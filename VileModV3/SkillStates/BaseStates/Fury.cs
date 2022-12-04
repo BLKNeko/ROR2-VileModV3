@@ -17,6 +17,9 @@ namespace VileMod.SkillStates.BaseStates
         public float baseDuration = 1f;
         public double MinHP;
         public static bool isCrit;
+        public static bool isInFury;
+
+        private float timerFury = 0;
 
         private float duration;
         private Animator animator;
@@ -52,6 +55,7 @@ namespace VileMod.SkillStates.BaseStates
             }
 
             CherryBlast.Chilldelay = ChillDelay;
+            Triple7.Chilldelay = ChillDelay;
 
 
         }
@@ -68,11 +72,16 @@ namespace VileMod.SkillStates.BaseStates
             }
 
             if (Timer <= HeatTime)
+            {
                 CherryBlast.heat = true;
+                Triple7.heat = true;
+            }  
             else
             {
                 CherryBlast.heat = false;
                 CherryBlast.buffSkillIndex = 0;
+                Triple7.heat = false;
+                Triple7.buffSkillIndex = 0;
             }
 
             if (base.inputBank.skill2.justReleased && (Timer <= HeatTime))
@@ -83,6 +92,16 @@ namespace VileMod.SkillStates.BaseStates
 
             if (base.inputBank.skill4.justReleased && (Timer <= HeatTime))
                 CherryBlast.buffSkillIndex = 3;
+
+
+            if (base.inputBank.skill2.justReleased && (Timer <= HeatTime))
+                Triple7.buffSkillIndex = 1;
+
+            if (base.inputBank.skill3.justReleased && (Timer <= HeatTime))
+                Triple7.buffSkillIndex = 2;
+
+            if (base.inputBank.skill4.justReleased && (Timer <= HeatTime))
+                Triple7.buffSkillIndex = 3;
 
             //-------PASSIVE EFFECT
 
@@ -96,14 +115,48 @@ namespace VileMod.SkillStates.BaseStates
                 base.healthComponent.AddBarrierAuthority(base.characterBody.healthComponent.fullHealth / 2f);
                 if (NetworkServer.active)
                 {
-                    base.characterBody.AddTimedBuff(RoR2Content.Buffs.LifeSteal, 6f);
+                    base.characterBody.AddTimedBuff(RoR2Content.Buffs.LifeSteal, 10f);
                     base.characterBody.AddTimedBuff(RoR2Content.Buffs.FullCrit, 10f);
                     base.characterBody.AddTimedBuff(RoR2Content.Buffs.Warbanner, 10f);
-                    base.characterBody.AddTimedBuff(RoR2Content.Buffs.NoCooldowns, 3f);
+                    base.characterBody.AddTimedBuff(RoR2Content.Buffs.NoCooldowns, 5f);
+                    base.characterBody.AddTimedBuff(Modules.Buffs.VileFuryBuff, 10f);
                 }
                 PassiveTimer = 50f;
+                timerFury = 10f;
 
             }
+
+            //Fury state bonus
+
+            /*
+
+            if (timerFury >= 1f)
+            {
+                isInFury = true;
+
+                timerFury -= Time.fixedDeltaTime;
+
+                if (NetworkServer.active)
+                {
+                    //base.characterBody.AddBuff(Modules.Buffs.VileFuryBuff);
+                    //base.characterBody.AddTimedBuff(Modules.Buffs.VileFuryBuff, 10f);
+
+                }
+
+            }
+            else
+            {
+                isInFury = false;
+
+                if (NetworkServer.active)
+                {
+                    //base.characterBody.RemoveBuff(Modules.Buffs.VileFuryBuff);
+                }
+                    
+            }
+                
+            */
+                
 
             //------------------------ Check Crit because passive interfer on the primary skill
 

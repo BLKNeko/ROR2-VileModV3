@@ -42,7 +42,7 @@ namespace VileMod.SkillStates
             base.StartAimMode(0.5f + this.duration, false);
             //base.characterBody.isSprinting = false;
 
-            Util.PlaySound(Modules.Sounds.vileAttack, base.gameObject);
+            Util.PlaySound(Modules.Sounds.vileHahaha, base.gameObject);
 
             HitBoxGroup hitBoxGroup = null;
             Transform modelTransform = base.GetModelTransform();
@@ -54,7 +54,7 @@ namespace VileMod.SkillStates
 
             //if (this.swingIndex == 0) base.PlayAnimation("Gesture, Override", "ZSlash1", "FireArrow.playbackRate", this.duration);
             //else base.PlayAnimation("Gesture, Override", "ZSlash1", "FireArrow.playbackRate", this.duration);
-            base.PlayAnimation("Body", "BurningDrive", "attackSpeed", this.duration);
+            base.PlayAnimation("FullBody, Override", "BurningDrive", "attackSpeed", this.duration);
 
             EffectManager.SimpleMuzzleFlash(Modules.Assets.BurningDriveVFX, base.gameObject, "GroundBox", true);
             EffectManager.SimpleMuzzleFlash(Modules.Assets.BurningDriveVFX, base.gameObject, "GroundBox", true);

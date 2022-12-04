@@ -13,7 +13,8 @@ namespace VileMod.Modules
             string desc = "Vile, the EX-Maverick Hunter.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Vile's Cherry Blast has a low start so use it after any skill for a momentary buff and faster start" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Vile is very powerfull, but is pretty slow" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > When activated, Vile's Passive give him a life steal buff for 6 seconds, so try to cause the maximum damage possible" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > When activated, Vile's Fury give him a life steal buff for 6 seconds, so try to cause the maximum damage possible" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Vile's tough body make him immune to fall damage" + Environment.NewLine + Environment.NewLine;
 
 
             string outro = "Back to the Hunter Base.";
@@ -39,6 +40,9 @@ namespace VileMod.Modules
             #region Primary
             LanguageAPI.Add(prefix + "CHERRYBLAST_NAME", "CherryBlast");
             LanguageAPI.Add(prefix + "CHERRYBLAST_DESCRIPTION", "Vile's gatling can fire super fast bullets after completely heated, dealing <style=cIsDamage>25% damage</style>.");
+
+            LanguageAPI.Add(prefix + "TRIPLE7_NAME", "Triple 7");
+            LanguageAPI.Add(prefix + "TRIPLE7_DESCRIPTION", "Vile's gatling can fire fast bullets after completely heated, this mode is innacurated but deals <style=cIsDamage>50% damage</style>.");
             #endregion
 
             #region Secondary
@@ -48,6 +52,9 @@ namespace VileMod.Modules
 
             LanguageAPI.Add(prefix + "FRONTRUNNER_NAME", "Front Runner");
             LanguageAPI.Add(prefix + "FRONTRUNNER_DESCRIPTION", "A cannon shot that explodes on impact, dealing <style=cIsDamage>300% damage</style>.");
+
+            LanguageAPI.Add(prefix + "NAPALMBOMB_NAME", "Napalm Bomb");
+            LanguageAPI.Add(prefix + "NAPALMBOMB_DESCRIPTION", "Vile throws a granade that explodes on impact, dealing <style=cIsDamage>500% damage</style> and spreading smaller granades to cause even more damage.");
 
             #endregion
 

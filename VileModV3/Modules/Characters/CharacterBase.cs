@@ -69,11 +69,11 @@ namespace VileMod.Modules.Characters
             bodyPrefab.GetComponent<EntityStateMachine>().initialStateType = new EntityStates.SerializableEntityStateType(characterSpawnState);
 
             Modules.Content.AddEntityState(characterMainState);
-            if (characterSpawnState != null)
-            {
-                bodyPrefab.GetComponent<EntityStateMachine>().initialStateType = new EntityStates.SerializableEntityStateType(characterSpawnState);
-                Modules.Content.AddEntityState(characterSpawnState);
-            }
+            //if (characterSpawnState != null)
+            //{
+            //    bodyPrefab.GetComponent<EntityStateMachine>().initialStateType = new EntityStates.SerializableEntityStateType(characterSpawnState);
+            //    Modules.Content.AddEntityState(characterSpawnState);
+            //}
         }
 
         public abstract void InitializeSkills();

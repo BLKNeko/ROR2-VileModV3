@@ -45,8 +45,8 @@ namespace VileMod.Modules.Survivors
             jumpCount = 1,
             maxHealth = 150f,
             attackSpeed = 0.85f,
-            jumpPowerGrowth = 0.5f,
-            jumpPower = 23,
+            jumpPowerGrowth = 0.2f,
+            jumpPower = 25,
             moveSpeed = 5.5f
         };
 
@@ -188,6 +188,35 @@ namespace VileMod.Modules.Survivors
 
             Modules.Skills.AddPrimarySkills(bodyPrefab, CherryBlastSkillDef);
 
+            //----------------
+
+            SkillDef Triple7SkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "TRIPLE7_NAME",
+                skillNameToken = prefix + "TRIPLE7_NAME",
+                skillDescriptionToken = prefix + "TRIPLE7_DESCRIPTION",
+                skillIcon = Modules.Assets.VT7,
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Triple7)),
+                activationStateMachineName = "Weapon",
+                baseMaxStock = 1,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = true,
+                mustKeyPress = true,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 0,
+                requiredStock = 0,
+                stockToConsume = 0,
+                //keywordTokens = new string[] { "KEYWORD_AGILE" }
+            });
+
+            Modules.Skills.AddPrimarySkills(bodyPrefab, Triple7SkillDef);
+
             #endregion
 
             #region Secondary
@@ -246,6 +275,35 @@ namespace VileMod.Modules.Survivors
             });
 
             Modules.Skills.AddSecondarySkills(bodyPrefab, FrontRunnerSkillDef);
+
+            //------------------------
+
+            SkillDef NapalmBombSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "NAPALMBOMB_NAME",
+                skillNameToken = prefix + "NAPALMBOMB_NAME",
+                skillDescriptionToken = prefix + "NAPALMBOMB_DESCRIPTION",
+                skillIcon = Modules.Assets.VNB,
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.NapalmBomb)),
+                activationStateMachineName = "Weapon",
+                baseMaxStock = 2,
+                baseRechargeInterval = 8f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = true,
+                mustKeyPress = true,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+                // keywordTokens = new string[] { "KEYWORD_AGILE" }
+            });
+
+            Modules.Skills.AddSecondarySkills(bodyPrefab, NapalmBombSkillDef);
 
 
             #endregion
@@ -381,7 +439,7 @@ namespace VileMod.Modules.Survivors
             #region DefaultSkin
             //this creates a SkinDef with all default fields
             SkinDef defaultSkin = Modules.Skins.CreateSkinDef(prefix + "DEFAULT_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+                Modules.Assets.VSkin,
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 

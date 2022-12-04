@@ -13,17 +13,9 @@ place the dll in your plugins folder or extract to a folder inside plugins.
 ![](https://i.imgur.com/q4egApU.png)
 ![](https://i.imgur.com/hnDgSRN.png)
 
-# Feedback
-Hey, if you want to talk, give me a hint for this mod you can DM me on discord, but sorry for my bad english and i hope you enjoy!
-
-# Discord
-BLKNeko#8448 (i'm also in the RoR2 modding community, they helped me a lot)
-
-#KNOW ISSUES:
-- Golden Needler is not working for no reason.
-
 
 # Changelog
+V 3.0.0 Update to work with the update and add 2 new skills and some audios
 V 2.0.0 Update to work with the update
 V 1.0.0 Posted
 

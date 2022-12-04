@@ -6,10 +6,10 @@ using VileMod.SkillStates.BaseStates;
 
 namespace VileMod.SkillStates
 {
-    public class ShotgunIce : BaseSkillState
+    public class NapalmBomb : BaseSkillState
     {
-        public float damageCoefficient = 4f;
-        public float baseDuration = 1.5f;
+        public float damageCoefficient = 5f;
+        public float baseDuration = 0.5f;
         public float recoil = 1f;
         public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerToolbotRebar");
 
@@ -26,31 +26,33 @@ namespace VileMod.SkillStates
             this.fireDuration = 0.25f * this.duration;
             base.characterBody.SetAimTimer(2f);
             this.animator = base.GetModelAnimator();
-            this.muzzleString = "Weapon";
+            this.muzzleString = "HandR";
 
             Util.PlaySound(Modules.Sounds.vileAttack, base.gameObject);
-            base.PlayAnimation("Gesture, Override", "CannonShoot", "attackSpeed", this.duration);
+            Util.PlaySound(Modules.Sounds.vileArmed, base.gameObject);
+            base.PlayAnimation("RightArm, Override", "GranadeR", "attackSpeed", this.duration);
         }
 
         public override void OnExit()
         {
+
             base.OnExit();
         }
 
-        private void FireES()
+        private void FireNB()
         {
             if (!this.hasFired)
             {
                 this.hasFired = true;
 
-                base.characterBody.SetSpreadBloom(0.8f);
+                base.characterBody.AddSpreadBloom(0.15f);
                 Ray aimRay = base.GetAimRay();
-                //EffectManager.SimpleMuzzleFlash(Commando.CommandoWeapon.FirePistol.effectPrefab, base.gameObject, this.muzzleString, false);
-                EffectManager.SimpleMuzzleFlash(EntityStates.Mage.Weapon.FireIceOrb.effectPrefab, base.gameObject, this.muzzleString, false);
+                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireBarrage.effectPrefab, base.gameObject, this.muzzleString, false);
+                //EffectManager.SimpleMuzzleFlash(EntityStates.Mage.Weapon.FireLaserbolt.impactEffectPrefab, base.gameObject, this.muzzleString, false);
 
                 if (base.isAuthority)
                 {
-                    ProjectileManager.instance.FireProjectile(Modules.Projectiles.ShotgunIceProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                    ProjectileManager.instance.FireProjectile(Modules.Projectiles.NapalmBombProjectile, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageCoefficient * this.damageStat, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
                 }
             }
         }
@@ -61,7 +63,7 @@ namespace VileMod.SkillStates
 
             if (base.fixedAge >= this.fireDuration)
             {
-                FireES();
+                FireNB();
             }
 
             if (base.fixedAge >= this.duration && base.isAuthority)

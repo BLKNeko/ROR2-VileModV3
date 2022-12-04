@@ -37,6 +37,8 @@ namespace VileMod.Modules
         internal static Sprite VBD;
         internal static Sprite VCP;
         internal static Sprite VCB;
+        internal static Sprite VT7;
+        internal static Sprite VNB;
         internal static Sprite VSkin;
 
 
@@ -103,9 +105,9 @@ namespace VileMod.Modules
             // feel free to delete everything in here and load in your own assets instead
             // it should work fine even if left as is- even if the assets aren't in the bundle
             
-            swordHitSoundEvent = CreateNetworkSoundEventDef("HenrySwordHit");
+            //swordHitSoundEvent = CreateNetworkSoundEventDef("HenrySwordHit");
 
-            bombExplosionEffect = LoadEffect("BombExplosionEffect", "HenryBombExplosion");
+            //bombExplosionEffect = LoadEffect("BombExplosionEffect", "HenryBombExplosion");
 
             if (bombExplosionEffect)
             {
@@ -123,8 +125,8 @@ namespace VileMod.Modules
                 };
             }
 
-            swordSwingEffect = Assets.LoadEffect("HenrySwordSwingEffect", true);
-            swordHitImpactEffect = Assets.LoadEffect("ImpactHenrySlash");
+            //swordSwingEffect = Assets.LoadEffect("HenrySwordSwingEffect", true);
+            //swordHitImpactEffect = Assets.LoadEffect("ImpactHenrySlash");
 
 
             BurningDriveVFX = Assets.LoadEffect("MagicFireBig", "");
@@ -140,6 +142,8 @@ namespace VileMod.Modules
             VBD = mainAssetBundle.LoadAsset<Sprite>("VileBurningDrive");
             VCB = mainAssetBundle.LoadAsset<Sprite>("VileCherryBlast");
             VFR = mainAssetBundle.LoadAsset<Sprite>("VileFrontRunner");
+            VT7 = mainAssetBundle.LoadAsset<Sprite>("VileTriple7");
+            VNB = mainAssetBundle.LoadAsset<Sprite>("VileNapalmBomb");
             VSkin = mainAssetBundle.LoadAsset<Sprite>("VileSkinBase");
 
 

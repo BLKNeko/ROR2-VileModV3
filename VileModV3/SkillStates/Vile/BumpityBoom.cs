@@ -30,7 +30,7 @@ namespace VileMod.SkillStates
 
             Util.PlaySound(Modules.Sounds.vileAttack, base.gameObject);
             Util.PlaySound(Modules.Sounds.vileFragDrop, base.gameObject);
-            base.PlayAnimation("AttackR", "GranadeR", "attackSpeed", this.duration);
+            base.PlayAnimation("RightArm, Override", "GranadeR", "attackSpeed", this.duration);
         }
 
         public override void OnExit()

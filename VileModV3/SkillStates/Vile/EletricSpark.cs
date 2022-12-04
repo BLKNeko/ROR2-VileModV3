@@ -29,7 +29,7 @@ namespace VileMod.SkillStates
             this.muzzleString = "Weapon";
 
             Util.PlaySound(Modules.Sounds.vileAttack, base.gameObject);
-            base.PlayAnimation("Attack", "TestShot", "attackSpeed", this.duration);
+            base.PlayAnimation("Gesture, Override", "CannonShoot", "attackSpeed", this.duration);
         }
 
         public override void OnExit()

@@ -11,22 +11,22 @@ namespace VileMod.SkillStates.BaseStates
     public class SpawnState : GenericCharacterSpawnState
     {
         private float duration;
-        public float baseDuration = 1f;
+        public float baseDuration = 3f;
         private Animator animator;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            this.duration = this.baseDuration / this.attackSpeedStat;
+            this.duration = this.baseDuration;
 
             //VilePlugin.isvisible = true;
             //VilePlugin.needtocheck = true;
-            
+
 
             //AdeptRough.MoraleGauge = 0.01f;
 
-
-            //base.PlayAnimation("Gesture, Override", "TBSwap", "attackSpeed", this.duration);
+            Util.PlaySound(Sounds.VReady, base.gameObject);
+            base.PlayAnimation("Body", "Spawn", "attackSpeed", this.duration);
             //base.PlayAnimation("FullBody, Override", "Death", "attackSpeed", this.duration);
 
         }

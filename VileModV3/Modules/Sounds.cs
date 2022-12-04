@@ -14,6 +14,8 @@ namespace VileMod.Modules
         public static readonly string vileSpawn = "Play_Vile_Spawn";
         public static readonly string vileFragDrop = "Play_Vile_Frag_Drop";
         public static readonly string vileArmed = "Play_Vile_Armed";
+        public static readonly string vileHahaha = "Play_Vile_Hahahaha";
+        public static readonly string VReady = "Play_Vile_Ready";
 
     }
 }

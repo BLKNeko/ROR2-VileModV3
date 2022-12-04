@@ -11,6 +11,9 @@ namespace VileMod.SkillStates
         public float damageCoefficient = 0.25f;
         public float baseDuration = 1f;
         public float recoil = 1f;
+        public static float procCoefficient = 1f;
+        public static float force = 100f;
+        public static float range = 200f;
         public static GameObject tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerClayBruiserMinigun");
         public static GameObject hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/Hitspark1");
         public int bulletcount;
@@ -99,27 +102,38 @@ namespace VileMod.SkillStates
                         isCrit = Util.CheckRoll(base.critStat, base.characterBody.master)
                     }.Fire();
                     */
+
                     BulletAttack BT = new BulletAttack();
                     BT.owner = base.gameObject;
-                    BT.weapon = base.gameObject;
+                    //BT.weapon = base.gameObject;
                     BT.origin = aimRay.origin;
                     BT.aimVector = aimRay.direction;
-                    BT.minSpread = 0.3f;
-                    BT.maxSpread = 0.8f;
+                    BT.minSpread = 0.1f;
+                    BT.maxSpread = 1f;
                     BT.damage = damageCoefficient * this.damageStat;
-                    //BT.procChainMask = default(ProcChainMask);
-                    BT.force = 45f;
-                    BT.radius = 0.3f;
-                    BT.sniper = true;
-                    BT.spreadPitchScale = 0.5f;
-                    BT.spreadYawScale = 0.5f;
+                    BT.spreadPitchScale = 0.1f;
+                    BT.spreadYawScale = 1f;
                     BT.tracerEffectPrefab = CherryBlast.tracerEffectPrefab;
-                   // BT.hitMask = LayerIndex.CommonMasks.bullet;
-                   // BT.falloffModel = BulletAttack.FalloffModel.None;
                     BT.muzzleName = muzzleString;
                     BT.hitEffectPrefab = hitEffectPrefab;
-                   // BT.queryTriggerInteraction = QueryTriggerInteraction.UseGlobal;
                     BT.isCrit = Fury.isCrit;
+                    BT.bulletCount = 1;
+                    BT.damageColorIndex = DamageColorIndex.Default;
+                    BT.falloffModel = BulletAttack.FalloffModel.DefaultBullet;
+                    BT.maxDistance = CherryBlast.range;
+                    BT.force = CherryBlast.force;
+                    BT.hitMask = LayerIndex.CommonMasks.bullet;
+                    BT.smartCollision = false;
+                    BT.procChainMask = default(ProcChainMask);
+                    BT.procCoefficient = procCoefficient;
+                    BT.radius = 0.75f;
+                    BT.sniper = false;
+                    BT.stopperMask = LayerIndex.CommonMasks.bullet;
+                    BT.weapon = null;
+                    BT.queryTriggerInteraction = QueryTriggerInteraction.UseGlobal;
+
+
+
 
                     switch (buffSkillIndex)
                     {
@@ -159,49 +173,84 @@ namespace VileMod.SkillStates
 
             if (base.inputBank.skill1.down && hasFired)
             {
-                if (timer > shootdelay)
+
+                //if (Fury.isInFury)
+                if (base.characterBody.HasBuff(Modules.Buffs.VileFuryBuff))
                 {
-                    if (shootdelay <= 0.075f)
+
+                    if (timer > shootdelay)
                     {
-                        shootdelay = 0.075f;
+                        shootdelay = 0.045f;
+
                         if (shootsfx)
                             shootsfx = false;
                         else
                             shootsfx = true;
-                    }
-                    else
-                    {
-                        if(shootdelay <= 1.6 && shootdelay >= 1.2)
-                        shootdelay -= (0.145f + (base.attackSpeedStat / 50));
 
-                        else if (shootdelay <= 1.19 && shootdelay >= 1)
-                            shootdelay -= (0.10f + (base.attackSpeedStat / 50));
 
-                        else if (shootdelay <= 0.99 && shootdelay >= 0.8)
-                            shootdelay -= (0.08f + (base.attackSpeedStat / 50));
 
-                        else if (shootdelay <= 0.79 && shootdelay >= 0.5)
-                            shootdelay -= (0.04f + (base.attackSpeedStat / 50));
 
-                        else if (shootdelay <= 0.49 && shootdelay >= 0.2)
-                            shootdelay -= (0.015f + (base.attackSpeedStat / 50));
-
-                        else if (shootdelay <= 0.19)
-                            shootdelay -= (0.008f + (base.attackSpeedStat / 50));
-
-                        else
-                            shootdelay -= (0.010f + (base.attackSpeedStat / 50));
+                        timer = 0;
+                        hasFired = false;
+                        base.characterBody.SetAimTimer(1f);
+                        base.PlayAnimation("Gesture, Override", "CannonShoot", "attackSpeed", this.duration);
+                        base.characterBody.isSprinting = false;
+                        FireArrow();
                     }
 
-                    
-
-                    timer = 0;
-                    hasFired = false;
-                    base.characterBody.SetAimTimer(1f);
-                    base.PlayAnimation("Gesture, Override", "CannonShoot", "attackSpeed", this.duration);
-                    base.characterBody.isSprinting = false;
-                    FireArrow();
+                 
                 }
+                else
+                {
+
+                    if (timer > shootdelay)
+                    {
+                        if (shootdelay <= 0.075f)
+                        {
+                            shootdelay = 0.075f;
+                            if (shootsfx)
+                                shootsfx = false;
+                            else
+                                shootsfx = true;
+                        }
+                        else
+                        {
+                            if (shootdelay <= 1.6 && shootdelay >= 1.2)
+                                shootdelay -= (0.25f + (base.attackSpeedStat / 50));
+
+                            else if (shootdelay <= 1.19 && shootdelay >= 1)
+                                shootdelay -= (0.18f + (base.attackSpeedStat / 50));
+
+                            else if (shootdelay <= 0.99 && shootdelay >= 0.8)
+                                shootdelay -= (0.085f + (base.attackSpeedStat / 50));
+
+                            else if (shootdelay <= 0.79 && shootdelay >= 0.5)
+                                shootdelay -= (0.045f + (base.attackSpeedStat / 50));
+
+                            else if (shootdelay <= 0.49 && shootdelay >= 0.2)
+                                shootdelay -= (0.015f + (base.attackSpeedStat / 50));
+
+                            else if (shootdelay <= 0.19)
+                                shootdelay -= (0.008f + (base.attackSpeedStat / 50));
+
+                            else
+                                shootdelay -= (0.010f + (base.attackSpeedStat / 50));
+                        }
+
+
+
+
+                        timer = 0;
+                        hasFired = false;
+                        base.characterBody.SetAimTimer(1f);
+                        base.PlayAnimation("Gesture, Override", "CannonShoot", "attackSpeed", this.duration);
+                        base.characterBody.isSprinting = false;
+                        FireArrow();
+                    }
+
+                }
+
+                
             }
 
 

@@ -8,6 +8,7 @@ namespace VileMod.Modules
     {
         // armor buff gained during roll
         internal static BuffDef armorBuff;
+        internal static BuffDef VileFuryBuff;
 
         internal static void RegisterBuffs()
         {
@@ -16,6 +17,8 @@ namespace VileMod.Modules
                 Color.white, 
                 false, 
                 false);
+
+            VileFuryBuff = AddNewBuff("VileFuryBuff", Modules.Assets.VilePassiveIcon, Color.white, false, false);
         }
 
         // simple helper method

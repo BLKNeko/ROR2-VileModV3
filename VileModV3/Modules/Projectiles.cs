@@ -15,6 +15,7 @@ namespace VileMod.Modules
         internal static GameObject FrontRunnerFireBallProjectile;
         internal static GameObject CerberusPhantonFMJProjectile;
         internal static GameObject ShotgunIceProjectile;
+        internal static GameObject NapalmBombProjectile;
 
         internal static void RegisterProjectiles()
         {
@@ -25,6 +26,7 @@ namespace VileMod.Modules
             CreateFrontRunnerProjectile();
             CreateCerberusPhantonProjectile();
             CreateShotgunIceProjectile();
+            CreateNapalmBombProjectile();
 
             //AddProjectile(bombPrefab);
             AddProjectile(EletricSpark);
@@ -32,6 +34,7 @@ namespace VileMod.Modules
             AddProjectile(FrontRunnerFireBallProjectile);
             AddProjectile(CerberusPhantonFMJProjectile);
             AddProjectile(ShotgunIceProjectile);
+            AddProjectile(NapalmBombProjectile);
         }
 
         internal static void AddProjectile(GameObject projectileToAdd)
@@ -151,6 +154,25 @@ namespace VileMod.Modules
             ProjectileController SIController = ShotgunIceProjectile.GetComponent<ProjectileController>();
             if (Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("SIGhost") != null) SIController.ghostPrefab = CreateGhostPrefab("SIGhost");
             SIController.startSound = "";
+        }
+
+        private static void CreateNapalmBombProjectile()
+        {
+
+            // clone FMJ's syringe projectile prefab here to use as our own projectile
+            NapalmBombProjectile = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Projectiles/CryoCanisterProjectile"), "Prefabs/Projectiles/BombProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\MegamanXVile\\MegamanXVile\\MegamanXVile\\MegamanXVile.cs", "RegisterCharacter", 155);
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            NapalmBombProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            NapalmBombProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            NapalmBombProjectile.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
+
+            // register it for networking
+            if (NapalmBombProjectile) PrefabAPI.RegisterNetworkPrefab(NapalmBombProjectile);
+
+            ProjectileController NBController = NapalmBombProjectile.GetComponent<ProjectileController>();
+            if (Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("NBGhost") != null) NBController.ghostPrefab = CreateGhostPrefab("NBGhost");
+            NBController.startSound = "";
         }
 
         private static void InitializeImpactExplosion(ProjectileImpactExplosion projectileImpactExplosion)

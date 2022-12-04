@@ -258,6 +258,21 @@ namespace VileMod
                     self.armor += 300f;
                 }
             }
+
+
+            if (self)
+            {
+                if (self.HasBuff(Modules.Buffs.VileFuryBuff))
+                {
+                    self.moveSpeed *= 1.3f;
+                    self.attackSpeed *= 1.25f;
+                    self.damage *= 1.4f;
+                    self.regen *= 1.4f;
+
+                }
+            }
+
+
         }
     }
 }

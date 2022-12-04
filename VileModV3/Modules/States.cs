@@ -10,13 +10,6 @@ namespace VileMod.Modules
         internal static void RegisterStates()
         {
             Modules.Content.AddEntityState(typeof(BaseMeleeAttack));
-            Modules.Content.AddEntityState(typeof(SlashCombo));
-
-            Modules.Content.AddEntityState(typeof(Shoot));
-
-            Modules.Content.AddEntityState(typeof(Roll));
-
-            Modules.Content.AddEntityState(typeof(ThrowBomb));
 
             Modules.Content.AddEntityState(typeof(CherryBlast));
             Modules.Content.AddEntityState(typeof(BumpityBoom));

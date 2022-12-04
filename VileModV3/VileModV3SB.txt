@@ -4,6 +4,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	706036056	Play_Vile_I_Show_You_How_Strong_I_Am			\Default Work Unit\Play_Vile_I_Show_You_How_Strong_I_Am	
 	738427375	Play_Vile_Hahahaha			\Default Work Unit\Play_Vile_Hahahaha	
 	742254679	Play_Vile_Attack			\Default Work Unit\Play_Vile_Attack	
+	923304244	Play_Vile_Ready			\Default Work Unit\Play_Vile_Ready	
 	2262011310	Play_Vile_I_Not_Done_Yet			\Default Work Unit\Play_Vile_I_Not_Done_Yet	
 	3140733435	Play_Vile_Cherry_Blast			\Default Work Unit\Play_Vile_Cherry_Blast	
 	3201666147	Play_Vile_Die			\Default Work Unit\Play_Vile_Die	
@@ -24,6 +25,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	88118441	Vile_Armed	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Armed_05842A19.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Armed		5459
 	132120522	Vile_Ha	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ha_05842A19.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Attack\Vile_Ha		3417
 	273514321	Vile_I-Cant_Lose_To_X	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I-Cant_Lose_To_X_05842A19.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Die\Vile_I-Cant_Lose_To_X		14142
+	373865687	Vile_Ready	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Ready_05842A19.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ready		8545
 	436735630	Vile_Frag_Drop	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Frag_Drop_05842A19.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Frag_Drop		7697
 	648815430	Vile_I_Not_Done_Yet	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Not_Done_Yet_05842A19.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Fury\Vile_I_Not_Done_Yet		9613
 	799034785	Vile_I_Show_You_How_Strong_I_Am	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Show_You_How_Strong_I_Am_05842A19.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Fury\Vile_I_Show_You_How_Strong_I_Am		11724
