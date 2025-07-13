@@ -111,11 +111,24 @@ namespace VileMod.Survivors.Vile.Components
         {
 
             childLocator.FindChildGameObject("VEH").SetActive(false);
+            childLocator.FindChildGameObject("VBodyMesh").SetActive(false);
+            childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(false);
+            childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(false);
 
             childLocator.FindChildGameObject("VEH").SetActive(true);
 
-            cameraTargetParams.fovOverride = 60f;
+            if(Body.skinIndex == 0)
+            {
+                childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(true);
+            }
+            else
+            {
+                childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(true);
+            }
 
+
+            //cameraTargetParams.fovOverride = 60f;
+            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
 
 
         }
@@ -123,9 +136,11 @@ namespace VileMod.Survivors.Vile.Components
         public void ExitGoliath()
         {
             childLocator.FindChildGameObject("VEH").SetActive(false);
+            childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(false);
+            childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(false);
+            childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
 
-
-            Body.transform.localPosition -= new Vector3(0f, 2.2f, 0f);
+            cameraTargetParams.fovOverride = 0f;
 
         }
 

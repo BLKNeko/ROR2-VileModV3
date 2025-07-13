@@ -30,7 +30,10 @@ namespace VileMod.Survivors.Vile
 
         //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => VILE_PREFIX;
-        
+
+        //GOLIATH SKILL DEFS
+        internal static SkillDef goliathPunchComboSkillDef;
+
         public override BodyInfo bodyInfo => new BodyInfo
         {
             bodyName = bodyName,
@@ -73,6 +76,14 @@ namespace VileMod.Survivors.Vile
                 new CustomRendererInfo
                 {
                     childName = "VH_Mesh_S",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "VH_VLC_Mesh",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "VH_VLMKC_Mesh",
                 }
         };
 
@@ -158,12 +169,50 @@ namespace VileMod.Survivors.Vile
         {
             //remove the genericskills from the commando body we cloned
             Skills.ClearGenericSkills(bodyPrefab);
+
+            CreateSkillDefs();
+
             //add our own
             //AddPassiveSkill();
             AddPrimarySkills();
             AddSecondarySkills();
             AddUtiitySkills();
             AddSpecialSkills();
+        }
+
+        private void CreateSkillDefs()
+        {
+
+            goliathPunchComboSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "GoliathPunchCombo",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(GPunch0)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 0f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
         }
 
         //skip if you don't have a passive
@@ -232,7 +281,7 @@ namespace VileMod.Survivors.Vile
                     VILE_PREFIX + "PRIMARY_SLASH_NAME",
                     VILE_PREFIX + "PRIMARY_SLASH_DESCRIPTION",
                     assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
-                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.SlashCombo)),
+                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.GPunch0)),
                     "Weapon",
                     true
                 ));
@@ -240,7 +289,8 @@ namespace VileMod.Survivors.Vile
             primarySkillDef1.stepCount = 2;
             primarySkillDef1.stepGraceDuration = 0.5f;
 
-            Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1);
+            //Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1);
+            Skills.AddPrimarySkills(bodyPrefab, goliathPunchComboSkillDef);
         }
 
         private void AddSecondarySkills()
@@ -374,6 +424,8 @@ namespace VileMod.Survivors.Vile
                 null,
                 null,
                 null,
+                null,
+                null,
                 null);
 
             defaultSkin.rendererInfos[0].defaultMaterial = assetBundle.LoadMaterial("matVile");
@@ -406,6 +458,8 @@ namespace VileMod.Survivors.Vile
             mk2Skin.meshReplacements = Modules.Skins.getMeshReplacements(assetBundle, defaultRendererinfos,
                 "VileMK2BodyMesh",
                 null,//no gun mesh replacement. use same gun mesh
+                null,
+                null,
                 null,
                 null,
                 null);

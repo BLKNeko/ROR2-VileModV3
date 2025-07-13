@@ -3,6 +3,7 @@ using VileMod.Survivors.Vile;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
+using VileMod.Survivors.Vile.Components;
 
 namespace VileMod.Survivors.Vile.SkillStates
 {
@@ -22,6 +23,8 @@ namespace VileMod.Survivors.Vile.SkillStates
         private float fireTime;
         private bool hasFired;
         private string muzzleString;
+
+        private VileComponent VC;
 
         public override void OnEnter()
         {
@@ -43,6 +46,9 @@ namespace VileMod.Survivors.Vile.SkillStates
                 {
                     characterBody.RemoveBuff(VileBuffs.GoliathBuff);
                 }
+
+                VC = GetComponent<VileComponent>();
+                VC.ExitGoliath();
 
             }
 
