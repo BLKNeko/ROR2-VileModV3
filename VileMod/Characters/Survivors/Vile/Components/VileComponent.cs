@@ -62,8 +62,8 @@ namespace VileMod.Survivors.Vile.Components
 
             cameraTargetParams = Body.GetComponent<CameraTargetParams>();
 
-            Debug.Log(AnimVeh);
-            Debug.Log("Camera: " + cameraTargetParams);
+            //Debug.Log(AnimVeh);
+            //Debug.Log("Camera: " + cameraTargetParams);
 
             //Debug.Log("EXEmodel: " + EXEmodel);
             //Debug.Log("EXEchildLocator: " + EXEchildLocator);
@@ -157,7 +157,7 @@ namespace VileMod.Survivors.Vile.Components
 
             baseHeatValue = Mathf.Clamp01(baseHeatValue);
 
-            Debug.Log("Base Heat Value: " + baseHeatValue);
+            //Debug.Log("Base Heat Value: " + baseHeatValue);
         }
 
         private void VElementUpdate()
@@ -178,9 +178,9 @@ namespace VileMod.Survivors.Vile.Components
             flameElementValue = Mathf.Clamp01(flameElementValue);
             shockElementValue = Mathf.Clamp01(shockElementValue);
 
-            Debug.Log("iceElementValue Value: " + iceElementValue);
-            Debug.Log("flameElementValue Value: " + flameElementValue);
-            Debug.Log("shockElementValue Value: " + shockElementValue);
+            //Debug.Log("iceElementValue Value: " + iceElementValue);
+            //Debug.Log("flameElementValue Value: " + flameElementValue);
+            //Debug.Log("shockElementValue Value: " + shockElementValue);
         }
 
         private void VElementBuffUpdate()

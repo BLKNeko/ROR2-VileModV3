@@ -9,7 +9,7 @@ using System;
 
 public class VileHeatUIController : MonoBehaviour
 {
-    public RawImage segmentImage;
+    public Image barFill;
     private VileComponent heatComp;
     private int maxSegments = 10;
     private HUD rorHUD;
@@ -18,63 +18,115 @@ public class VileHeatUIController : MonoBehaviour
     private GameObject heatBarGO;
     private CharacterBody characterBody;
 
+    public bool failedToInitialize;
+    private bool isInitialized = false;
+    public const int MAX_FAIL_ATTEMPTS = 50;
+    public int failAttempts = 0;
+
     public void Start()
     {
         characterBody = GetComponent<CharacterBody>();
         heatComp = GetComponent<VileComponent>();
-        heatBarGO = VileAssets.BarPanel;
 
         Hook();
 
+        try
+        {
+            InitializeUI();
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.Log($"Vile - NRE on UI Initialization, trying again: {e}");
+        }
 
-        InitializeRoRHUD();
+       
 
     }
 
-    //private void InitializeRoRHUD()
-    //{
-    //    if (RoRHUDObject)
-    //    {
-    //        // Using Lee as a reference for HUD
-    //        RoRHUDSpringCanvasTransform = RoRHUDObject.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas");
+    public void InitializeUI()
+    {
+        if (!isInitialized)
+        {
+            InitializeRoRHUD();
+            HeatBarUI();
 
-    //        rorHUD = RoRHUDObject.GetComponent<HUD>();
-
-    //        return;
-    //    }
-    //    throw new NullReferenceException();
-    //}
+            isInitialized = true;
+        }
+    }
 
     private void InitializeRoRHUD()
     {
-        if (!heatBarGO || !RoRHUDObject) return;
-
-        Transform springCanvas = RoRHUDObject.transform.Find("MainContainer/MainUIArea/SpringCanvas");
-        if (!springCanvas)
+        if (RoRHUDObject)
         {
-            Debug.LogWarning("SpringCanvas not found in HUD.");
+            // Using Lee as a reference for HUD
+            RoRHUDSpringCanvasTransform = RoRHUDObject.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas");
+
+            rorHUD = RoRHUDObject.GetComponent<HUD>();
+
             return;
         }
+        throw new NullReferenceException();
+    }
 
-        GameObject instance = GameObject.Instantiate(heatBarGO, springCanvas);
-        segmentImage = instance.GetComponentInChildren<RawImage>();
+    void HeatBarUI()
+    {
+        if (!RoRHUDObject) return;
 
-        if (!segmentImage)
-        {
-            Debug.LogWarning("segmentImage (RawImage) not found in HeatBar prefab.");
-        }
+        heatBarGO = Instantiate(VileAssets.BarPanel, RoRHUDSpringCanvasTransform.Find("BottomLeftCluster/BarRoots/Healthbar"));
+        heatBarGO.transform.rotation = Quaternion.identity;
+        heatBarGO.transform.localScale = new Vector3(0.7891f, 0.4f, 1f);
+        heatBarGO.transform.position = new Vector3(-9.7021f, -4.8843f, 12.6537f);
+        heatBarGO.transform.localPosition = new Vector3(2.3027f, 0.7998f, 0.0003f);
 
-        Debug.Log("VileHeatUI: Bar added to HUD.");
+        barFill = heatBarGO.transform.Find("Bar/Bar_Fill").GetComponent<Image>();
+
+        Debug.Log("barFill: " + barFill);
+
     }
 
     void Update()
     {
-        if (!heatComp || !segmentImage) return;
 
-        float heat = heatComp.GetBaseHeatValue();
-        int segments = Mathf.RoundToInt(heat * maxSegments);
-        segmentImage.uvRect = new Rect(0f, 0f, segments, 1f);
+        // Using Lee as a reference for HUD
+        if (characterBody.hasEffectiveAuthority)
+        {
+            if (!isInitialized && !failedToInitialize)
+            {
+                try
+                {
+                    InitializeUI();
+                }
+                catch (NullReferenceException e)
+                {
+                    Debug.Log($"Vile - NRE on UI Initialization, trying again: {e}");
+                    failAttempts++;
+
+                    if (failAttempts >= MAX_FAIL_ATTEMPTS)
+                    {
+                        failedToInitialize = true;
+                        Debug.Log($"Vile UI failed to initialize after more than {MAX_FAIL_ATTEMPTS} attempts. Stopping attempts to initialize.");
+                    }
+                }
+
+                return;
+            }
+
+            //After that its supposed to be initialized buuut...
+
+            if (isInitialized)
+            {
+                //Debug.Log("RoRHUDOBJ: " + RoRHUDObject);
+                //Debug.Log("heatBarGO: " + heatBarGO);
+
+                barFill.fillAmount = heatComp.GetBaseHeatValue();
+
+                Debug.Log("barFill.fillAmount: " + barFill.fillAmount);
+
+            }
+
+        }
     }
+
 
     public void Hook()
     {
