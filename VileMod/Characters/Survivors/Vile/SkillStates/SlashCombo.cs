@@ -33,10 +33,10 @@ namespace VileMod.Survivors.Vile.SkillStates
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingLeft" : "SwingRight";
             playbackRateParam = "Slash.playbackRate";
-            swingEffectPrefab = HenryAssets.swordSwingEffect;
-            hitEffectPrefab = HenryAssets.swordHitImpactEffect;
+            swingEffectPrefab = VileAssets.swordSwingEffect;
+            hitEffectPrefab = VileAssets.swordHitImpactEffect;
 
-            impactSound = HenryAssets.swordHitSoundEvent.index;
+            impactSound = VileAssets.swordHitSoundEvent.index;
 
             base.OnEnter();
         }

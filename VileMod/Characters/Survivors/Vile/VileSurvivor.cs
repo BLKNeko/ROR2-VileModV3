@@ -8,6 +8,7 @@ using RoR2.Skills;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using RoR2.UI;
 
 namespace VileMod.Survivors.Vile
 {
@@ -31,8 +32,14 @@ namespace VileMod.Survivors.Vile
         //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => VILE_PREFIX;
 
+        private static Dictionary<HUD, GameObject> activeHeatUIs = new Dictionary<HUD, GameObject>();
+
         //GOLIATH SKILL DEFS
         internal static SkillDef goliathPunchComboSkillDef;
+
+        //PRIMARY SKILLS DEFS
+        internal static SkillDef cherryBlastSkillDef;
+
 
         public override BodyInfo bodyInfo => new BodyInfo
         {
@@ -41,17 +48,27 @@ namespace VileMod.Survivors.Vile
             subtitleNameToken = VILE_PREFIX + "SUBTITLE",
 
             characterPortrait = assetBundle.LoadAsset<Texture>("texHenryIcon"),
-            bodyColor = Color.white,
+            bodyColor = new Color(0.35f, 0.05f, 0.4f),
             sortPosition = 100,
 
-            crosshair = Asset.LoadCrosshair("Standard"),
+            crosshair = Asset.LoadCrosshair("SMGCrosshair"),
             podPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
 
-            maxHealth = 110f,
-            healthRegen = 1.5f,
-            armor = 0f,
-
+            armor = 30f,
+            armorGrowth = 1.8f,
+            shieldGrowth = 0.25f,
+            damage = 25f,
+            healthGrowth = 25f,
+            healthRegen = 1.8f,
             jumpCount = 1,
+            maxHealth = 150f,
+            attackSpeed = 0.85f,
+            jumpPowerGrowth = 0.2f,
+            jumpPower = 25,
+            moveSpeed = 5.5f
+            
+
+            
         };
 
         public override CustomRendererInfo[] customRendererInfos => new CustomRendererInfo[]
@@ -122,7 +139,7 @@ namespace VileMod.Survivors.Vile
             HenryStates.Init();
             HenryTokens.Init();
 
-            HenryAssets.Init(assetBundle);
+            VileAssets.Init(assetBundle);
             VileBuffs.Init(assetBundle);
 
             InitializeEntityStateMachines();
@@ -139,8 +156,10 @@ namespace VileMod.Survivors.Vile
         {
             //AddHitboxes();
             bodyPrefab.AddComponent<VileComponent>();
+            bodyPrefab.AddComponent<VileHeatUIController>();
             //bodyPrefab.AddComponent<HuntressTrackerComopnent>();
             //anything else here
+            bodyPrefab.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage; 
         }
 
         public void AddHitboxes()
@@ -212,6 +231,40 @@ namespace VileMod.Survivors.Vile
                 cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
             });
+
+            #region Primary
+
+            cherryBlastSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "CherryBlast",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(CherryBlast)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 0f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            #endregion
 
         }
 
@@ -290,7 +343,8 @@ namespace VileMod.Survivors.Vile
             primarySkillDef1.stepGraceDuration = 0.5f;
 
             //Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1);
-            Skills.AddPrimarySkills(bodyPrefab, goliathPunchComboSkillDef);
+            //Skills.AddPrimarySkills(bodyPrefab, goliathPunchComboSkillDef);
+            Skills.AddPrimarySkills(bodyPrefab, cherryBlastSkillDef);
         }
 
         private void AddSecondarySkills()
@@ -394,7 +448,8 @@ namespace VileMod.Survivors.Vile
                 mustKeyPress = false,
             });
 
-            Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
+            //Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
+            Skills.AddSpecialSkills(bodyPrefab, goliathPunchComboSkillDef);
         }
         #endregion skills
         
@@ -544,7 +599,9 @@ namespace VileMod.Survivors.Vile
         private void AddHooks()
         {
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+
         }
+
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {

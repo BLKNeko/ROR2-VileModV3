@@ -32,6 +32,11 @@ namespace VileMod.Survivors.Vile.Components
         private Vector3 cameraDefaultPos;
         private Vector3 cameraMechaPos = new Vector3(0f, 2f, -12f);
 
+        private float baseHeatValue;
+        private float shockElementValue;
+        private float flameElementValue;
+        private float iceElementValue;
+
         private void Start()
         {
             //any funny custom behavior you want here
@@ -93,6 +98,9 @@ namespace VileMod.Survivors.Vile.Components
             if(!Body.hasAuthority) return;
 
             IsWeak();
+            VHeatUpdate();
+            VElementUpdate();
+            VElementBuffUpdate();
 
             if (Body.HasBuff(VileBuffs.GoliathBuff))
                 UpdateGoliathAnimator();
@@ -105,6 +113,11 @@ namespace VileMod.Survivors.Vile.Components
 
             Anim.SetBool("isWeak", isWeak);
 
+        }
+
+        public CharacterBody GetVileBody()
+        {
+            return Body;
         }
 
         public void EnterGoliath()
@@ -133,6 +146,65 @@ namespace VileMod.Survivors.Vile.Components
 
         }
 
+        private void VHeatUpdate()
+        {
+            float delta = Time.fixedDeltaTime * 0.1f;
+
+            if (!Body.HasBuff(VileBuffs.PrimaryHeatBuff))
+                baseHeatValue -= delta;
+            else
+                baseHeatValue += delta;
+
+            baseHeatValue = Mathf.Clamp01(baseHeatValue);
+
+            Debug.Log("Base Heat Value: " + baseHeatValue);
+        }
+
+        private void VElementUpdate()
+        {
+            float delta = Time.fixedDeltaTime * 0.1f;
+
+            if (iceElementValue >= 0)
+                iceElementValue -= delta;
+
+            if (flameElementValue >= 0)
+                flameElementValue -= delta;
+
+            if (shockElementValue >= 0)
+                shockElementValue -= delta;
+
+
+            iceElementValue = Mathf.Clamp01(iceElementValue);
+            flameElementValue = Mathf.Clamp01(flameElementValue);
+            shockElementValue = Mathf.Clamp01(shockElementValue);
+
+            Debug.Log("iceElementValue Value: " + iceElementValue);
+            Debug.Log("flameElementValue Value: " + flameElementValue);
+            Debug.Log("shockElementValue Value: " + shockElementValue);
+        }
+
+        private void VElementBuffUpdate()
+        {
+            UpdateBuff(VileBuffs.PrimaryIceBuff, iceElementValue);
+            UpdateBuff(VileBuffs.PrimaryFlameBuff, flameElementValue);
+            UpdateBuff(VileBuffs.PrimaryShockBuff, shockElementValue);
+        }
+
+        private void UpdateBuff(BuffDef buff, float value)
+        {
+            bool hasBuff = Body.HasBuff(buff);
+
+            if (value > 0f && !hasBuff)
+                Body.AddBuff(buff);
+            else if (value <= 0f && hasBuff)
+                Body.RemoveBuff(buff);
+        }
+
+        public float GetBaseHeatValue()
+        {
+            return baseHeatValue;
+        }
+
         public void ExitGoliath()
         {
             childLocator.FindChildGameObject("VEH").SetActive(false);
@@ -140,7 +212,7 @@ namespace VileMod.Survivors.Vile.Components
             childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(false);
             childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
 
-            cameraTargetParams.fovOverride = 0f;
+            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
 
         }
 

@@ -35,14 +35,14 @@ namespace VileMod.Survivors.Vile.SkillStates
             hitSoundString = "";
             muzzleString = swingIndex % 2 == 0 ? "SwingLeft" : "SwingRight";
             playbackRateParam = "Slash.playbackRate";
-            swingEffectPrefab = HenryAssets.swordSwingEffect;
-            hitEffectPrefab = HenryAssets.swordHitImpactEffect;
+            swingEffectPrefab = VileAssets.swordSwingEffect;
+            hitEffectPrefab = VileAssets.swordHitImpactEffect;
 
-            impactSound = HenryAssets.swordHitSoundEvent.index;
+            impactSound = VileAssets.swordHitSoundEvent.index;
 
             customAnimator = childLocator.FindChildGameObject("VEH").GetComponents<Animator>()[0];
             SetCustomAnimator(customAnimator);
-            playCustomExitAnim = true;
+            //playCustomExitAnim = true;
 
             SetHitReset(true, 3);
 
@@ -56,13 +56,14 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         protected override void PlayCustomExitAnimation()
         {
-            PlayCrossfade("Gesture, Override", "VEH_ATK0_L_END", playbackRateParam, duration, 0.1f * duration);
+            //PlayCrossfade("Gesture, Override", "VEH_ATK0_L_END", playbackRateParam, duration, 0.1f * duration);
+            //PlayAnimationOnAnimator(customAnimator, "Gesture, Override", "VEH_ATK0_R_END", playbackRateParam, duration * 0.2f, 0.1f * duration);
         }
 
         protected override void PlayAttackAnimation()
         {
             //PlayCrossfade("Gesture, Override", "VEH_ATK0_L", playbackRateParam, duration, 0.1f * duration);\
-            PlayAnimationOnAnimator(customAnimator, "Gesture, Override", "VEH_ATK0_R", playbackRateParam, duration * 0.5f, 0.1f * duration);
+            PlayAnimationOnAnimator(customAnimator, "Gesture, Override", "VEH_ATK0_R", playbackRateParam, duration * 0.3f, 0.1f * duration);
         }
 
         protected override void PlaySwingEffect()

@@ -16,7 +16,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override void OnEnter()
         {
-            projectilePrefab = HenryAssets.bombProjectilePrefab;
+            projectilePrefab = VileAssets.bombProjectilePrefab;
             //base.effectPrefab = Modules.Assets.SomeMuzzleEffect;
             //targetmuzzle = "muzzleThrow"
 

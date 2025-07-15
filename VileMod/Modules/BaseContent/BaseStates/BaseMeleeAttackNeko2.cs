@@ -111,11 +111,6 @@ namespace VileMod.Modules.BaseStates
             }
             shouldResetHit = false;
 
-            if (playCustomExitAnim && isAuthority && animator)
-            {
-                PlayCustomExitAnimation();
-            }
-
             base.OnExit();
         }
 
@@ -227,6 +222,10 @@ namespace VileMod.Modules.BaseStates
             {
                 //Debug.Log("Back to main");
                 //Debug.Log("Nextstate: "+ NextState);
+                if (playCustomExitAnim && isAuthority && animator)
+                {
+                    PlayCustomExitAnimation();
+                }
                 outer.SetNextStateToMain();
                 return;
             }
