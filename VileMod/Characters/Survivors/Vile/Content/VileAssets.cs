@@ -22,6 +22,7 @@ namespace VileMod.Survivors.Vile
 
         //projectiles
         public static GameObject bombProjectilePrefab;
+        public static GameObject vileShotgunIcePrefab;
 
         private static AssetBundle _assetBundle;
 
@@ -76,7 +77,11 @@ namespace VileMod.Survivors.Vile
         private static void CreateProjectiles()
         {
             CreateBombProjectile();
+            CreateVileShotgunIce();
+
+
             Content.AddProjectilePrefab(bombProjectilePrefab);
+            Content.AddProjectilePrefab(vileShotgunIcePrefab);
         }
 
         private static void CreateBombProjectile()
@@ -105,6 +110,40 @@ namespace VileMod.Survivors.Vile
             
             bombController.startSound = "";
         }
+
+
+        private static void CreateVileShotgunIce()
+        {
+
+            // clone FMJ's syringe projectile prefab here to use as our own projectile
+            //shotgunIceprefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("prefabs/projectiles/MageIceBombProjectile"), "Prefabs/Projectiles/ShotgIceProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\MegamanX\\MegamanX\\MegamanX\\MegamanX.cs", "RegisterCharacter", 155);
+
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            vileShotgunIcePrefab = Asset.CloneProjectilePrefab("MageIceBombProjectile", "VileShotgunIceProjectile");
+
+            //UnityEngine.Object.Destroy(shotgunIceprefab.GetComponent<EffectComponent>());
+            //UnityEngine.Object.Destroy(shotgunIceprefab.GetComponent<VFXAttributes>());
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            vileShotgunIcePrefab.GetComponent<ProjectileDamage>().damage = 1f;
+            vileShotgunIcePrefab.GetComponent<ProjectileController>().procCoefficient = 1f;
+            vileShotgunIcePrefab.GetComponent<ProjectileDamage>().damageType |= DamageType.Freeze2s;
+            vileShotgunIcePrefab.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
+
+            // register it for networking
+            //if (shotgunIceprefab) PrefabAPI.RegisterNetworkPrefab(shotgunIceprefab);
+
+            ProjectileController shotgunIceController = vileShotgunIcePrefab.GetComponent<ProjectileController>();
+            shotgunIceController.ghostPrefab = vileShotgunIcePrefab.GetComponent<ProjectileController>().ghostPrefab;
+
+            //if (_assetBundle.LoadAsset<GameObject>("ShotgunIceGhost") != null) shotgunIceController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("ShotgunIceGhost");
+            //shotgunIceController.ghostPrefab = shotgunIceprefab;
+
+            shotgunIceController.startSound = "";
+
+        }
+
+
         #endregion projectiles
     }
 }

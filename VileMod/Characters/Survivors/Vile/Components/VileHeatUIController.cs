@@ -10,6 +10,10 @@ using System;
 public class VileHeatUIController : MonoBehaviour
 {
     public Image barFill;
+    public Image barFillOH;
+    public Image barFillEI;
+    public Image barFillES;
+    public Image barFillEF;
     private VileComponent heatComp;
     private int maxSegments = 10;
     private HUD rorHUD;
@@ -72,15 +76,34 @@ public class VileHeatUIController : MonoBehaviour
     {
         if (!RoRHUDObject) return;
 
-        heatBarGO = Instantiate(VileAssets.BarPanel, RoRHUDSpringCanvasTransform.Find("BottomLeftCluster/BarRoots/Healthbar"));
-        heatBarGO.transform.rotation = Quaternion.identity;
-        heatBarGO.transform.localScale = new Vector3(0.7891f, 0.4f, 1f);
-        heatBarGO.transform.position = new Vector3(-9.7021f, -4.8843f, 12.6537f);
-        heatBarGO.transform.localPosition = new Vector3(2.3027f, 0.7998f, 0.0003f);
+        // Instancia a barra dentro do SpringCanvas (pode ser ajustado para outro local depois)
+        heatBarGO = Instantiate(VileAssets.BarPanel, RoRHUDSpringCanvasTransform);
+        heatBarGO.name = "VileHeatBar";
 
+        // Resetar transform
+        heatBarGO.transform.localRotation = Quaternion.identity;
+        heatBarGO.transform.localScale = Vector3.one;
+
+        // Ajustar posição usando RectTransform
+        RectTransform rectTransform = heatBarGO.GetComponent<RectTransform>();
+        rectTransform.anchorMin = new Vector2(0f, 1f);  // Canto superior esquerdo
+        rectTransform.anchorMax = new Vector2(0f, 1f);
+        rectTransform.pivot = new Vector2(0f, 1f);      // Pivot no canto superior esquerdo
+
+        // Offset relativo ao canto superior esquerdo (ajuste fino)
+        rectTransform.anchoredPosition = new Vector2(30f, -125f); // X mais para direita, Y mais para baixo
+
+        // Ajuste de tamanho, se necessário
+        rectTransform.sizeDelta = new Vector2(160f, 20f); // largura x altura
+
+        // Referência ao Image do preenchimento
         barFill = heatBarGO.transform.Find("Bar/Bar_Fill").GetComponent<Image>();
+        barFillOH = heatBarGO.transform.Find("Bar/Bar_Fill_OH").GetComponent<Image>();
+        barFillEI = heatBarGO.transform.Find("EBar/Bar_Fill_I").GetComponent<Image>();
+        barFillES = heatBarGO.transform.Find("EBar/Bar_Fill_S").GetComponent<Image>();
+        barFillEF = heatBarGO.transform.Find("EBar/Bar_Fill_F").GetComponent<Image>();
 
-        Debug.Log("barFill: " + barFill);
+        //Debug.Log("barFill: " + barFill);
 
     }
 
@@ -119,8 +142,12 @@ public class VileHeatUIController : MonoBehaviour
                 //Debug.Log("heatBarGO: " + heatBarGO);
 
                 barFill.fillAmount = heatComp.GetBaseHeatValue();
+                barFillOH.fillAmount = heatComp.GetBaseOverHeatValue();
+                barFillEI.fillAmount = heatComp.GeticeElementValue();
+                barFillES.fillAmount = heatComp.GetShockElementValue();
+                barFillEF.fillAmount = heatComp.GetFlameElementValue();
 
-                Debug.Log("barFill.fillAmount: " + barFill.fillAmount);
+                //Debug.Log("barFill.fillAmount: " + barFill.fillAmount);
 
             }
 

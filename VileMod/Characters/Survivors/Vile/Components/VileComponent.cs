@@ -33,6 +33,7 @@ namespace VileMod.Survivors.Vile.Components
         private Vector3 cameraMechaPos = new Vector3(0f, 2f, -12f);
 
         private float baseHeatValue;
+        private float baseOverHeatValue;
         private float shockElementValue;
         private float flameElementValue;
         private float iceElementValue;
@@ -101,6 +102,12 @@ namespace VileMod.Survivors.Vile.Components
             VHeatUpdate();
             VElementUpdate();
             VElementBuffUpdate();
+            SetOverHeat();
+
+            if (Body.HasBuff(VileBuffs.OverHeatDebuff))
+            {
+                OverHeatBehavior();
+            }
 
             if (Body.HasBuff(VileBuffs.GoliathBuff))
                 UpdateGoliathAnimator();
@@ -151,18 +158,26 @@ namespace VileMod.Survivors.Vile.Components
             float delta = Time.fixedDeltaTime * 0.1f;
 
             if (!Body.HasBuff(VileBuffs.PrimaryHeatBuff))
+            {
                 baseHeatValue -= delta;
+                baseOverHeatValue -= delta;
+            } 
             else
                 baseHeatValue += delta;
 
+            if (Body.HasBuff(VileBuffs.PrimaryHeatBuff) && baseHeatValue >= 0.95f)
+                baseOverHeatValue += delta;
+            
+
             baseHeatValue = Mathf.Clamp01(baseHeatValue);
+            baseOverHeatValue = Mathf.Clamp01(baseOverHeatValue);
 
             //Debug.Log("Base Heat Value: " + baseHeatValue);
         }
 
         private void VElementUpdate()
         {
-            float delta = Time.fixedDeltaTime * 0.1f;
+            float delta = Time.fixedDeltaTime * 0.05f;
 
             if (iceElementValue >= 0)
                 iceElementValue -= delta;
@@ -190,6 +205,59 @@ namespace VileMod.Survivors.Vile.Components
             UpdateBuff(VileBuffs.PrimaryShockBuff, shockElementValue);
         }
 
+        public void SetExtraHeatValues(float heat)
+        {
+            if (!Body.hasAuthority) return;
+
+            if (baseOverHeatValue >= 0.1f)
+            {
+                baseOverHeatValue += heat;
+            }
+            else
+            {
+                baseHeatValue += heat;
+            }
+
+        }
+
+        private void SetOverHeat()
+        {
+            if (!Body.hasAuthority) return;
+
+            if (baseOverHeatValue >= 0.99f && !Body.HasBuff(VileBuffs.OverHeatDebuff)) 
+            {
+                Body.AddTimedBuff(VileBuffs.OverHeatDebuff, 5f);
+            }
+
+        }
+
+        private void OverHeatBehavior()
+        {
+            Body.skillLocator.primary.temporaryCooldownPenalty = 2f;
+            Body.skillLocator.secondary.temporaryCooldownPenalty = 3f;
+            Body.skillLocator.utility.temporaryCooldownPenalty = 4f;
+            Body.skillLocator.special.temporaryCooldownPenalty = 5f;
+        }
+
+        public void SetElementValues(float iceValue, float shockValue, float flameValue, bool iceReset, bool shockReset, bool flameReset)
+        {
+            if (!Body.hasAuthority) return;
+
+            iceElementValue += iceValue;
+            shockElementValue += shockValue;
+            flameElementValue += flameValue;
+
+            iceElementValue = iceReset ? 0f : iceElementValue;
+            shockElementValue = shockReset ? 0f : shockElementValue;
+            flameElementValue = flameReset ? 0f : flameElementValue;
+
+            iceElementValue = Mathf.Clamp01(iceElementValue);
+            flameElementValue = Mathf.Clamp01(flameElementValue);
+            shockElementValue = Mathf.Clamp01(shockElementValue);
+
+            Debug.Log("Set Element Values: " + iceElementValue + ", " + shockElementValue + ", " + flameElementValue);
+        }
+
         private void UpdateBuff(BuffDef buff, float value)
         {
             bool hasBuff = Body.HasBuff(buff);
@@ -203,6 +271,26 @@ namespace VileMod.Survivors.Vile.Components
         public float GetBaseHeatValue()
         {
             return baseHeatValue;
+        }
+
+        public float GetBaseOverHeatValue()
+        {
+            return baseOverHeatValue;
+        }
+
+        public float GeticeElementValue()
+        {
+            return iceElementValue;
+        }
+
+        public float GetShockElementValue()
+        {
+            return shockElementValue;
+        }
+
+        public float GetFlameElementValue()
+        {
+            return flameElementValue;
         }
 
         public void ExitGoliath()

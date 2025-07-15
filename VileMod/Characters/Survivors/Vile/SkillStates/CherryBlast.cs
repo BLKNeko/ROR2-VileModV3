@@ -45,7 +45,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             VC = GetComponent<VileComponent>();
 
             shootDelay = 1.5f;
-            maxShootDelay = 1.5f;
+            maxShootDelay = 1.25f;
             minShootDelay = 0.15f;
             spinLevel = VC.GetBaseHeatValue();
             stopwatch = 999f; // for immediate fire
@@ -86,9 +86,16 @@ namespace VileMod.Survivors.Vile.SkillStates
                 characterBody.SetAimTimer(1f);
                 //characterBody.isSprinting = false;
 
-                Debug.Log("spinLevel: " + spinLevel);
+                //Debug.Log("spinLevel: " + spinLevel);
 
                 PlayCrossfade("Gesture, Override", "CannonShoot", "attackSpeed", shootDelay, 0.05f);
+
+                if (characterBody.HasBuff(VileBuffs.OverHeatDebuff))
+                {
+                    CherryBlastEnd CBE = new CherryBlastEnd();
+                    outer.SetNextState(CBE);
+                }
+
             }
 
             // Encerrar estado quando soltar botão
@@ -145,6 +152,29 @@ namespace VileMod.Survivors.Vile.SkillStates
                 //    3 => Util.CheckRoll(8f, characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic,
                 //    _ => DamageType.Generic
                 //};
+
+                if (characterBody.HasBuff(VileBuffs.PrimaryIceBuff))
+                {
+                    bullet.damageType |= DamageType.Freeze2s;
+
+                    VC.SetElementValues(-0.07f, 0f, 0f, false, true, true);
+                }
+
+                if (characterBody.HasBuff(VileBuffs.PrimaryShockBuff))
+                {
+                    bullet.damageType |= DamageType.Shock5s;
+
+                    VC.SetElementValues(0f, -0.1f, 0f, true, false, true);
+                }
+
+                if (characterBody.HasBuff(VileBuffs.PrimaryFlameBuff))
+                {
+                    bullet.damageType |= DamageType.IgniteOnHit;
+
+                    VC.SetElementValues(0f, 0f, -0.08f, true, true, false);
+                }
+
+
 
                 // Recoil dinâmico
                 float recoilFactor = Mathf.Lerp(0.1f, 1.5f, spinLevel);

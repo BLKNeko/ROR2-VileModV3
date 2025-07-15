@@ -40,6 +40,11 @@ namespace VileMod.Survivors.Vile
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
 
+        //SECONDARY SKILL DEFS
+
+        //UTILITY SKILL DEFS
+        internal static SkillDef vileShotgunIceSkillDef;
+
 
         public override BodyInfo bodyInfo => new BodyInfo
         {
@@ -266,6 +271,41 @@ namespace VileMod.Survivors.Vile
 
             #endregion
 
+            #region Utility
+
+            vileShotgunIceSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "VShotgunIce",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VShotgunIce)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 8f,
+                baseMaxStock = 2,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+
+            #endregion
+
         }
 
         //skip if you don't have a passive
@@ -422,6 +462,7 @@ namespace VileMod.Survivors.Vile
                 forceSprintDuringState = true,
             });
 
+            Skills.AddUtilitySkills(bodyPrefab, vileShotgunIceSkillDef);
             Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef1);
         }
 
