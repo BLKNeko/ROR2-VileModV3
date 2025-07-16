@@ -44,6 +44,10 @@ namespace VileMod.Survivors.Vile
 
         //UTILITY SKILL DEFS
         internal static SkillDef vileShotgunIceSkillDef;
+        internal static SkillDef vileEletricSparkSkillDef;
+
+        //SPECIAL SKILL DEFS
+        internal static SkillDef vileBurningDriveSkillDef;
 
 
         public override BodyInfo bodyInfo => new BodyInfo
@@ -193,8 +197,14 @@ namespace VileMod.Survivors.Vile
         {
             //remove the genericskills from the commando body we cloned
             Skills.ClearGenericSkills(bodyPrefab);
+            Skills.CreateFirstExtraSkillFamily(bodyPrefab);
+            Skills.CreateSecondExtraSkillFamily(bodyPrefab);
+            Skills.CreateThirdExtraSkillFamily(bodyPrefab);
+            Skills.CreateFourthExtraSkillFamily(bodyPrefab);
+
 
             CreateSkillDefs();
+            
 
             //add our own
             //AddPassiveSkill();
@@ -202,6 +212,11 @@ namespace VileMod.Survivors.Vile
             AddSecondarySkills();
             AddUtiitySkills();
             AddSpecialSkills();
+
+            AddExtraFirstSkills();
+            AddExtraSecondSkills();
+            AddExtraThirdSkills();
+            AddExtraFourthSkills();
         }
 
         private void CreateSkillDefs()
@@ -303,6 +318,70 @@ namespace VileMod.Survivors.Vile
                 forceSprintDuringState = false,
             });
 
+            vileEletricSparkSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "VEletricSpark",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VEletricSpark)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 9f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+
+            #endregion
+
+            #region Special
+
+            vileBurningDriveSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "VBurningDrive",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VBurningDrive)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 7f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
 
             #endregion
 
@@ -462,6 +541,7 @@ namespace VileMod.Survivors.Vile
                 forceSprintDuringState = true,
             });
 
+            Skills.AddUtilitySkills(bodyPrefab, vileEletricSparkSkillDef);
             Skills.AddUtilitySkills(bodyPrefab, vileShotgunIceSkillDef);
             Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef1);
         }
@@ -490,10 +570,35 @@ namespace VileMod.Survivors.Vile
             });
 
             //Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
-            Skills.AddSpecialSkills(bodyPrefab, goliathPunchComboSkillDef);
+            Skills.AddSpecialSkills(bodyPrefab, vileBurningDriveSkillDef);
         }
+
+        private void AddExtraFirstSkills()
+        {
+
+            Skills.AddFirstExtraSkill(bodyPrefab, goliathPunchComboSkillDef);
+        }
+
+        private void AddExtraSecondSkills()
+        {
+
+            Skills.AddSecondExtraSkill(bodyPrefab, goliathPunchComboSkillDef);
+        }
+
+        private void AddExtraThirdSkills()
+        {
+
+            Skills.AddThirdExtraSkill(bodyPrefab, goliathPunchComboSkillDef);
+        }
+
+        private void AddExtraFourthSkills()
+        {
+
+            Skills.AddFourthExtraSkill(bodyPrefab, goliathPunchComboSkillDef);
+        }
+
         #endregion skills
-        
+
         #region skins
         public override void InitializeSkins()
         {

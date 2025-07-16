@@ -23,6 +23,7 @@ namespace VileMod.Survivors.Vile
         //projectiles
         public static GameObject bombProjectilePrefab;
         public static GameObject vileShotgunIcePrefab;
+        public static GameObject vileEletricSparkPrefab;
 
         private static AssetBundle _assetBundle;
 
@@ -78,10 +79,11 @@ namespace VileMod.Survivors.Vile
         {
             CreateBombProjectile();
             CreateVileShotgunIce();
-
+            CreateVileEletricSpark();
 
             Content.AddProjectilePrefab(bombProjectilePrefab);
             Content.AddProjectilePrefab(vileShotgunIcePrefab);
+            Content.AddProjectilePrefab(vileEletricSparkPrefab);
         }
 
         private static void CreateBombProjectile()
@@ -128,7 +130,7 @@ namespace VileMod.Survivors.Vile
             vileShotgunIcePrefab.GetComponent<ProjectileDamage>().damage = 1f;
             vileShotgunIcePrefab.GetComponent<ProjectileController>().procCoefficient = 1f;
             vileShotgunIcePrefab.GetComponent<ProjectileDamage>().damageType |= DamageType.Freeze2s;
-            vileShotgunIcePrefab.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
+            vileShotgunIcePrefab.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericUtility;
 
             // register it for networking
             //if (shotgunIceprefab) PrefabAPI.RegisterNetworkPrefab(shotgunIceprefab);
@@ -140,6 +142,37 @@ namespace VileMod.Survivors.Vile
             //shotgunIceController.ghostPrefab = shotgunIceprefab;
 
             shotgunIceController.startSound = "";
+
+        }
+
+        private static void CreateVileEletricSpark()
+        {
+
+            // clone FMJ's syringe projectile prefab here to use as our own projectile
+            //shotgunIceprefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("prefabs/projectiles/MageIceBombProjectile"), "Prefabs/Projectiles/ShotgIceProjectile", true, "C:\\Users\\test\\Documents\\ror2mods\\MegamanX\\MegamanX\\MegamanX\\MegamanX.cs", "RegisterCharacter", 155);
+
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            vileEletricSparkPrefab = Asset.CloneProjectilePrefab("MageLightningBombProjectile", "VileEletricSparkProjectile");
+
+            //UnityEngine.Object.Destroy(shotgunIceprefab.GetComponent<EffectComponent>());
+            //UnityEngine.Object.Destroy(shotgunIceprefab.GetComponent<VFXAttributes>());
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            vileEletricSparkPrefab.GetComponent<ProjectileDamage>().damage = 1f;
+            vileEletricSparkPrefab.GetComponent<ProjectileController>().procCoefficient = 1f;
+            vileEletricSparkPrefab.GetComponent<ProjectileDamage>().damageType |= DamageType.Shock5s;
+            vileEletricSparkPrefab.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericUtility;
+
+            // register it for networking
+            //if (shotgunIceprefab) PrefabAPI.RegisterNetworkPrefab(shotgunIceprefab);
+
+            ProjectileController eletricSparkController = vileEletricSparkPrefab.GetComponent<ProjectileController>();
+            eletricSparkController.ghostPrefab = vileEletricSparkPrefab.GetComponent<ProjectileController>().ghostPrefab;
+
+            //if (_assetBundle.LoadAsset<GameObject>("ShotgunIceGhost") != null) shotgunIceController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("ShotgunIceGhost");
+            //shotgunIceController.ghostPrefab = shotgunIceprefab;
+
+            eletricSparkController.startSound = "";
 
         }
 

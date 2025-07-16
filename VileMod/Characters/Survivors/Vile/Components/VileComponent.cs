@@ -220,6 +220,16 @@ namespace VileMod.Survivors.Vile.Components
 
         }
 
+        public void SetHeatValue(float heat)
+        {
+            baseHeatValue = heat;
+        }
+
+        public void SetOverHeatValue(float heat)
+        {
+            baseOverHeatValue = heat;
+        }
+
         private void SetOverHeat()
         {
             if (!Body.hasAuthority) return;

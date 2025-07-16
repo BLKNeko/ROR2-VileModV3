@@ -3,19 +3,24 @@ using RoR2;
 using UnityEngine;
 using static UnityEngine.UI.Selectable;
 using EntityStates;
+using VileMod.Survivors.Vile.Components;
 
 namespace VileMod.Survivors.Vile.SkillStates
 {
-    public class GPunch0 : BaseMeleeAttackNeko2
+    public class VBurningDrive : BaseMeleeAttackNeko2
     {
+
+        private VileComponent VC;
+
         public override void OnEnter()
         {
             hitboxGroupName = "SwordGroup";
 
-            damageType = DamageTypeCombo.GenericPrimary;
+            damageType |= DamageTypeCombo.GenericSpecial;
+            damageType |= DamageType.IgniteOnHit;
             damageCoefficient = HenryStaticValues.swordDamageCoefficient;
             procCoefficient = 1f;
-            pushForce = 300f;
+            pushForce = 500f;
             bonusForce = Vector3.zero;
             baseDuration = 0.8f;
             childLocator = GetModelTransform().GetComponent<ChildLocator>();
@@ -41,23 +46,16 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             impactSound = VileAssets.swordHitSoundEvent.index;
 
+            VC = GetComponent<VileComponent>();
 
+            damageCoefficient = (damageCoefficient + (VC.GetBaseHeatValue() * 2f)) + (damageCoefficient * (VC.GetBaseOverHeatValue() * 5));
 
-            customAnimator = childLocator.FindChildGameObject("VEH").GetComponents<Animator>()[0];
-            SetCustomAnimator(customAnimator);
-            //playCustomExitAnim = true;
+            SetHitReset(true, 5);
 
-            //Debug.Log("ChildLocator" + childLocator);
-            //Debug.Log("CustomAnimator" + customAnimator);
-            //Debug.Log("Animator" + animator);
-            Debug.Log("GP0");
+            float elementBonus = (0.1f + characterBody.level / 100f) + ((VC.GetBaseHeatValue() + VC.GetBaseOverHeatValue() / 2f));
 
-            //SetHitReset(true, 3);
-
-            GPunch1 GP1 = new GPunch1();
-            SetNextEntityState(GP1);
-
-            //PlayAnimationOnAnimator(customAnimator, "Gesture, Override", "VEH_ATK0_S", playbackRateParam, duration, 0.1f * duration);
+            VC.SetElementValues(0f, 0f, elementBonus, true, true, false);
+            
 
             base.OnEnter();
         }
@@ -71,7 +69,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         protected override void PlayAttackAnimation()
         {
             //PlayCrossfade("Gesture, Override", "VEH_ATK0_S", playbackRateParam, duration, 0.1f * duration);
-            PlayAnimationOnAnimator(customAnimator, "Gesture, Override", "VEH_ATK0_S", playbackRateParam, duration * 0.3f, 0.1f * duration);
+            //PlayAnimationOnAnimator(customAnimator, "Gesture, Override", "VEH_ATK0_S", playbackRateParam, duration * 0.3f, 0.1f * duration);
         }
 
         protected override void PlaySwingEffect()
@@ -86,6 +84,9 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override void OnExit()
         {
+            VC.SetHeatValue(0f);
+            VC.SetOverHeatValue(0f);
+
             base.OnExit();
         }
 

@@ -222,7 +222,7 @@ namespace VileMod.Modules.BaseStates
             {
                 //Debug.Log("Back to main");
                 //Debug.Log("Nextstate: "+ NextState);
-                if (playCustomExitAnim && isAuthority && animator)
+                if (playCustomExitAnim && isAuthority && animator && customAnimator)
                 {
                     PlayCustomExitAnimation();
                 }
