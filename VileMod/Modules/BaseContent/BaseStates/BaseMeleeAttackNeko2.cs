@@ -69,7 +69,12 @@ namespace VileMod.Modules.BaseStates
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
-            animator = GetModelAnimator();
+            //animator = GetModelAnimator();
+
+            if(animator == null)
+                animator = GetModelAnimator();
+
+
             StartAimMode(0.5f + duration, false);
             hitResetTime = duration / amountOfHits;
 

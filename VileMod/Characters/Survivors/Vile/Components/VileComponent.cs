@@ -314,9 +314,9 @@ namespace VileMod.Survivors.Vile.Components
             RemoveSkills();
 
             Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            Body.skillLocator.special.SetSkillOverride(Body.skillLocator.special, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.goliathShootSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.goliathDashPunchSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.special.SetSkillOverride(Body.skillLocator.special, VileSurvivor.rideRapairSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.exitGoliathSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 

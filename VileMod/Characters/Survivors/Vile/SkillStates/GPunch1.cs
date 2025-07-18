@@ -9,25 +9,25 @@ namespace VileMod.Survivors.Vile.SkillStates
     {
         public override void OnEnter()
         {
-            hitboxGroupName = "SwordGroup";
+            hitboxGroupName = "GoliathHitbox";
 
             damageType = DamageTypeCombo.GenericPrimary;
             damageCoefficient = HenryStaticValues.swordDamageCoefficient;
             procCoefficient = 1f;
             pushForce = 300f;
             bonusForce = Vector3.zero;
-            baseDuration = 0.8f;
+            baseDuration = 0.6f;
             childLocator = GetModelTransform().GetComponent<ChildLocator>();
 
             //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)
             //for example, if attackStartPercentTime is 0.5, the attack will start hitting halfway through the ability. if baseduration is 3 seconds, the attack will start happening at 1.5 seconds
-            attackStartPercentTime = 0.2f;
-            attackEndPercentTime = 0.8f;
+            attackStartPercentTime = 0.3f;
+            attackEndPercentTime = 0.6f;
 
             //this is the point at which the attack can be interrupted by itself, continuing a combo
             earlyExitPercentTime = 0.6f;
 
-            hitStopDuration = 0.012f;
+            hitStopDuration = 0.2f;
             attackRecoil = 0.5f;
             hitHopVelocity = 4f;
 
@@ -46,7 +46,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             Debug.Log("GP1");
 
-            SetHitReset(true, 3);
+            SetHitReset(true, 2);
 
             GPunch2 GP2 = new GPunch2();
             SetNextEntityState(GP2);

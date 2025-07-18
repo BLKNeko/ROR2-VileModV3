@@ -32,7 +32,6 @@ namespace VileMod.Survivors.Vile
         //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => VILE_PREFIX;
 
-        private static Dictionary<HUD, GameObject> activeHeatUIs = new Dictionary<HUD, GameObject>();
 
         //GOLIATH SKILL DEFS
         internal static SkillDef destroyGoliathSkillDef;
@@ -40,6 +39,11 @@ namespace VileMod.Survivors.Vile
         internal static SkillDef exitGoliathSkillDef;
 
         internal static SkillDef goliathPunchComboSkillDef;
+        internal static SkillDef goliathDashPunchSkillDef;
+        internal static SkillDef goliathShootSkillDef;
+
+        //RIDE ARMOR GENERAL
+        internal static SkillDef rideRapairSkillDef;
 
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
@@ -167,7 +171,7 @@ namespace VileMod.Survivors.Vile
 
         private void AdditionalBodySetup()
         {
-            //AddHitboxes();
+            AddHitboxes();
             bodyPrefab.AddComponent<VileComponent>();
             bodyPrefab.AddComponent<VileHeatUIController>();
             bodyPrefab.AddComponent<VileBoltComponent>();
@@ -180,7 +184,22 @@ namespace VileMod.Survivors.Vile
         public void AddHitboxes()
         {
             //example of how to create a HitBoxGroup. see summary for more details
-            Prefabs.SetupHitBoxGroup(characterModelObject, "SwordGroup", "SwordHitbox");
+            //Prefabs.SetupHitBoxGroup(characterModelObject, "SwordGroup", "SwordHitbox");
+
+            ChildLocator childLocator = bodyPrefab.GetComponentInChildren<ChildLocator>();
+            GameObject model = childLocator.gameObject;
+
+
+            Transform hitboxTransform = childLocator.FindChild("GoliathHitbox");
+            Prefabs.SetupHitBoxGroup(model, "GoliathHitbox", "GoliathHitbox");
+            //hitboxTransform.localScale = new Vector3(5.2f, 5.2f, 5.2f);
+            hitboxTransform.localScale = new Vector3(10f, 10f, 10f);
+
+            Transform hitboxTransform2 = childLocator.FindChild("VileCenterHitbox");
+            Prefabs.SetupHitBoxGroup(model, "VileCenterHitbox", "VileCenterHitbox");
+            //hitboxTransform.localScale = new Vector3(5.2f, 5.2f, 5.2f);
+            hitboxTransform2.localScale = new Vector3(6f, 6f, 6f);
+
         }
 
         public override void InitializeEntityStateMachines() 
@@ -331,6 +350,96 @@ namespace VileMod.Survivors.Vile
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 0f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            goliathShootSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "GoliathDashPunch",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(GShot)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 15f,
+                baseMaxStock = 3,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            goliathDashPunchSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "GoliathDashPunch",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(GDashPunch)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 10f,
+                baseMaxStock = 2,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            rideRapairSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "Repair Ride Armor",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(RepairRideArmor)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 30f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -861,8 +970,8 @@ namespace VileMod.Survivors.Vile
                 args.armorAdd += 150;
                 args.armorAdd += sender.baseArmor * 4f;
                 args.healthMultAdd += 3f;
-                args.damageMultAdd += 1f;
-                args.attackSpeedMultAdd -= 0.2f;
+                args.damageMultAdd += 2f;
+                args.attackSpeedMultAdd -= 0.1f;
                 args.regenMultAdd += 1f;
                 args.jumpPowerMultAdd -= 0.2f;
                 args.moveSpeedMultAdd -= 0.15f;

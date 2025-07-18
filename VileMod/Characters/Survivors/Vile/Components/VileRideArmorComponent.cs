@@ -145,9 +145,21 @@ namespace VileMod.Survivors.Vile.Components
             }
         }
 
+        public void RepairRideArmor(float amount)
+        {
+            r_Health += amount;
+
+            r_Health = Mathf.Clamp(r_Health, 1f, r_MaxHealth);
+        }
+
         public float GetRHealthValue()
         {
             return r_Health;
+        }
+
+        public float GetRMaxHealthValue()
+        {
+            return r_MaxHealth;
         }
 
         public float GetInverseLerpRHealthValue()
@@ -210,14 +222,14 @@ namespace VileMod.Survivors.Vile.Components
 
                     if (modelTransform)
                     {
-                        TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(this.modelTransform.gameObject);
+                        TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                         temporaryOverlayInstance.duration = 1f;
                         temporaryOverlayInstance.animateShaderAlpha = true;
                         temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                         temporaryOverlayInstance.destroyComponentOnEnd = true;
-                        temporaryOverlayInstance.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matGhostEffect");
+                        temporaryOverlayInstance.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matFullCrit");
                         temporaryOverlayInstance.inspectorCharacterModel = model;
-                        temporaryOverlayInstance.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
+                        temporaryOverlayInstance.AddToCharacterModel(model);
                     }
 
                     damageInfo.damage = 0f;
