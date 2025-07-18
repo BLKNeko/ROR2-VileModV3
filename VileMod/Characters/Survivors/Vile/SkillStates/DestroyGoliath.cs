@@ -18,7 +18,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            duration = baseDuration / attackSpeedStat;
+            duration = baseDuration;
             characterBody.SetAimTimer(1f);
 
             //PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
@@ -28,8 +28,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             if (NetworkServer.active)
             {
-                characterBody.AddTimedBuff(VileBuffs.armorBuff, 3f * duration);
-                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 1.5f * duration);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.Immune, 1.5f * duration);
 
                 if (characterBody.HasBuff(VileBuffs.GoliathBuff))
                 {
@@ -44,7 +44,15 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             Debug.Log("Destroying Goliath state entered");
 
+            EffectManager.SimpleMuzzleFlash(VileAssets.rideExplosionEffect, gameObject, "BasePos", true);
+
             VC.ExitGoliath();
+
+            Vector3 backward = characterDirection.forward * -1f; // Direção para trás do personagem
+            Vector3 pushDirection = (backward + Vector3.up).normalized; // para cima + para trás
+            float pushForce = 50f;
+
+            characterBody.characterMotor.velocity = pushDirection * pushForce;
 
         }
 

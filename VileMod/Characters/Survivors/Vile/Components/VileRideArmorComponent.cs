@@ -133,7 +133,7 @@ namespace VileMod.Survivors.Vile.Components
         {
             if (r_Health < r_MaxHealth || r_InitializeSuperRegemTimer <= 2f)
             {
-                r_Health += Time.fixedDeltaTime * (r_MaxHealth / 8f);
+                r_Health += Time.fixedDeltaTime * (r_MaxHealth / (2f - Time.fixedDeltaTime));
                 r_Health = Mathf.Clamp(r_Health, 1f, r_MaxHealth);
 
                 r_InitializeSuperRegemTimer += Time.fixedDeltaTime;
@@ -194,18 +194,28 @@ namespace VileMod.Survivors.Vile.Components
 
                 if (self.GetComponent<CharacterBody>().HasBuff(VileBuffs.GoliathBuff))
                 {
-                    r_Health -= damageInfo.damage;
+                    float finalDamage = damageInfo.damage;
+
+                    if (self.GetComponent<CharacterBody>())
+                    {
+                        float armor = self.GetComponent<CharacterBody>().armor;
+                        float armorMultiplier = 100f / (100f + armor);
+                        finalDamage *= armorMultiplier;
+                    }
+
+                    r_Health -= finalDamage;
+
                     
                     Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {damageInfo.damage}, New Health: {r_Health}");
 
                     if (modelTransform)
                     {
                         TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(this.modelTransform.gameObject);
-                        temporaryOverlayInstance.duration = 0.25f;
+                        temporaryOverlayInstance.duration = 1f;
                         temporaryOverlayInstance.animateShaderAlpha = true;
                         temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                         temporaryOverlayInstance.destroyComponentOnEnd = true;
-                        temporaryOverlayInstance.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matDamageFlash");
+                        temporaryOverlayInstance.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matGhostEffect");
                         temporaryOverlayInstance.inspectorCharacterModel = model;
                         temporaryOverlayInstance.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
                     }

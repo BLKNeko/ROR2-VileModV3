@@ -14,6 +14,8 @@ namespace VileMod.Survivors.Vile
 
         public static GameObject bombExplosionEffect;
 
+        public static GameObject rideExplosionEffect;
+
         // networked hit sounds
         public static NetworkSoundEventDef swordHitSoundEvent;
 
@@ -43,11 +45,34 @@ namespace VileMod.Survivors.Vile
         private static void CreateEffects()
         {
             CreateBombExplosionEffect();
+            CreateRideExplosionEffect();
 
             swordSwingEffect = _assetBundle.LoadEffect("HenrySwordSwingEffect", true);
             swordHitImpactEffect = _assetBundle.LoadEffect("ImpactHenrySlash");
 
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
+
+        }
+
+        private static void CreateRideExplosionEffect()
+        {
+            rideExplosionEffect = _assetBundle.LoadEffect("RideArmorExplosionVFX", "HenryBombExplosion", false);
+
+            if (!rideExplosionEffect)
+                return;
+
+            ShakeEmitter shakeEmitter = rideExplosionEffect.AddComponent<ShakeEmitter>();
+            shakeEmitter.amplitudeTimeDecay = true;
+            shakeEmitter.duration = 1.5f;
+            shakeEmitter.radius = 400f;
+            shakeEmitter.scaleShakeRadiusWithLocalScale = false;
+
+            shakeEmitter.wave = new Wave
+            {
+                amplitude = 2f,
+                frequency = 80f,
+                cycleOffset = 0f
+            };
 
         }
 

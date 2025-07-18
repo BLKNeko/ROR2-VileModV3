@@ -23,7 +23,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             characterBody.SetAimTimer(1f);
-            boltCost = 999; //Set the cost of entering Goliath mode
+            boltCost = 1; //Set the cost of entering Goliath mode
 
             //PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
 
@@ -48,7 +48,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                 characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
             }
 
-            VBC.ChangeBoltValue(boltCost); //Remove 1000 bolts
+            VBC.ChangeBoltValue(-boltCost); //Remove 1000 bolts
             VC.EnterGoliath();
 
         }
