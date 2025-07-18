@@ -35,6 +35,10 @@ namespace VileMod.Survivors.Vile
         private static Dictionary<HUD, GameObject> activeHeatUIs = new Dictionary<HUD, GameObject>();
 
         //GOLIATH SKILL DEFS
+        internal static SkillDef destroyGoliathSkillDef;
+        internal static SkillDef enterGoliathSkillDef;
+        internal static SkillDef exitGoliathSkillDef;
+
         internal static SkillDef goliathPunchComboSkillDef;
 
         //PRIMARY SKILLS DEFS
@@ -166,6 +170,8 @@ namespace VileMod.Survivors.Vile
             //AddHitboxes();
             bodyPrefab.AddComponent<VileComponent>();
             bodyPrefab.AddComponent<VileHeatUIController>();
+            bodyPrefab.AddComponent<VileBoltComponent>();
+            bodyPrefab.AddComponent<VileRideArmorComponent>();
             //bodyPrefab.AddComponent<HuntressTrackerComopnent>();
             //anything else here
             bodyPrefab.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage; 
@@ -221,6 +227,97 @@ namespace VileMod.Survivors.Vile
 
         private void CreateSkillDefs()
         {
+            #region Goliath
+
+            destroyGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "DestroyGoliath",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(DestroyGoliath)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 60f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            enterGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "EnterGoliath",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EnterGoliath)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 60f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            exitGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "EnterGoliath",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ExitGoliath)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 20f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
 
             goliathPunchComboSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
@@ -251,6 +348,8 @@ namespace VileMod.Survivors.Vile
                 cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
             });
+
+            #endregion
 
             #region Primary
 
@@ -594,7 +693,7 @@ namespace VileMod.Survivors.Vile
         private void AddExtraFourthSkills()
         {
 
-            Skills.AddFourthExtraSkill(bodyPrefab, goliathPunchComboSkillDef);
+            Skills.AddFourthExtraSkill(bodyPrefab, enterGoliathSkillDef);
         }
 
         #endregion skills
@@ -755,6 +854,20 @@ namespace VileMod.Survivors.Vile
             if (sender.HasBuff(VileBuffs.armorBuff))
             {
                 args.armorAdd += 300;
+            }
+
+            if (sender.HasBuff(VileBuffs.GoliathBuff))
+            {
+                args.armorAdd += 150;
+                args.armorAdd += sender.baseArmor * 4f;
+                args.healthMultAdd += 3f;
+                args.damageMultAdd += 1f;
+                args.attackSpeedMultAdd -= 0.2f;
+                args.regenMultAdd += 1f;
+                args.jumpPowerMultAdd -= 0.2f;
+                args.moveSpeedMultAdd -= 0.15f;
+                args.shieldMultAdd += 3f;
+                args.critDamageMultAdd += 1f;
             }
         }
     }

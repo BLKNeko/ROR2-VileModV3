@@ -14,12 +14,17 @@ public class VileHeatUIController : MonoBehaviour
     public Image barFillEI;
     public Image barFillES;
     public Image barFillEF;
+    public Image barFillB;
+    public Image barFillR;
     private VileComponent heatComp;
+    private VileBoltComponent boltComp;
+    private VileRideArmorComponent rideComp;
     private int maxSegments = 10;
     private HUD rorHUD;
     private Transform RoRHUDSpringCanvasTransform;
     private GameObject RoRHUDObject;
     private GameObject heatBarGO;
+    public GameObject barR;
     private CharacterBody characterBody;
 
     public bool failedToInitialize;
@@ -31,6 +36,8 @@ public class VileHeatUIController : MonoBehaviour
     {
         characterBody = GetComponent<CharacterBody>();
         heatComp = GetComponent<VileComponent>();
+        boltComp = GetComponent<VileBoltComponent>();
+        rideComp = GetComponent<VileRideArmorComponent>();
 
         Hook();
 
@@ -102,6 +109,10 @@ public class VileHeatUIController : MonoBehaviour
         barFillEI = heatBarGO.transform.Find("EBar/Bar_Fill_I").GetComponent<Image>();
         barFillES = heatBarGO.transform.Find("EBar/Bar_Fill_S").GetComponent<Image>();
         barFillEF = heatBarGO.transform.Find("EBar/Bar_Fill_F").GetComponent<Image>();
+        barFillB = heatBarGO.transform.Find("BBar/Bar_Fill_B").GetComponent<Image>();
+        barFillR = heatBarGO.transform.Find("RBar/Bar_Fill_R").GetComponent<Image>();
+
+        barR = heatBarGO.transform.Find("RBar").gameObject;
 
         //Debug.Log("barFill: " + barFill);
 
@@ -146,6 +157,17 @@ public class VileHeatUIController : MonoBehaviour
                 barFillEI.fillAmount = heatComp.GeticeElementValue();
                 barFillES.fillAmount = heatComp.GetShockElementValue();
                 barFillEF.fillAmount = heatComp.GetFlameElementValue();
+                barFillB.fillAmount = boltComp.GetInverseLerpBoltValue();
+
+                if (characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                {
+                    barR.SetActive(true);
+                    barFillR.fillAmount = rideComp.GetInverseLerpRHealthValue();
+                }
+                else
+                {
+                    barR.SetActive(false);
+                }
 
                 //Debug.Log("barFill.fillAmount: " + barFill.fillAmount);
 

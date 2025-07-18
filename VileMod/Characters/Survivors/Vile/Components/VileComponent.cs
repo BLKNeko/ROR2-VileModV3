@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using static Wamp;
+using ExtraSkillSlots;
 
 namespace VileMod.Survivors.Vile.Components
 {
@@ -25,6 +26,10 @@ namespace VileMod.Survivors.Vile.Components
         private CharacterModel model;
         private ChildLocator childLocator;
         private CameraTargetParams cameraTargetParams;
+
+        private ExtraSkillLocator extraskillLocator;
+
+        private VileRideArmorComponent rideArmorComponent;
 
         private float minHpWeak = 0.45f;
 
@@ -62,6 +67,10 @@ namespace VileMod.Survivors.Vile.Components
             AnimVeh = childLocator.FindChildGameObject("VEH").GetComponents<Animator>()[0];
 
             cameraTargetParams = Body.GetComponent<CameraTargetParams>();
+
+            extraskillLocator = GetComponent<ExtraSkillLocator>();
+
+            rideArmorComponent = GetComponent<VileRideArmorComponent>();
 
             //Debug.Log(AnimVeh);
             //Debug.Log("Camera: " + cameraTargetParams);
@@ -127,31 +136,7 @@ namespace VileMod.Survivors.Vile.Components
             return Body;
         }
 
-        public void EnterGoliath()
-        {
-
-            childLocator.FindChildGameObject("VEH").SetActive(false);
-            childLocator.FindChildGameObject("VBodyMesh").SetActive(false);
-            childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(false);
-            childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(false);
-
-            childLocator.FindChildGameObject("VEH").SetActive(true);
-
-            if(Body.skinIndex == 0)
-            {
-                childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(true);
-            }
-            else
-            {
-                childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(true);
-            }
-
-
-            //cameraTargetParams.fovOverride = 60f;
-            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
-
-
-        }
+        
 
         private void VHeatUpdate()
         {
@@ -303,6 +288,49 @@ namespace VileMod.Survivors.Vile.Components
             return flameElementValue;
         }
 
+        public void EnterGoliath()
+        {
+
+            childLocator.FindChildGameObject("VEH").SetActive(false);
+            childLocator.FindChildGameObject("VBodyMesh").SetActive(false);
+            childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(false);
+            childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(false);
+
+            childLocator.FindChildGameObject("VEH").SetActive(true);
+
+            if (Body.skinIndex == 0)
+            {
+                childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(true);
+            }
+            else
+            {
+                childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(true);
+            }
+
+
+            //cameraTargetParams.fovOverride = 60f;
+            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+
+            RemoveSkills();
+
+            Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.special.SetSkillOverride(Body.skillLocator.special, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+
+            extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.exitGoliathSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+
+            Body.skillLocator.primary.Reset();
+            Body.skillLocator.secondary.Reset();
+            Body.skillLocator.utility.Reset();
+            Body.skillLocator.special.Reset();
+            extraskillLocator.extraFourth.Reset();
+
+            if(!Body.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                rideArmorComponent.InitializeRideArmor();
+
+        }
+
         public void ExitGoliath()
         {
             childLocator.FindChildGameObject("VEH").SetActive(false);
@@ -311,6 +339,8 @@ namespace VileMod.Survivors.Vile.Components
             childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
 
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+
+            RemoveSkills();
 
         }
 
@@ -323,6 +353,31 @@ namespace VileMod.Survivors.Vile.Components
 
 
         }
+
+        private void RemoveSkills()
+        {
+            foreach (var skill in SkillDefs)
+            {
+                Body.skillLocator.primary.UnsetSkillOverride(Body.skillLocator.primary, skill, GenericSkill.SkillOverridePriority.Contextual);
+                Body.skillLocator.secondary.UnsetSkillOverride(Body.skillLocator.secondary, skill, GenericSkill.SkillOverridePriority.Contextual);
+                Body.skillLocator.utility.UnsetSkillOverride(Body.skillLocator.utility, skill, GenericSkill.SkillOverridePriority.Contextual);
+                Body.skillLocator.special.UnsetSkillOverride(Body.skillLocator.special, skill, GenericSkill.SkillOverridePriority.Contextual);
+
+
+                extraskillLocator.extraFourth.UnsetSkillOverride(extraskillLocator.extraFourth, skill, GenericSkill.SkillOverridePriority.Contextual);
+
+            }
+        }
+
+        private static readonly SkillDef[] SkillDefs =
+        {
+            VileSurvivor.goliathPunchComboSkillDef,
+            VileSurvivor.enterGoliathSkillDef,
+            VileSurvivor.exitGoliathSkillDef,
+            VileSurvivor.cherryBlastSkillDef,
+            VileSurvivor.vileBurningDriveSkillDef
+            
+        };
 
     }
 }
