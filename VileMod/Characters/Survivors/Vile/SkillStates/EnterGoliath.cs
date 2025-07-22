@@ -43,13 +43,14 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             if (NetworkServer.active)
             {
-                characterBody.AddTimedBuff(VileBuffs.armorBuff, 3f * duration);
-                characterBody.AddBuff(VileBuffs.GoliathBuff);
-                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
+                //characterBody.AddBuff(VileBuffs.GoliathBuff);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 5f);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.Immune, 5f);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.Intangible, 5f);
             }
 
             VBC.ChangeBoltValue(-boltCost); //Remove 1000 bolts
-            VC.EnterGoliath();
+            //VC.EnterGoliath();
 
         }
 
@@ -64,7 +65,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             if (fixedAge >= duration && isAuthority)
             {
-                outer.SetNextStateToMain();
+                outer.SetNextState(new EnterGoliathAnim());
                 return;
             }
         }

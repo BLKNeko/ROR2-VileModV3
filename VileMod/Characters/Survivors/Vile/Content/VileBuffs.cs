@@ -11,6 +11,7 @@ namespace VileMod.Survivors.Vile
         public static BuffDef RideArmorEnabledBuff;
 
         public static BuffDef GoliathBuff;
+        public static BuffDef HawkBuff;
 
         public static BuffDef PrimaryHeatBuff;
 
@@ -36,6 +37,12 @@ namespace VileMod.Survivors.Vile
                 false);
 
             GoliathBuff = Modules.Content.CreateAndAddBuff("GoliathBuff",
+                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                Color.white,
+                false,
+                false);
+
+            HawkBuff = Modules.Content.CreateAndAddBuff("HawkBuff",
                 LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
                 Color.white,
                 false,

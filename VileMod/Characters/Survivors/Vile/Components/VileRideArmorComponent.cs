@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using static Wamp;
 using System;
 using UnityEngine.TextCore.Text;
+using System.Xml.Linq;
 
 namespace VileMod.Survivors.Vile.Components
 {
@@ -35,6 +36,14 @@ namespace VileMod.Survivors.Vile.Components
         private bool r_InitializeSuperRegem = false;
         private float r_InitializeSuperRegemTimer = 0f;
 
+        private float h_FlyingSpeed; // Speed at which the ride armor flies
+        private float h_FlyingSpeedMultplier; // Speed multiplier for flying
+        private float h_FlyingDuration = 3f; // Duration of the flying state
+        private float h_FlyingTimer = 0f; // Timer to track flying duration
+        private bool h_FlyingActivated = false;
+        private float h_FallSlowStrength = 1f;   // força para desacelerar a queda
+        private float h_MaxFallSpeed = -20f;
+
 
         private void Start()
         {
@@ -55,6 +64,8 @@ namespace VileMod.Survivors.Vile.Components
 
             entityState = EntityStateMachine.FindByCustomName(Body.gameObject, "Body");
 
+            h_FlyingSpeedMultplier = VileConfig.hk_flyingSpeedMultiplier.Value;
+
             Hook();
 
         }
@@ -63,7 +74,7 @@ namespace VileMod.Survivors.Vile.Components
         {
             if (!Body.hasAuthority) return;
 
-            if (Body.HasBuff(VileBuffs.GoliathBuff))
+            if (HasRideArmorBuff())
             {
                 UpdateMaxHealth();
                 CheckHealthUpdate();
@@ -73,9 +84,17 @@ namespace VileMod.Survivors.Vile.Components
                 InitializeSuperRegem();
 
 
-            if (Body.HasBuff(VileBuffs.RideArmorEnabledBuff) && !Body.HasBuff(VileBuffs.GoliathBuff))
+            if (Body.HasBuff(VileBuffs.RideArmorEnabledBuff) && !HasRideArmorBuff())
                 RegenRideArmorWhileNotInUse();
 
+            if (Body.HasBuff(VileBuffs.HawkBuff))
+                HawkFlyingBehavior();
+
+        }
+
+        private bool HasRideArmorBuff()
+        {
+            return Body.HasBuff(VileBuffs.GoliathBuff) || Body.HasBuff(VileBuffs.HawkBuff);
         }
 
         private void UpdateMaxHealth()
@@ -85,10 +104,10 @@ namespace VileMod.Survivors.Vile.Components
 
         private void CheckHealthUpdate()
         {
-            if(r_Health <= 0f)
+            if(r_Health <= 0f && r_InitializeSuperRegemTimer >= 1.9f)
             {
                 
-                entityState.SetNextState(new SkillStates.DestroyGoliath());
+                entityState.SetNextState(new SkillStates.DestroyRideArmor());
 
             }
         }
@@ -168,6 +187,85 @@ namespace VileMod.Survivors.Vile.Components
             return Mathf.InverseLerp(0, r_MaxHealth, r_Health);
         }
 
+        private void HawkFlyingBehavior()
+        {
+            if (!Body.hasAuthority) return;
+
+            if (!Body.HasBuff(VileBuffs.HawkBuff)) return;
+
+            if (Body.characterMotor.isGrounded)
+            {
+                h_FlyingTimer = 0f;
+                h_FlyingActivated = false;
+                return;
+            }
+
+            // Ativa o voo se pulo for pressionado no ar e ainda não voou
+            if (!h_FlyingActivated && Body.inputBank.jump.justPressed)
+            {
+                h_FlyingActivated = true;
+                Debug.Log("Hawk Flight Activated!");
+            }
+
+            if (h_FlyingActivated && Body.inputBank.jump.down)
+            {
+                if (h_FlyingTimer < h_FlyingDuration)
+                {
+                    h_FlyingSpeed = Body.moveSpeed * h_FlyingSpeedMultplier;
+
+                    // Obtém direção horizontal do movimento (sem Y)
+                    Vector3 moveInput = Body.inputBank.moveVector;
+                    Vector3 horizontalDirection = new Vector3(moveInput.x, 0f, moveInput.z).normalized;
+
+                    float horizontalSpeed = h_FlyingSpeed * 1.1f; // boost leve nos lados
+                    float verticalSpeed = h_FlyingSpeed * 1.2f;     // impulso mais forte pra cima
+
+                    // Aplica impulso horizontal
+                    Vector3 horizontalVelocity = horizontalDirection * horizontalSpeed;
+
+                    // Aplica impulso vertical (mantém o Y positivo)
+                    float currentY = Mathf.Max(Body.characterMotor.velocity.y, 0f);
+                    float newY = currentY + verticalSpeed;
+
+                    // Define nova velocidade final
+                    Vector3 finalVelocity = new Vector3(horizontalVelocity.x, newY, horizontalVelocity.z);
+
+                    // Limita a velocidade total para evitar exagero
+                    finalVelocity.x = Mathf.Clamp(finalVelocity.x, -h_FlyingSpeed, h_FlyingSpeed);
+                    finalVelocity.z = Mathf.Clamp(finalVelocity.z, -h_FlyingSpeed, h_FlyingSpeed);
+                    finalVelocity.y = Mathf.Clamp(finalVelocity.y, 0f, h_FlyingSpeed);
+
+                    Body.characterMotor.velocity = finalVelocity;
+
+                    Debug.Log("Hawk Flying - Horizontal Dir: " + horizontalDirection);
+                    Debug.Log("Hawk Flying - Final Velocity: " + finalVelocity);
+                }
+
+                h_FlyingTimer += Time.fixedDeltaTime;
+            }
+
+            // Queda suave quando não está segurando o botão de pulo
+            //if (h_FlyingActivated && !Body.inputBank.jump.down)
+            //{
+            //    if (Body.characterMotor.velocity.y < 0f)
+            //    {
+            //        //// Suaviza a queda reduzindo a velocidade vertical negativamente
+            //        //Body.characterMotor.velocity += Vector3.up * Time.fixedDeltaTime * h_FallSlowStrength;
+
+            //        //// Opcional: limita a queda para não ficar flutuando demais
+            //        //Body.characterMotor.velocity.y = Mathf.Clamp(Body.characterMotor.velocity.y, -h_MaxFallSpeed, 999f);
+
+            //        //Debug.Log("Hawk Falling - Softening Fall. Y Velocity: " + Body.characterMotor.velocity.y);
+
+            //        float num = Body.characterMotor.velocity.y;
+            //        num = Mathf.MoveTowards(num, h_MaxFallSpeed, h_FallSlowStrength);
+            //        Body.characterMotor.velocity = new Vector3(Body.characterMotor.velocity.x, num, Body.characterMotor.velocity.z);
+
+            //        Debug.Log("Hawk Falling - Softening Fall. Y Velocity: " + Body.characterMotor.velocity.y);
+            //    }
+            //}
+        }
+
         private void Hook()
         {
             //On.RoR2.CameraRigController.Update += CameraRigController_Update;
@@ -204,7 +302,7 @@ namespace VileMod.Survivors.Vile.Components
             if (damageInfo.attacker.name != Body.name && self == HealthComp)
             {
 
-                if (self.GetComponent<CharacterBody>().HasBuff(VileBuffs.GoliathBuff))
+                if (self.GetComponent<CharacterBody>().HasBuff(VileBuffs.GoliathBuff) || self.GetComponent<CharacterBody>().HasBuff(VileBuffs.HawkBuff))
                 {
                     float finalDamage = damageInfo.damage;
 

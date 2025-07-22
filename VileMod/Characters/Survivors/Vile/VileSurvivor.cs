@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using RoR2.UI;
+using MegamanXMod.Survivors.X.SkillStates;
+using EntityStates;
 
 namespace VileMod.Survivors.Vile
 {
@@ -34,16 +36,24 @@ namespace VileMod.Survivors.Vile
 
 
         //GOLIATH SKILL DEFS
-        internal static SkillDef destroyGoliathSkillDef;
         internal static SkillDef enterGoliathSkillDef;
         internal static SkillDef exitGoliathSkillDef;
+        internal static SkillDef resumeGoliathSkillDef;
 
         internal static SkillDef goliathPunchComboSkillDef;
         internal static SkillDef goliathDashPunchSkillDef;
         internal static SkillDef goliathShootSkillDef;
 
+        //HAWK SKILL DEFS
+        internal static SkillDef enterHawkSkillDef;
+        internal static SkillDef exitHawkSkillDef;
+        internal static SkillDef resumeHawkSkillDef;
+
+        internal static HuntressTrackerSkillDef hawkGunSkillDef;
+
         //RIDE ARMOR GENERAL
         internal static SkillDef rideRapairSkillDef;
+        internal static SkillDef destroyRideArmorSkillDef;
 
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
@@ -118,12 +128,28 @@ namespace VileMod.Survivors.Vile
                 new CustomRendererInfo
                 {
                     childName = "VH_VLMKC_Mesh",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "HAWK",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "HK_Mesh",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "HK_VLC_Mesh",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "HK_VLMKC_Mesh",
                 }
         };
 
         public override UnlockableDef characterUnlockableDef => HenryUnlockables.characterUnlockableDef;
         
-        public override ItemDisplaysBase itemDisplays => new HenryItemDisplays();
+        public override ItemDisplaysBase itemDisplays => new VileItemDisplays();
 
         //set in base classes
         public override AssetBundle assetBundle { get; protected set; }
@@ -152,7 +178,7 @@ namespace VileMod.Survivors.Vile
 
             base.InitializeCharacter();
 
-            HenryConfig.Init();
+            VileConfig.Init();
             HenryStates.Init();
             HenryTokens.Init();
 
@@ -176,7 +202,13 @@ namespace VileMod.Survivors.Vile
             bodyPrefab.AddComponent<VileHeatUIController>();
             bodyPrefab.AddComponent<VileBoltComponent>();
             bodyPrefab.AddComponent<VileRideArmorComponent>();
-            //bodyPrefab.AddComponent<HuntressTrackerComopnent>();
+            bodyPrefab.AddComponent<HuntressTracker>();
+            HuntressTracker huntressTracker = bodyPrefab.GetComponent<HuntressTracker>();
+            if (huntressTracker)
+            {
+                huntressTracker.maxTrackingDistance = 500f;
+                huntressTracker.maxTrackingAngle = 4f;
+            }
             //anything else here
             bodyPrefab.GetComponent<CharacterBody>().bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage; 
         }
@@ -248,36 +280,6 @@ namespace VileMod.Survivors.Vile
         {
             #region Goliath
 
-            destroyGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
-            {
-                skillName = "DestroyGoliath",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
-
-                activationState = new EntityStates.SerializableEntityStateType(typeof(DestroyGoliath)),
-                activationStateMachineName = "Body",
-                interruptPriority = EntityStates.InterruptPriority.Skill,
-
-                baseRechargeInterval = 60f,
-                baseMaxStock = 1,
-
-                rechargeStock = 1,
-                requiredStock = 1,
-                stockToConsume = 1,
-
-                resetCooldownTimerOnUse = false,
-                fullRestockOnAssign = false,
-                dontAllowPastMaxStocks = true,
-                mustKeyPress = false,
-                beginSkillCooldownOnSkillEnd = false,
-
-                isCombatSkill = false,
-                canceledFromSprinting = false,
-                cancelSprintingOnActivation = true,
-                forceSprintDuringState = false,
-            });
-
             enterGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "EnterGoliath",
@@ -316,6 +318,36 @@ namespace VileMod.Survivors.Vile
                 //skillIcon = ZeroAssets.ZSaberSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitGoliath)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 20f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            resumeGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "EnterGoliath",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeGoliath)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -428,6 +460,8 @@ namespace VileMod.Survivors.Vile
                 forceSprintDuringState = false,
             });
 
+            #endregion
+
             rideRapairSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "Repair Ride Armor",
@@ -456,6 +490,163 @@ namespace VileMod.Survivors.Vile
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
+            });
+
+            destroyRideArmorSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "DestroyRideArmor",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(DestroyRideArmor)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 60f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            #region HAWK
+
+
+
+            enterHawkSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "EnterGoliath",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EnterHawk)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 60f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            exitHawkSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "EnterGoliath",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ExitHawk)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 20f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            resumeHawkSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "EnterGoliath",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeHawk)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 20f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            hawkGunSkillDef = Skills.CreateSkillDef<HuntressTrackerSkillDef>(new SkillDefInfo
+            {
+                skillName = "HawkGun",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                // skillIcon = XAssets.IconHomingTorpedo,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(HGun1)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+                
+                
             });
 
             #endregion
@@ -803,6 +994,7 @@ namespace VileMod.Survivors.Vile
         {
 
             Skills.AddFourthExtraSkill(bodyPrefab, enterGoliathSkillDef);
+            Skills.AddFourthExtraSkill(bodyPrefab, enterHawkSkillDef);
         }
 
         #endregion skills
@@ -835,6 +1027,10 @@ namespace VileMod.Survivors.Vile
                 null,
                 null,
                 null,
+                null,
+                null,
+                null,
+                null,
                 null);
 
             defaultSkin.rendererInfos[0].defaultMaterial = assetBundle.LoadMaterial("matVile");
@@ -846,6 +1042,11 @@ namespace VileMod.Survivors.Vile
                 new SkinDef.GameObjectActivation
                 {
                     gameObject = childLocator.FindChildGameObject("VEH"),
+                    shouldActivate = false,
+                },
+                new SkinDef.GameObjectActivation
+                {
+                    gameObject = childLocator.FindChildGameObject("HAWK"),
                     shouldActivate = false,
                 }
             };
@@ -871,6 +1072,10 @@ namespace VileMod.Survivors.Vile
                 null,
                 null,
                 null,
+                null,
+                null,
+                null,
+                null,
                 null);
 
             //masterySkin has a new set of RendererInfos (based on default rendererinfos)
@@ -884,6 +1089,11 @@ namespace VileMod.Survivors.Vile
                 new SkinDef.GameObjectActivation
                 {
                     gameObject = childLocator.FindChildGameObject("VEH"),
+                    shouldActivate = false,
+                },
+                new SkinDef.GameObjectActivation
+                {
+                    gameObject = childLocator.FindChildGameObject("HAWK"),
                     shouldActivate = false,
                 }
             };
@@ -970,7 +1180,7 @@ namespace VileMod.Survivors.Vile
                 args.armorAdd += 150;
                 args.armorAdd += sender.baseArmor * 4f;
                 args.healthMultAdd += 3f;
-                args.damageMultAdd += 2f;
+                args.damageMultAdd += 3f;
                 args.attackSpeedMultAdd -= 0.1f;
                 args.regenMultAdd += 1f;
                 args.jumpPowerMultAdd -= 0.2f;
@@ -978,6 +1188,21 @@ namespace VileMod.Survivors.Vile
                 args.shieldMultAdd += 3f;
                 args.critDamageMultAdd += 1f;
             }
+
+            if (sender.HasBuff(VileBuffs.HawkBuff))
+            {
+                args.armorAdd += 100;
+                args.armorAdd += sender.baseArmor * 2f;
+                args.healthMultAdd += 3f;
+                args.damageMultAdd += 1.8f;
+                args.attackSpeedMultAdd += 0.25f;
+                args.regenMultAdd += 1f;
+                args.jumpPowerMultAdd += 0.3f;
+                args.moveSpeedMultAdd += 0.25f;
+                args.shieldMultAdd += 3f;
+                args.critDamageMultAdd += 1f;
+            }
+
         }
     }
 }

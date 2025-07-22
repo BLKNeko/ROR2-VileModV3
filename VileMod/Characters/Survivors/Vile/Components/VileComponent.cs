@@ -16,6 +16,7 @@ namespace VileMod.Survivors.Vile.Components
 
         private Animator Anim;
         private Animator AnimVeh;
+        private Animator AnimHK;
 
         private HealthComponent HealthComp;
 
@@ -65,6 +66,8 @@ namespace VileMod.Survivors.Vile.Components
             Anim = Body.characterDirection.modelAnimator;
 
             AnimVeh = childLocator.FindChildGameObject("VEH").GetComponents<Animator>()[0];
+
+            AnimHK = childLocator.FindChildGameObject("HAWK").GetComponents<Animator>()[0];
 
             cameraTargetParams = Body.GetComponent<CameraTargetParams>();
 
@@ -120,6 +123,9 @@ namespace VileMod.Survivors.Vile.Components
 
             if (Body.HasBuff(VileBuffs.GoliathBuff))
                 UpdateGoliathAnimator();
+
+            if (Body.HasBuff(VileBuffs.HawkBuff))
+                UpdateHawkAnimator();
 
         }
 
@@ -291,10 +297,7 @@ namespace VileMod.Survivors.Vile.Components
         public void EnterGoliath()
         {
 
-            childLocator.FindChildGameObject("VEH").SetActive(false);
-            childLocator.FindChildGameObject("VBodyMesh").SetActive(false);
-            childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(false);
-            childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(false);
+            DeactivateChilds();
 
             childLocator.FindChildGameObject("VEH").SetActive(true);
 
@@ -333,14 +336,15 @@ namespace VileMod.Survivors.Vile.Components
 
         public void ExitGoliath()
         {
-            childLocator.FindChildGameObject("VEH").SetActive(false);
-            childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(false);
-            childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(false);
+            DeactivateChilds();
+
             childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
 
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
 
             RemoveSkills();
+
+            extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.resumeGoliathSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
         }
 
@@ -351,6 +355,97 @@ namespace VileMod.Survivors.Vile.Components
             AnimVeh.SetBool("isGrounded", Anim.GetBool("isGrounded"));
             AnimVeh.SetBool("inCombat", Anim.GetBool("inCombat"));
 
+
+        }
+
+        // HAWK
+
+        public void EnterHawk()
+        {
+
+            DeactivateChilds();
+
+            childLocator.FindChildGameObject("HAWK").SetActive(true);
+
+            if (Body.skinIndex == 0)
+            {
+                childLocator.FindChildGameObject("HK_VLC_Mesh").SetActive(true);
+            }
+            else
+            {
+                childLocator.FindChildGameObject("HK_VLMKC_Mesh").SetActive(true);
+            }
+
+
+            //cameraTargetParams.fovOverride = 60f;
+            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+
+            RemoveSkills();
+
+            Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.hawkGunSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.goliathShootSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.goliathDashPunchSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.special.SetSkillOverride(Body.skillLocator.special, VileSurvivor.rideRapairSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+
+            extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.exitHawkSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+
+            Body.skillLocator.primary.Reset();
+            Body.skillLocator.secondary.Reset();
+            Body.skillLocator.utility.Reset();
+            Body.skillLocator.special.Reset();
+            extraskillLocator.extraFourth.Reset();
+
+            if (!Body.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                rideArmorComponent.InitializeRideArmor();
+
+        }
+
+        public void ExitHawk()
+        {
+            DeactivateChilds();
+
+            childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
+
+            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+
+            RemoveSkills();
+
+            extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.resumeHawkSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+
+        }
+
+        private void UpdateHawkAnimator()
+        {
+            AnimHK.SetBool("isMoving", Anim.GetBool("isMoving"));
+            AnimHK.SetBool("isSprinting", Anim.GetBool("isSprinting"));
+            AnimHK.SetBool("isGrounded", Anim.GetBool("isGrounded"));
+            AnimHK.SetBool("inCombat", Anim.GetBool("inCombat"));
+
+
+        }
+
+        public void DestroyRideArmor()
+        {
+            DeactivateChilds();
+
+            childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
+
+            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+
+            RemoveSkills();
+        }
+
+        private void DeactivateChilds()
+        {
+            childLocator.FindChildGameObject("VBodyMesh").SetActive(false);
+
+            childLocator.FindChildGameObject("VEH").SetActive(false);
+            childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(false);
+            childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(false);
+
+            childLocator.FindChildGameObject("HAWK").SetActive(false);
+            childLocator.FindChildGameObject("HK_VLC_Mesh").SetActive(false);
+            childLocator.FindChildGameObject("HK_VLMKC_Mesh").SetActive(false);
 
         }
 
@@ -372,8 +467,16 @@ namespace VileMod.Survivors.Vile.Components
         private static readonly SkillDef[] SkillDefs =
         {
             VileSurvivor.goliathPunchComboSkillDef,
+            VileSurvivor.goliathShootSkillDef,
+            VileSurvivor.goliathDashPunchSkillDef,
+
             VileSurvivor.enterGoliathSkillDef,
             VileSurvivor.exitGoliathSkillDef,
+            VileSurvivor.resumeGoliathSkillDef,
+
+            VileSurvivor.rideRapairSkillDef,
+
+
             VileSurvivor.cherryBlastSkillDef,
             VileSurvivor.vileBurningDriveSkillDef
             
