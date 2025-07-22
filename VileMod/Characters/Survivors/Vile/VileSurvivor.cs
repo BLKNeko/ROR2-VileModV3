@@ -55,6 +55,9 @@ namespace VileMod.Survivors.Vile
         internal static SkillDef rideRapairSkillDef;
         internal static SkillDef destroyRideArmorSkillDef;
 
+        //UNITS
+        internal static SkillDef unitPreonESkillDef;
+
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
 
@@ -649,6 +652,39 @@ namespace VileMod.Survivors.Vile
                 
             });
 
+            unitPreonESkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "HawkGun",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                // skillIcon = XAssets.IconHomingTorpedo,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitPreonE)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
             #endregion
 
             #region Primary
@@ -987,7 +1023,7 @@ namespace VileMod.Survivors.Vile
         private void AddExtraThirdSkills()
         {
 
-            Skills.AddThirdExtraSkill(bodyPrefab, goliathPunchComboSkillDef);
+            Skills.AddThirdExtraSkill(bodyPrefab, unitPreonESkillDef);
         }
 
         private void AddExtraFourthSkills()

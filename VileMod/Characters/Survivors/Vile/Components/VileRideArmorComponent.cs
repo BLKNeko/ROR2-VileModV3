@@ -64,6 +64,7 @@ namespace VileMod.Survivors.Vile.Components
 
             entityState = EntityStateMachine.FindByCustomName(Body.gameObject, "Body");
 
+
             h_FlyingSpeedMultplier = VileConfig.hk_flyingSpeedMultiplier.Value;
 
             Hook();

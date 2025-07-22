@@ -110,26 +110,30 @@ namespace MegamanXMod.Survivors.X.SkillStates
 
                     //genericDamageOrb.damageType = DamageType.ApplyMercExpose;
 
-                    Debug.Log("GenereciDamageOrb:" + genericDamageOrb);
+                    //Debug.Log("GenereciDamageOrb:" + genericDamageOrb);
 
                     HurtBox hurtBox = this.initialOrbTarget;
                     if (hurtBox)
                     {
                         Transform transform = this.childLocator.FindChild(this.muzzleString);
+                        Transform transform2 = this.childLocator.FindChild(this.muzzleString);
+
                         EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, base.gameObject, this.muzzleString, true);
                         genericDamageOrb.origin = transform.position;
                         genericDamageOrb.target = hurtBox;
                         OrbManager.instance.AddOrb(genericDamageOrb);
-                        //OrbManager.instance.AddOrb(genericDamageOrb);
+
+                        EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, base.gameObject, this.muzzleString, true);
+                        genericDamageOrb.origin = transform2.position;
+                        genericDamageOrb.target = hurtBox;
+                        OrbManager.instance.AddOrb(genericDamageOrb);
                     }
 
-                    Debug.Log("HurbBox2:" + hurtBox);
+                    //Debug.Log("HurbBox2:" + hurtBox);
 
 
 
                     base.characterBody.AddSpreadBloom(0.15f);
-                    Ray aimRay = base.GetAimRay();
-                    EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, base.gameObject, this.muzzleString, false);
                 }
 
                     

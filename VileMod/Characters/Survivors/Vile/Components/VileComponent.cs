@@ -32,6 +32,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private VileRideArmorComponent rideArmorComponent;
 
+        private HuntressTracker tracker;
+
         private float minHpWeak = 0.45f;
 
         private bool isWeak;
@@ -74,6 +76,10 @@ namespace VileMod.Survivors.Vile.Components
             extraskillLocator = GetComponent<ExtraSkillLocator>();
 
             rideArmorComponent = GetComponent<VileRideArmorComponent>();
+
+            tracker = GetComponent<HuntressTracker>();
+
+            tracker.enabled = false;
 
             //Debug.Log(AnimVeh);
             //Debug.Log("Camera: " + cameraTargetParams);
@@ -365,6 +371,8 @@ namespace VileMod.Survivors.Vile.Components
 
             DeactivateChilds();
 
+            tracker.enabled = true;
+
             childLocator.FindChildGameObject("HAWK").SetActive(true);
 
             if (Body.skinIndex == 0)
@@ -404,6 +412,8 @@ namespace VileMod.Survivors.Vile.Components
         {
             DeactivateChilds();
 
+            tracker.enabled = false;
+
             childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
 
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
@@ -427,6 +437,8 @@ namespace VileMod.Survivors.Vile.Components
         public void DestroyRideArmor()
         {
             DeactivateChilds();
+
+            tracker.enabled = false;
 
             childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
 

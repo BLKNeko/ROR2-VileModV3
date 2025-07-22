@@ -3,6 +3,8 @@ using UnityEngine;
 using VileMod.Modules;
 using System;
 using RoR2.Projectile;
+using VileMod.Survivors.Vile.Components;
+using R2API;
 
 namespace VileMod.Survivors.Vile
 {
@@ -27,6 +29,9 @@ namespace VileMod.Survivors.Vile
         public static GameObject vileShotgunIcePrefab;
         public static GameObject vileEletricSparkPrefab;
 
+        public static GameObject unitPreonEPrefab;
+        public static GameObject unitPreonEPrefabTest;
+
         private static AssetBundle _assetBundle;
 
         public static void Init(AssetBundle assetBundle)
@@ -39,6 +44,69 @@ namespace VileMod.Survivors.Vile
             CreateEffects();
 
             CreateProjectiles();
+
+            //CreateUnitTest();
+        }
+
+        private static void CreateUnitTest()
+        {
+            //unitPreonEPrefabTest = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterMasters/Turret1Master"),
+            //                                        "PreonEMasterPrefab", true);
+            //unitPreonEPrefabTest.GetComponent<CharacterMaster>().bodyPrefab = _assetBundle.LoadAsset<GameObject>("PreonE");
+
+            //Content.AddMasterPrefab(unitPreonEPrefabTest);
+
+            //unitPreonEPrefabTest  = _assetBundle.LoadAsset<GameObject>("PreonE");
+            //unitPreonEPrefabTest.AddComponent<PreonEController>();
+
+            // Clonar o corpo da torreta (ou Commando se quiser que pareça mais um personagem)
+            //GameObject baseBody = LegacyResourcesAPI.Load<GameObject>("prefabs/characterbodies/EngiTurretBody");
+            //unitPreonEPrefabTest = PrefabAPI.InstantiateClone(baseBody, "PreonE", true);
+            ////AllyBodyPrefab = _assetBundle.LoadAsset<GameObject>("EXETurret");
+
+            //// Pega o ModelLocator do prefab
+            //ModelLocator modelLocator = unitPreonEPrefabTest.GetComponent<ModelLocator>();
+
+            //// Destrói o modelo antigo
+            //GameObject oldModel = modelLocator.modelTransform.gameObject;
+            //UnityEngine.Object.DestroyImmediate(oldModel);
+
+            //// Instancia seu novo modelo (deve ser um prefab seu carregado nos assets)
+            //GameObject newModel = UnityEngine.Object.Instantiate(_assetBundle.LoadAsset<GameObject>("PreonE"), unitPreonEPrefabTest.transform);
+
+            //// Atualiza o modelLocator
+            //modelLocator.modelTransform = newModel.transform;
+            //modelLocator.modelBaseTransform = newModel.transform; // ou algum filho específico, se quiser
+
+            //// Acessa o SkillLocator da torreta
+            //SkillLocator skillLocator = unitPreonEPrefabTest.GetComponent<SkillLocator>();
+
+            //// Substitui a habilidade primária por uma que você já tem
+            ////skillLocator.primary.skillFamily.variants[0].skillDef = MegamanEXESurvivor.BusterTurretSkillDef;
+
+
+            //// Ajustar stats (opcional)
+            //CharacterBody body = unitPreonEPrefabTest.GetComponent<CharacterBody>();
+            //body.baseMaxHealth = 200f;
+            //body.baseDamage = 15f;
+            //body.baseMoveSpeed = 0f; // parado como uma torreta
+            //body.baseAttackSpeed = 1.5f;
+            //body.isChampion = false;
+
+            //// Clonar o master da torreta
+            //GameObject baseMaster = LegacyResourcesAPI.Load<GameObject>("prefabs/charactermasters/EngiTurretMaster");
+            //unitPreonEPrefabTest = PrefabAPI.InstantiateClone(baseMaster, "MyAllyMaster", true);
+
+            //// Definir que o master usa nosso body
+            //CharacterMaster master = unitPreonEPrefabTest.GetComponent<CharacterMaster>();
+            //master.bodyPrefab = unitPreonEPrefabTest;
+
+            //Content.AddMasterPrefab(unitPreonEPrefabTest);
+            // Registrar no catálogo
+            //BodyCatalog.getAdditionalEntries += list => list.Add(unitPreonEPrefabTest);
+            //MasterCatalog.getAdditionalEntries += list => list.Add(unitPreonEPrefabTest);
+
+
         }
 
         #region effects
@@ -106,9 +174,13 @@ namespace VileMod.Survivors.Vile
             CreateVileShotgunIce();
             CreateVileEletricSpark();
 
+            CreateUnitPreonEProjectile();
+
             Content.AddProjectilePrefab(bombProjectilePrefab);
             Content.AddProjectilePrefab(vileShotgunIcePrefab);
             Content.AddProjectilePrefab(vileEletricSparkPrefab);
+
+            Content.AddProjectilePrefab(unitPreonEPrefab);
         }
 
         private static void CreateBombProjectile()
@@ -136,6 +208,37 @@ namespace VileMod.Survivors.Vile
                 bombController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("HenryBombGhost");
             
             bombController.startSound = "";
+        }
+
+        private static void CreateUnitPreonEProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            unitPreonEPrefab = Asset.CloneProjectilePrefab("FMJ", "PreonEProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            UnityEngine.Object.Destroy(unitPreonEPrefab.GetComponent<ProjectileImpactExplosion>());
+            //ProjectileImpactExplosion bombImpactExplosion = bombProjectilePrefab.AddComponent<ProjectileImpactExplosion>();
+
+            //bombImpactExplosion.blastRadius = 16f;
+            //bombImpactExplosion.blastDamageCoefficient = 1f;
+            //bombImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
+            //bombImpactExplosion.destroyOnEnemy = true;
+            //bombImpactExplosion.lifetime = 12f;
+            //bombImpactExplosion.impactEffect = bombExplosionEffect;
+            //bombImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
+            //bombImpactExplosion.timerAfterImpact = true;
+            //bombImpactExplosion.lifetimeAfterImpact = 0.1f;
+
+            unitPreonEPrefab.GetComponent<ProjectileSimple>().lifetime = 10f;
+
+            unitPreonEPrefab.AddComponent<PreonEController>();
+
+            ProjectileController unitPreonEController = unitPreonEPrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("PreonE") != null)
+                unitPreonEController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("PreonE");
+
+            unitPreonEController.startSound = "";
         }
 
 
