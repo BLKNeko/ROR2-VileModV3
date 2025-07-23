@@ -654,7 +654,7 @@ namespace VileMod.Survivors.Vile
 
             unitPreonESkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "HawkGun",
+                skillName = "PreonE",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 // skillIcon = XAssets.IconHomingTorpedo,
