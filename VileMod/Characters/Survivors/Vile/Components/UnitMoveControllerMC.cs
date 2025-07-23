@@ -221,7 +221,7 @@ namespace VileMod.Survivors.Vile.Components
                 if (!hb || !hb.healthComponent) continue;
 
                 CharacterBody body = hb.healthComponent.body;
-                Debug.Log($"Body: {body}");
+                //Debug.Log($"Body: {body}");
                 if (body && body.healthComponent.alive && body.healthComponent.health < body.healthComponent.fullHealth)
                 {
                     return body;
@@ -230,7 +230,7 @@ namespace VileMod.Survivors.Vile.Components
                 if (body.HasBuff(VileBuffs.RideArmorEnabledBuff))
                 {
 
-                    Debug.Log($"Body RideArmorComp: {body.GetComponent<VileRideArmorComponent>()}");
+                    //Debug.Log($"Body RideArmorComp: {body.GetComponent<VileRideArmorComponent>()}");
 
                     if (body.GetComponent<VileRideArmorComponent>())
                     {
@@ -248,13 +248,7 @@ namespace VileMod.Survivors.Vile.Components
 
         public virtual void StartHeal(CharacterBody body)
         {
-            if (body != null)
-            {
-                body.healthComponent.Heal(healCoeficient * ownerBody.damage, default, true);
-
-                Debug.Log($"Body RideArmorComp: {body.GetComponent<VileRideArmorComponent>()}");
-
-            }
+            //To be overrited
         }
 
         public void SetState(bool idle, bool run, bool shoot)
