@@ -188,6 +188,12 @@ namespace VileMod.Survivors.Vile.Components
             return Mathf.InverseLerp(0, r_MaxHealth, r_Health);
         }
 
+        public bool IsRideArmorFullHealth()
+        {
+            
+            return r_Health >= r_MaxHealth;
+        }
+
         private void HawkFlyingBehavior()
         {
             if (!Body.hasAuthority) return;

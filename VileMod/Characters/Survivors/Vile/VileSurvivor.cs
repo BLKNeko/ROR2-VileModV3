@@ -56,6 +56,8 @@ namespace VileMod.Survivors.Vile
         internal static SkillDef destroyRideArmorSkillDef;
 
         //UNITS
+        internal static SkillDef unitMettaurcureSkillDef;
+
         internal static SkillDef unitPreonESkillDef;
 
         //PRIMARY SKILLS DEFS
@@ -652,6 +654,45 @@ namespace VileMod.Survivors.Vile
                 
             });
 
+
+
+            #endregion
+
+            #region Units
+
+            unitMettaurcureSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "Mettaurcure",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                // skillIcon = XAssets.IconHomingTorpedo,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitMettaurcure)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
             unitPreonESkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "PreonE",
@@ -1011,7 +1052,7 @@ namespace VileMod.Survivors.Vile
         private void AddExtraFirstSkills()
         {
 
-            Skills.AddFirstExtraSkill(bodyPrefab, goliathPunchComboSkillDef);
+            Skills.AddFirstExtraSkill(bodyPrefab, unitMettaurcureSkillDef);
         }
 
         private void AddExtraSecondSkills()

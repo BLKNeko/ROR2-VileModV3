@@ -186,7 +186,7 @@ namespace VileMod.Survivors.Vile
 
             unitMettaurcurePrefab.GetComponent<ProjectileSimple>().lifetime = 60f;
 
-            unitMettaurcurePrefab.AddComponent<PreonEController>();
+            unitMettaurcurePrefab.AddComponent<MetCurController>();
 
             ProjectileController unitPreonEController = unitMettaurcurePrefab.GetComponent<ProjectileController>();
 
