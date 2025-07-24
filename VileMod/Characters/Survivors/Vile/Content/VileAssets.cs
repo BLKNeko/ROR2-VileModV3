@@ -35,6 +35,8 @@ namespace VileMod.Survivors.Vile
 
         public static GameObject unitMettaurcurePrefab;
 
+        public static GameObject unitBigBitPrefab;
+
         private static AssetBundle _assetBundle;
 
         public static void Init(AssetBundle assetBundle)
@@ -188,12 +190,33 @@ namespace VileMod.Survivors.Vile
 
             unitMettaurcurePrefab.AddComponent<MetCurController>();
 
-            ProjectileController unitPreonEController = unitMettaurcurePrefab.GetComponent<ProjectileController>();
+            ProjectileController unitMetCurController = unitMettaurcurePrefab.GetComponent<ProjectileController>();
 
             if (_assetBundle.LoadAsset<GameObject>("Mettaurcure") != null)
-                unitPreonEController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("Mettaurcure");
+                unitMetCurController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("Mettaurcure");
 
-            unitPreonEController.startSound = "";
+            unitMetCurController.startSound = "";
+        }
+
+        private static void CreateUnitBigBitProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            unitBigBitPrefab = Asset.CloneProjectilePrefab("FMJ", "MettaurcureProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            UnityEngine.Object.Destroy(unitBigBitPrefab.GetComponent<ProjectileImpactExplosion>());
+            //ProjectileImpactExplosion bombImpactExplosion = bombProjectilePrefab.AddComponent<ProjectileImpactExplosion>();
+
+            unitBigBitPrefab.GetComponent<ProjectileSimple>().lifetime = 60f;
+
+            unitBigBitPrefab.AddComponent<BigBitController>();
+
+            ProjectileController unitBigBitController = unitBigBitPrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("BigBit") != null)
+                unitBigBitController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("BigBit");
+
+            unitBigBitController.startSound = "";
         }
 
 
