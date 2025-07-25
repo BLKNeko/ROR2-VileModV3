@@ -16,6 +16,7 @@ namespace VileMod.Survivors.Vile
         public static BuffDef PrimaryHeatBuff;
 
         public static BuffDef OverHeatDebuff;
+        public static BuffDef nightmareVirusDebuff;
 
 
         public static BuffDef PrimaryIceBuff;
@@ -74,6 +75,12 @@ namespace VileMod.Survivors.Vile
 
 
             OverHeatDebuff = Modules.Content.CreateAndAddBuff("OverHeatDebuff",
+                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                Color.white,
+                false,
+                true);
+
+            nightmareVirusDebuff = Modules.Content.CreateAndAddBuff("NightmareVirusDebuff",
                 LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
                 Color.white,
                 false,

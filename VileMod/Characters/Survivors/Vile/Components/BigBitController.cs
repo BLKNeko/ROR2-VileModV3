@@ -18,19 +18,23 @@ namespace VileMod.Survivors.Vile.Components
             base.Start();
 
             minDistance = 1f;
-            maxDistance = 35f;
+            maxDistance = 50f;
             frontSafeDistance = 15f;
-            backToDistance = 25f;
+            backToDistance = 10f;
             rotationSpeed = 5f;
 
             moveSpeed += (ownerBody.moveSpeed * 2f) + 2f;
-            damageCoeficient = 1f;
-            FireCooldown = 0.5f; // Tempo de recarga entre disparos
+            damageCoefficient = 1f;
+            FireCooldown = 0.4f; // Tempo de recarga entre disparos
 
-            enemyCheckRadius = 45f;
-            firePoint = transform;
+            enemyCheckRadius = 50f;
 
-            groundOffset = 15f; // Quanto acima do chão o projetil deve ficar
+            firePoint = projectileController.ghost.gameObject.transform;
+
+            groundOffset = 8f; // Quanto acima do chão o projetil deve ficar
+
+            shouldFollowGroundOffset = true; // Deve seguir o offset do chão
+            shouldRotateY = true; // Deve rotacionar no eixo Y
 
             EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
             {
@@ -49,7 +53,7 @@ namespace VileMod.Survivors.Vile.Components
                 bulletCount = 1,
                 aimVector = shootDir,
                 origin = firePoint.position,
-                damage = damageCoeficient * ownerBody.damage,
+                damage = damageCoefficient * ownerBody.damage,
                 damageColorIndex = DamageColorIndex.Default,
                 damageType = DamageType.Generic,
                 falloffModel = BulletAttack.FalloffModel.None,

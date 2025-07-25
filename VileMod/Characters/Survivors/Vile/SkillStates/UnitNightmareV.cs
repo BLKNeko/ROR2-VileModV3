@@ -9,7 +9,7 @@ using VileMod.Modules;
 
 namespace VileMod.Survivors.Vile.SkillStates
 {
-    public class UnitMettaurcure : BaseSkillState
+    public class UnitNightmareV : BaseSkillState
     {
         public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
@@ -44,7 +44,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             {
                 //Play sound
 
-                Chat.AddMessage($"You need at least {boltCost} Vile Bolts to call Mettaurcure unit! You currently have {VBC.GetBoltValue()} Vile Bolts.");
+                Chat.AddMessage($"You need at least {boltCost} Vile Bolts to call Nightmare Virus unit! You currently have {VBC.GetBoltValue()} Vile Bolts.");
 
                 //Reset cooldown
                 outer.SetNextStateToMain();
@@ -82,6 +82,10 @@ namespace VileMod.Survivors.Vile.SkillStates
                 if (isAuthority)
                 {
 
+                    characterBody.AddSpreadBloom(0.8f);
+                    EffectManager.SimpleMuzzleFlash(EntityStates.Mage.Weapon.IceNova.impactEffectPrefab, gameObject, muzzleString, true);
+                    AddRecoil(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
+
                     //if (XConfig.enableVoiceBool.Value)
                     //{
                     //    AkSoundEngine.PostEvent(XStaticValues.X_shotgunIce_VSFX, this.gameObject);
@@ -101,7 +105,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                     }
 
                     FireProjectileInfo ShotgunProjectille = new FireProjectileInfo();
-                    ShotgunProjectille.projectilePrefab = VileAssets.unitMettaurcurePrefab;
+                    ShotgunProjectille.projectilePrefab = VileAssets.unitNightmareVPrefab;
                     ShotgunProjectille.position = spawnPos;
                     ShotgunProjectille.rotation = Util.QuaternionSafeLookRotation(aimRay.direction);
                     ShotgunProjectille.owner = gameObject;

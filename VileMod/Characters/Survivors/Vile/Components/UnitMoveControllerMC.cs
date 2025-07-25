@@ -36,7 +36,7 @@ namespace VileMod.Survivors.Vile.Components
         [Header("Ataque")]
         protected float FireCooldown = 0.5f; // Tempo de recarga entre disparos
         protected float FireTimer; // Tempo de recarga entre disparos
-        protected float healCoeficient;
+        protected float healCoefficient;
 
         public bool IsIdle { get; private set; }
         public bool IsRunning { get; private set; }

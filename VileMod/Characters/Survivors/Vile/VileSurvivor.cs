@@ -58,7 +58,11 @@ namespace VileMod.Survivors.Vile
         //UNITS
         internal static SkillDef unitMettaurcureSkillDef;
 
+        internal static SkillDef unitBigBitSkillDef;
+
         internal static SkillDef unitPreonESkillDef;
+
+        internal static SkillDef unitNightmareVSkillDef;
 
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
@@ -693,6 +697,39 @@ namespace VileMod.Survivors.Vile
 
             });
 
+            unitBigBitSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "BigBit",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                // skillIcon = XAssets.IconHomingTorpedo,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitBigBit)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
             unitPreonESkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "PreonE",
@@ -702,6 +739,39 @@ namespace VileMod.Survivors.Vile
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitPreonE)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
+            unitNightmareVSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "NightmareVirus",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                // skillIcon = XAssets.IconHomingTorpedo,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitNightmareV)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
@@ -1058,12 +1128,13 @@ namespace VileMod.Survivors.Vile
         private void AddExtraSecondSkills()
         {
 
-            Skills.AddSecondExtraSkill(bodyPrefab, goliathPunchComboSkillDef);
+            Skills.AddSecondExtraSkill(bodyPrefab, unitBigBitSkillDef);
         }
 
         private void AddExtraThirdSkills()
         {
 
+            Skills.AddThirdExtraSkill(bodyPrefab, unitNightmareVSkillDef);
             Skills.AddThirdExtraSkill(bodyPrefab, unitPreonESkillDef);
         }
 
@@ -1278,6 +1349,33 @@ namespace VileMod.Survivors.Vile
                 args.moveSpeedMultAdd += 0.25f;
                 args.shieldMultAdd += 3f;
                 args.critDamageMultAdd += 1f;
+            }
+
+            if (sender.HasBuff(VileBuffs.nightmareVirusDebuff))
+            {
+                args.armorAdd -= 100;
+                args.damageMultAdd -= 0.5f;
+                args.attackSpeedMultAdd -= 0.25f;
+                args.regenMultAdd -= 1f;
+                args.jumpPowerMultAdd -= 0.3f;
+                args.moveSpeedMultAdd -= 0.25f;
+
+                if (sender.transform)
+                {
+                    CharacterModel model = sender.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
+
+                    model.baseRendererInfos[0].defaultMaterial = VileAssets.nightmareVMaterial;
+
+                    //TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(sender.transform.gameObject);
+                    //temporaryOverlayInstance.duration = 1f;
+                    //temporaryOverlayInstance.animateShaderAlpha = true;
+                    //temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                    //temporaryOverlayInstance.destroyComponentOnEnd = true;
+                    //temporaryOverlayInstance.originalMaterial = VileAssets.nightmareVMaterial;
+                    //temporaryOverlayInstance.inspectorCharacterModel = model;
+                    //temporaryOverlayInstance.AddToCharacterModel(model);
+                }
+
             }
 
         }

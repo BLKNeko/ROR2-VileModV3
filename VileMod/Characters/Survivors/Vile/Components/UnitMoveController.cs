@@ -15,15 +15,22 @@ namespace VileMod.Survivors.Vile.Components
     public class UnitMoveController : MonoBehaviour
     {
         [Header("Movimentação")]
-        public float moveSpeed = 5f;
-        public float minDistance = 1f;
-        public float maxDistance = 40f;
-        public float frontSafeDistance = 15f;
-        public float backToDistance = 30f;
-        public float rotationSpeed = 5f;
+        protected float moveSpeed = 5f;
+        protected float minDistance = 1f;
+        protected float maxDistance = 40f;
+        protected float frontSafeDistance = 15f;
+        protected float backToDistance = 30f;
+        protected float rotationSpeed = 5f;
+        protected float enemyReachDistance = 2f;
+        protected float procCoefficient = 1f;
+        protected float distance;
+
+        protected bool shouldRotateY = false;
+        protected bool shouldFollowGroundOffset = false;
+        protected bool shouldMoveTowardEnemy = false;
 
         [Header("Alvo")]
-        public Transform target;
+        public Transform playerTarget;
         
 
         [Header("Detecção de inimigos")]
@@ -32,11 +39,13 @@ namespace VileMod.Survivors.Vile.Components
         protected Transform firePoint;
         public HurtBox enemyHurtbox;
         public Vector3 shootDir;
+        private float enemyDistance;
+        
 
         [Header("Ataque")]
         protected float FireCooldown = 0.5f; // Tempo de recarga entre disparos
         protected float FireTimer; // Tempo de recarga entre disparos
-        protected float damageCoeficient;
+        protected float damageCoefficient;
 
         public bool IsIdle { get; private set; }
         public bool IsRunning { get; private set; }
@@ -45,6 +54,7 @@ namespace VileMod.Survivors.Vile.Components
         private Vector3 direction;
         private Vector3 lookDirection;
 
+        public ProjectileOverlapAttack overlapAttack;
         public ProjectileController projectileController;
         public CharacterBody ownerBody;
         private Animator animator;
@@ -55,9 +65,10 @@ namespace VileMod.Survivors.Vile.Components
         public virtual void Start()
         {
             projectileController = GetComponent<ProjectileController>();
+            overlapAttack = GetComponent<ProjectileOverlapAttack>();
             ownerBody = projectileController.owner.GetComponent<CharacterBody>();
             animator = projectileController.ghost.gameObject.GetComponent<Animator>();
-            target = ownerBody.transform;
+            playerTarget = ownerBody.transform;
 
             moveSpeed += ownerBody.moveSpeed * 1.5f;
             FireTimer = FireCooldown;
@@ -66,9 +77,18 @@ namespace VileMod.Survivors.Vile.Components
 
         public virtual void FixedUpdate()
         {
-            if (target == null) return;
+            if (playerTarget == null) return;
 
-            float distance = Vector3.Distance(transform.position, target.position);
+            if (!shouldFollowGroundOffset)
+            {
+                distance = Vector3.Distance(transform.position, playerTarget.position);
+            }
+            else
+            {
+                Vector3 Target2 = playerTarget.position;
+                Target2.y += groundOffset; // Adiciona o offset do chão ao alvo
+                distance = Vector3.Distance(transform.position, Target2);
+            }
 
             // Atualiza as animações
             UpdateAnims();
@@ -80,75 +100,235 @@ namespace VileMod.Survivors.Vile.Components
             // Atira se houver inimigos
             if (enemyHurtbox)
             {
-                SetState(false, false, true); // Shooting
+                //Moved to FIRE
+                //SetState(false, false, true); // Shooting
                 
                 shootDir = (enemyHurtbox.healthComponent.body.corePosition - projectileController.transform.position).normalized;
 
-                FireTimer -= Time.fixedDeltaTime;
+                
 
-                if (FireTimer <= 0f)
+                enemyDistance = Vector3.Distance(transform.position, enemyHurtbox.healthComponent.body.corePosition);
+
+                if (!shouldMoveTowardEnemy)
                 {
-                    lookDirection = new Vector3(shootDir.x, 0, shootDir.z); // Só gira no eixo Y
+                    FireTimer -= Time.fixedDeltaTime;
 
-                    if (lookDirection != Vector3.zero)
+                    if (FireTimer <= 0f)
                     {
-                        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
-                    }
 
-                    FireAttack();
-                    FireTimer = FireCooldown; // Reinicia o tempo de recarga
+                        LookTowardsEnemy();
+
+                        FireAttack();
+                        FireTimer = FireCooldown; // Reinicia o tempo de recarga
+                    }
                 }
+                else
+                {
+                    FireTimer -= Time.fixedDeltaTime;
+
+                    if (enemyDistance > enemyReachDistance)
+                    {
+                        LookTowardsEnemy();
+                        MoveTowardsEnemy(enemyDistance, enemyHurtbox.healthComponent.body.transform);
+                    }
+                    else
+                    {
+                        
+
+                        if (FireTimer <= 0f)
+                        {
+
+                            LookTowardsEnemy();
+
+                            FireAttack();
+                            FireTimer = FireCooldown; // Reinicia o tempo de recarga
+                        }
+                    }
+                }
+
+                
 
 
                 return;
             }
 
+            if (!shouldMoveTowardEnemy)
+                BaseMovment();
+            else
+                BaseMeeleeMovment();
+
+            StickToGround();
+
+            LookTowardsTarget();
+
+        }
+
+        public virtual void BaseMovment()
+        {
             // Movimento baseado na distância
             if (distance < minDistance)
             {
+                Debug.Log($"Distance: {distance} < MinDistance: {minDistance}");
                 MoveAwayFromTarget();
                 SetState(false, true, false); // Run
             }
             else if (distance > maxDistance)
             {
+                Debug.Log($"Distance: {distance} > MaxDistance: {maxDistance}");
                 MoveTowardsTarget(backToDistance);
                 SetState(false, true, false); // Run
             }
             else if (distance > frontSafeDistance)
             {
+                Debug.Log($"Distance: {distance} > FrontSafeDistance: {frontSafeDistance}");
                 MoveTowardsTarget(frontSafeDistance);
                 SetState(false, true, false); // Run
             }
             else
             {
+                Debug.Log($"Distance: {distance} is within range.");
                 SetState(true, false, false); // Idle
             }
-            StickToGround();
+        }
 
-            Vector3 flatDirection = new Vector3(direction.x, 0, direction.z);
-            if (flatDirection != Vector3.zero)
+        public virtual void BaseMeeleeMovment()
+        {
+            if (enemyHurtbox != null) return;
+
+            // Movimento baseado na distância
+            if (distance < minDistance)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(flatDirection);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
+                Debug.Log($"Distance: {distance} < MinDistance: {minDistance}");
+                MoveAwayFromTarget();
+                SetState(false, true, false); // Run
+            }
+            else if (distance > maxDistance)
+            {
+                Debug.Log($"Distance: {distance} > MaxDistance: {maxDistance}");
+                MoveTowardsTarget(backToDistance);
+                SetState(false, true, false); // Run
+            }
+            else if (distance > frontSafeDistance)
+            {
+                Debug.Log($"Distance: {distance} > FrontSafeDistance: {frontSafeDistance}");
+                MoveTowardsTarget(frontSafeDistance);
+                SetState(false, true, false); // Run
+            }
+            else
+            {
+                Debug.Log($"Distance: {distance} is within range.");
+                SetState(true, false, false); // Idle
+            }
+        }
+
+        private void LookTowardsEnemy()
+        {
+
+            if (!shouldRotateY)
+            {
+                lookDirection = new Vector3(shootDir.x, 0, shootDir.z); // Só gira no eixo Y
+
+                if (lookDirection != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
+                }
+            }
+            else
+            {
+                lookDirection = new Vector3(shootDir.x, shootDir.y, shootDir.z); // Só gira no eixo Y
+
+                if (lookDirection != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
+                }
             }
 
+        }
+
+        private void LookTowardsTarget()
+        {
+
+            if (!shouldRotateY)
+            {
+                Vector3 flatDirection = new Vector3(direction.x, 0, direction.z);
+                if (flatDirection != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(flatDirection);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
+                }
+            }
+            else
+            {
+                Vector3 flatDirection = new Vector3(direction.x, direction.y, direction.z);
+                if (flatDirection != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(flatDirection);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
+                }
+            }
+            
+        }
+
+        private void MoveTowardsEnemy(float enemyDistance, Transform enemyTransform)
+        {
+            direction = (enemyTransform.position - transform.position).normalized;
+
+            if (enemyDistance > enemyReachDistance)
+            {
+                Vector3 moveTarget = enemyTransform.position - direction * enemyReachDistance;
+                transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
+            }
         }
 
         private void MoveTowardsTarget(float targetDistance)
         {
-            direction = (target.position - transform.position).normalized;
-            Vector3 moveTarget = target.position - direction * targetDistance;
 
-            transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
+            if (!shouldFollowGroundOffset)
+            {
+                direction = (playerTarget.position - transform.position).normalized;
+                Vector3 moveTarget = playerTarget.position - direction * targetDistance;
+
+                transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+
+                // Se deve seguir o offset do chão, calcula a posição alvo com o offset
+                playerTarget.position = new Vector3(playerTarget.position.x,playerTarget.position.y + groundOffset, playerTarget.position.z);
+
+                direction = (playerTarget.position - transform.position).normalized;
+                Vector3 moveTarget = playerTarget.position - direction * targetDistance;
+
+                transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
+            }
+
+            
         }
 
         private void MoveAwayFromTarget()
         {
-            direction = (transform.position - target.position).normalized;
-            Vector3 moveTarget = transform.position + direction;
 
-            transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
+            if (!shouldFollowGroundOffset)
+            {
+                direction = (transform.position - playerTarget.position).normalized;
+                Vector3 moveTarget = transform.position + direction;
+
+                transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+
+                // Se deve seguir o offset do chão, calcula a posição alvo com o offset
+                playerTarget.position = new Vector3(playerTarget.position.x, playerTarget.position.y + groundOffset, playerTarget.position.z);
+
+                direction = (transform.position - playerTarget.position).normalized;
+                Vector3 moveTarget = transform.position + direction;
+
+                transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
+            }
+
         }
 
         void StickToGround()
@@ -162,19 +342,6 @@ namespace VileMod.Survivors.Vile.Components
                 pos.y = hit.point.y + groundOffset;
                 transform.position = pos;
             }
-        }
-
-        bool CheckForEnemiesNearby()
-        {
-            if (ownerBody == null || !ownerBody.teamComponent) return false;
-
-            TeamIndex myTeam = ownerBody.teamComponent.teamIndex;
-
-            var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster)
-                .Where(tc => tc.teamIndex != myTeam)
-                .Where(tc => Vector3.Distance(tc.transform.position, transform.position) <= enemyCheckRadius);
-
-            return enemies.Any();
         }
 
         private void UpdateAnims()

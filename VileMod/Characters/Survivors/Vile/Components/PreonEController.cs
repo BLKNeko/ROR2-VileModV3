@@ -18,7 +18,7 @@ namespace VileMod.Survivors.Vile.Components
             base.Start();
 
             moveSpeed += ownerBody.moveSpeed * 1.5f;
-            damageCoeficient = 2f;
+            damageCoefficient = 2f;
             FireCooldown = 0.5f; // Tempo de recarga entre disparos
 
             enemyCheckRadius = 35f;
@@ -38,12 +38,14 @@ namespace VileMod.Survivors.Vile.Components
         public override void FireAttack()
         {
 
+            SetState(false, false, true); // shooting
+
             new BulletAttack
             {
                 bulletCount = 1,
                 aimVector = shootDir,
                 origin = firePoint.position,
-                damage = damageCoeficient * ownerBody.damage,
+                damage = damageCoefficient * ownerBody.damage,
                 damageColorIndex = DamageColorIndex.Default,
                 damageType = DamageType.Generic,
                 falloffModel = BulletAttack.FalloffModel.None,

@@ -24,6 +24,9 @@ namespace VileMod.Survivors.Vile
         //UI
         public static GameObject BarPanel;
 
+        //Material
+        public static Material nightmareVMaterial;
+
         //projectiles
         public static GameObject bombProjectilePrefab;
         public static GameObject vileShotgunIcePrefab;
@@ -36,6 +39,8 @@ namespace VileMod.Survivors.Vile
         public static GameObject unitMettaurcurePrefab;
 
         public static GameObject unitBigBitPrefab;
+
+        public static GameObject unitNightmareVPrefab;
 
         private static AssetBundle _assetBundle;
 
@@ -63,6 +68,8 @@ namespace VileMod.Survivors.Vile
             swordHitImpactEffect = _assetBundle.LoadEffect("ImpactHenrySlash");
 
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
+
+            nightmareVMaterial = _assetBundle.LoadMaterial("NightmareVMaterial");
 
         }
 
@@ -120,6 +127,8 @@ namespace VileMod.Survivors.Vile
 
             CreateUnitPreonEProjectile();
             CreateUnitMettaurcureProjectile();
+            CreateUnitBigBitProjectile();
+            CreateUnitNightmareVProjectile();
 
             Content.AddProjectilePrefab(bombProjectilePrefab);
             Content.AddProjectilePrefab(vileShotgunIcePrefab);
@@ -127,6 +136,8 @@ namespace VileMod.Survivors.Vile
 
             Content.AddProjectilePrefab(unitPreonEPrefab);
             Content.AddProjectilePrefab(unitMettaurcurePrefab);
+            Content.AddProjectilePrefab(unitBigBitPrefab);
+            Content.AddProjectilePrefab(unitNightmareVPrefab);
         }
 
         private static void CreateBombProjectile()
@@ -201,7 +212,7 @@ namespace VileMod.Survivors.Vile
         private static void CreateUnitBigBitProjectile()
         {
             //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
-            unitBigBitPrefab = Asset.CloneProjectilePrefab("FMJ", "MettaurcureProjectile");
+            unitBigBitPrefab = Asset.CloneProjectilePrefab("FMJ", "BigBitProjectile");
 
             //remove their ProjectileImpactExplosion component and start from default values
             UnityEngine.Object.Destroy(unitBigBitPrefab.GetComponent<ProjectileImpactExplosion>());
@@ -217,6 +228,27 @@ namespace VileMod.Survivors.Vile
                 unitBigBitController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("BigBit");
 
             unitBigBitController.startSound = "";
+        }
+
+        private static void CreateUnitNightmareVProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            unitNightmareVPrefab = Asset.CloneProjectilePrefab("FMJ", "NightmareVProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            UnityEngine.Object.Destroy(unitNightmareVPrefab.GetComponent<ProjectileImpactExplosion>());
+            //ProjectileImpactExplosion bombImpactExplosion = bombProjectilePrefab.AddComponent<ProjectileImpactExplosion>();
+
+            unitNightmareVPrefab.GetComponent<ProjectileSimple>().lifetime = 60f;
+
+            unitNightmareVPrefab.AddComponent<NightmareVController>();
+
+            ProjectileController unitNightmareVController = unitNightmareVPrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("NightmareVirus") != null)
+                unitNightmareVController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("NightmareVirus");
+
+            unitNightmareVController.startSound = "";
         }
 
 

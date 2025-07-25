@@ -27,19 +27,33 @@ namespace VileMod.Survivors.Vile.SkillStates
         private string muzzleString;
 
         private VileComponent VC;
-        private float elementBonus;
-
+        private VileBoltComponent VBC;
+        private int boltCost;
         public override void OnEnter()
         {
             base.OnEnter();
-            duration = baseDuration / attackSpeedStat;
+            duration = baseDuration;
             fireTime = firePercentTime * duration;
             characterBody.SetAimTimer(2f);
             muzzleString = "Muzzle";
-            elementBonus = 0.4f + characterBody.level / 100f;
+            boltCost = 10;
             VC = GetComponent<VileComponent>();
+            VBC = GetComponent<VileBoltComponent>();
 
-            //PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
+            if (VBC.GetBoltValue() < boltCost)
+            {
+                //Play sound
+
+                Chat.AddMessage($"You need at least {boltCost} Vile Bolts to call Preon Elite unit! You currently have {VBC.GetBoltValue()} Vile Bolts.");
+
+                //Reset cooldown
+                outer.SetNextStateToMain();
+                return;
+            }
+
+            VBC.ChangeBoltValue(-boltCost);
+
+            Fire();
 
         }
 
@@ -51,11 +65,6 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-            if (fixedAge >= fireTime)
-            {
-                Fire();
-            }
 
             if (fixedAge >= duration && isAuthority)
             {

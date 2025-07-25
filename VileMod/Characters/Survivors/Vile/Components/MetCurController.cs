@@ -19,7 +19,7 @@ namespace VileMod.Survivors.Vile.Components
             base.Start();
 
             moveSpeed += ownerBody.moveSpeed * 2f;
-            healCoeficient = 2f;
+            healCoefficient = 2f;
             FireCooldown = 3f; // Tempo de recarga entre disparos
 
             allyCheckRadius = 35f;
@@ -42,10 +42,10 @@ namespace VileMod.Survivors.Vile.Components
 
             if (body != null)
             {
-                body.healthComponent.Heal(healCoeficient * ownerBody.damage, default, true);
+                body.healthComponent.Heal(healCoefficient * ownerBody.damage, default, true);
 
                 Debug.Log($"Body Name: {body.name}");
-                Debug.Log($"Body Heal: {body.healthComponent.health} + {healCoeficient * ownerBody.damage} = {body.healthComponent.health + (healCoeficient * ownerBody.damage)}");
+                Debug.Log($"Body Heal: {body.healthComponent.health} + {healCoefficient * ownerBody.damage} = {body.healthComponent.health + (healCoefficient * ownerBody.damage)}");
 
                 if (body.HasBuff(VileBuffs.RideArmorEnabledBuff))
                 {
@@ -54,7 +54,7 @@ namespace VileMod.Survivors.Vile.Components
 
                     if (body.GetComponent<VileRideArmorComponent>())
                     {
-                        body.GetComponent<VileRideArmorComponent>().RepairRideArmor(healCoeficient * ownerBody.damage);
+                        body.GetComponent<VileRideArmorComponent>().RepairRideArmor(healCoefficient * ownerBody.damage);
                     }
 
                 }
