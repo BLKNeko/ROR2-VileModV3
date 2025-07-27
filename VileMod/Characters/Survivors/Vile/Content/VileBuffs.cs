@@ -23,6 +23,9 @@ namespace VileMod.Survivors.Vile
         public static BuffDef PrimaryFlameBuff;
         public static BuffDef PrimaryShockBuff;
 
+
+        public static BuffDef MetComBuff;
+
         public static void Init(AssetBundle assetBundle)
         {
             armorBuff = Modules.Content.CreateAndAddBuff("HenryArmorBuff",
@@ -72,6 +75,12 @@ namespace VileMod.Survivors.Vile
                 Color.white,
                 false,
                 false);
+
+            MetComBuff = Modules.Content.CreateAndAddBuff("MetComBuff",
+                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                Color.white,
+                false,
+                true);
 
 
             OverHeatDebuff = Modules.Content.CreateAndAddBuff("OverHeatDebuff",

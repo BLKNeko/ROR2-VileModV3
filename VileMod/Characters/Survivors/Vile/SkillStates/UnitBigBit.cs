@@ -101,7 +101,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                     if (Physics.Raycast(spawnPos, Vector3.down, out RaycastHit hitInfo, 100f, LayerIndex.world.mask))
                     {
                         spawnPos = hitInfo.point;
-                        spawnPos.y += 0.5f;
+                        spawnPos.y += 8f;
                     }
 
                     FireProjectileInfo ShotgunProjectille = new FireProjectileInfo();

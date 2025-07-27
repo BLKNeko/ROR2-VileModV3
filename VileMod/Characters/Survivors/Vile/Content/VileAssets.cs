@@ -42,6 +42,8 @@ namespace VileMod.Survivors.Vile
 
         public static GameObject unitNightmareVPrefab;
 
+        public static GameObject unitMettaurCommanderPrefab;
+
         private static AssetBundle _assetBundle;
 
         public static void Init(AssetBundle assetBundle)
@@ -129,6 +131,7 @@ namespace VileMod.Survivors.Vile
             CreateUnitMettaurcureProjectile();
             CreateUnitBigBitProjectile();
             CreateUnitNightmareVProjectile();
+            CreateUnitMetComProjectile();
 
             Content.AddProjectilePrefab(bombProjectilePrefab);
             Content.AddProjectilePrefab(vileShotgunIcePrefab);
@@ -138,6 +141,7 @@ namespace VileMod.Survivors.Vile
             Content.AddProjectilePrefab(unitMettaurcurePrefab);
             Content.AddProjectilePrefab(unitBigBitPrefab);
             Content.AddProjectilePrefab(unitNightmareVPrefab);
+            Content.AddProjectilePrefab(unitMettaurCommanderPrefab);
         }
 
         private static void CreateBombProjectile()
@@ -249,6 +253,27 @@ namespace VileMod.Survivors.Vile
                 unitNightmareVController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("NightmareVirus");
 
             unitNightmareVController.startSound = "";
+        }
+
+        private static void CreateUnitMetComProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            unitMettaurCommanderPrefab = Asset.CloneProjectilePrefab("FMJ", "MettaurCommanderProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            UnityEngine.Object.Destroy(unitMettaurCommanderPrefab.GetComponent<ProjectileImpactExplosion>());
+            //ProjectileImpactExplosion bombImpactExplosion = bombProjectilePrefab.AddComponent<ProjectileImpactExplosion>();
+
+            unitMettaurCommanderPrefab.GetComponent<ProjectileSimple>().lifetime = 60f;
+
+            unitMettaurCommanderPrefab.AddComponent<MetComController>();
+
+            ProjectileController unitMetComController = unitMettaurCommanderPrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("MetCom") != null)
+                unitMetComController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("MetCom");
+
+            unitMetComController.startSound = "";
         }
 
 

@@ -29,6 +29,9 @@ namespace VileMod.Survivors.Vile.Components
         private float r_MaxHealth;
         private float r_Health;
 
+        private float r_MaxShield;
+        private float r_Shield;
+
         private float r_RegemValue = 1f;
         private float r_RegemCooldown = 0.5f; // 0.5 seconds cooldown for regen
         private float r_RegenTimer;
@@ -91,6 +94,8 @@ namespace VileMod.Survivors.Vile.Components
             if (Body.HasBuff(VileBuffs.HawkBuff))
                 HawkFlyingBehavior();
 
+            DeplateShieldOverTime();
+
         }
 
         private bool HasRideArmorBuff()
@@ -101,6 +106,8 @@ namespace VileMod.Survivors.Vile.Components
         private void UpdateMaxHealth()
         {
             r_MaxHealth = HealthComp.fullCombinedHealth;
+
+            r_MaxShield = r_MaxHealth;
         }
 
         private void CheckHealthUpdate()
@@ -126,6 +133,17 @@ namespace VileMod.Survivors.Vile.Components
                 r_RegenTimer = 0f;
 
                 Debug.Log($"VileRideArmorComponent - Ride Armor Regenerated: {r_RegemValue}, New Health: {r_Health}");
+            }
+        }
+
+        private void DeplateShieldOverTime()
+        {
+            if (r_Shield > 0f)
+            {
+                r_Shield -= Time.fixedDeltaTime; // Deplete shield over time
+                r_Shield = Mathf.Clamp(r_Shield, 0f, r_MaxShield);
+
+                Debug.Log($"VileRideArmorComponent - Ride Armor Shield Depleted: New Shield: {r_Shield}");
             }
         }
 
@@ -172,6 +190,13 @@ namespace VileMod.Survivors.Vile.Components
             r_Health = Mathf.Clamp(r_Health, 1f, r_MaxHealth);
         }
 
+        public void AddShieldRA(float amount)
+        {
+            r_Shield += amount;
+
+            r_Shield = Mathf.Clamp(r_Shield, 1f, r_MaxShield);
+        }
+
         public float GetRHealthValue()
         {
             return r_Health;
@@ -182,16 +207,38 @@ namespace VileMod.Survivors.Vile.Components
             return r_MaxHealth;
         }
 
+        public float GetRShieldValue()
+        {
+            return r_Shield;
+        }
+
+        public float GetRMaxShieldValue()
+        {
+            return r_MaxShield;
+        }
+
         public float GetInverseLerpRHealthValue()
         {
             // Inverse lerp the bolt value to a range of 0 to 1
             return Mathf.InverseLerp(0, r_MaxHealth, r_Health);
         }
 
+        public float GetInverseLerpRShieldValue()
+        {
+            // Inverse lerp the bolt value to a range of 0 to 1
+            return Mathf.InverseLerp(0, r_MaxShield, r_Shield);
+        }
+
         public bool IsRideArmorFullHealth()
         {
             
             return r_Health >= r_MaxHealth;
+        }
+
+        public bool IsRideArmorFullShield()
+        {
+
+            return r_Shield >= r_MaxShield;
         }
 
         private void HawkFlyingBehavior()
@@ -320,10 +367,21 @@ namespace VileMod.Survivors.Vile.Components
                         finalDamage *= armorMultiplier;
                     }
 
-                    r_Health -= finalDamage;
+                    if(r_Shield > 0f)
+                    {
+                        r_Shield -= finalDamage;
+
+                        Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {finalDamage}, New Shield: {r_Shield}");
+                    }
+                    else
+                    {
+                        r_Health -= finalDamage;
+
+
+                        Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {finalDamage}, New Health: {r_Health}");
+                    }
 
                     
-                    Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {damageInfo.damage}, New Health: {r_Health}");
 
                     if (modelTransform)
                     {

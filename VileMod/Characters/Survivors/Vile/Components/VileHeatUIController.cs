@@ -16,6 +16,7 @@ public class VileHeatUIController : MonoBehaviour
     public Image barFillEF;
     public Image barFillB;
     public Image barFillR;
+    public Image barFillRSH;
     private VileComponent heatComp;
     private VileBoltComponent boltComp;
     private VileRideArmorComponent rideComp;
@@ -98,7 +99,7 @@ public class VileHeatUIController : MonoBehaviour
         rectTransform.pivot = new Vector2(0f, 1f);      // Pivot no canto superior esquerdo
 
         // Offset relativo ao canto superior esquerdo (ajuste fino)
-        rectTransform.anchoredPosition = new Vector2(30f, -125f); // X mais para direita, Y mais para baixo
+        rectTransform.anchoredPosition = new Vector2(1300f, -650f); // X mais para direita, Y mais para baixo
 
         // Ajuste de tamanho, se necessário
         rectTransform.sizeDelta = new Vector2(160f, 20f); // largura x altura
@@ -111,6 +112,7 @@ public class VileHeatUIController : MonoBehaviour
         barFillEF = heatBarGO.transform.Find("EBar/Bar_Fill_F").GetComponent<Image>();
         barFillB = heatBarGO.transform.Find("BBar/Bar_Fill_B").GetComponent<Image>();
         barFillR = heatBarGO.transform.Find("RBar/Bar_Fill_R").GetComponent<Image>();
+        barFillRSH = heatBarGO.transform.Find("RBar/Bar_Fill_RSH").GetComponent<Image>();
 
         barR = heatBarGO.transform.Find("RBar").gameObject;
 
@@ -163,6 +165,7 @@ public class VileHeatUIController : MonoBehaviour
                 {
                     barR.SetActive(true);
                     barFillR.fillAmount = rideComp.GetInverseLerpRHealthValue();
+                    barFillRSH.fillAmount = rideComp.GetInverseLerpRShieldValue();
                 }
                 else
                 {

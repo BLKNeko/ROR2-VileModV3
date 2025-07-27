@@ -58,6 +58,8 @@ namespace VileMod.Survivors.Vile
         //UNITS
         internal static SkillDef unitMettaurcureSkillDef;
 
+        internal static SkillDef unitMettaurCommanderSkillDef;
+
         internal static SkillDef unitBigBitSkillDef;
 
         internal static SkillDef unitPreonESkillDef;
@@ -92,7 +94,8 @@ namespace VileMod.Survivors.Vile
 
             armor = 30f,
             armorGrowth = 1.8f,
-            shieldGrowth = 0.25f,
+            shield = 25f,
+            shieldGrowth = 2f,
             damage = 25f,
             healthGrowth = 25f,
             healthRegen = 1.8f,
@@ -697,6 +700,39 @@ namespace VileMod.Survivors.Vile
 
             });
 
+            unitMettaurCommanderSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "MettaurCommander",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                // skillIcon = XAssets.IconHomingTorpedo,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitMettaurCommander)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
             unitBigBitSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "BigBit",
@@ -1128,6 +1164,7 @@ namespace VileMod.Survivors.Vile
         private void AddExtraSecondSkills()
         {
 
+            Skills.AddSecondExtraSkill(bodyPrefab, unitMettaurCommanderSkillDef);
             Skills.AddSecondExtraSkill(bodyPrefab, unitBigBitSkillDef);
         }
 
@@ -1349,6 +1386,11 @@ namespace VileMod.Survivors.Vile
                 args.moveSpeedMultAdd += 0.25f;
                 args.shieldMultAdd += 3f;
                 args.critDamageMultAdd += 1f;
+            }
+
+            if (sender.HasBuff(VileBuffs.MetComBuff))
+            {
+                args.shieldMultAdd += 3f;
             }
 
             if (sender.HasBuff(VileBuffs.nightmareVirusDebuff))

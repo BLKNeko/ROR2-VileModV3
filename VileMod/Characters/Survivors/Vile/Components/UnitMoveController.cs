@@ -117,7 +117,7 @@ namespace VileMod.Survivors.Vile.Components
                     {
 
                         LookTowardsEnemy();
-
+                        animator.Play("Shoot", 0, 0f);
                         FireAttack();
                         FireTimer = FireCooldown; // Reinicia o tempo de recarga
                     }
@@ -139,7 +139,7 @@ namespace VileMod.Survivors.Vile.Components
                         {
 
                             LookTowardsEnemy();
-
+                            animator.Play("Shoot", 0, 0f);
                             FireAttack();
                             FireTimer = FireCooldown; // Reinicia o tempo de recarga
                         }
@@ -346,8 +346,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private void UpdateAnims()
         {
-            if (IsShooting && animator.GetCurrentStateName(0) != "Shoot")
-                animator.Play("Shoot");
+            //if (IsShooting)
+            //    animator.Play("Shoot", 0, 0f);
 
             if (IsRunning && animator.GetCurrentStateName(0) != "Run")
                 animator.Play("Run");

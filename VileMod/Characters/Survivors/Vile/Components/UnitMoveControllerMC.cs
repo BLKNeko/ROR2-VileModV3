@@ -21,6 +21,7 @@ namespace VileMod.Survivors.Vile.Components
         public float frontSafeDistance = 5f;
         public float backToDistance = 10f;
         public float rotationSpeed = 5f;
+        public float healMaxDistanceFromPlayer = 10f; // nova variável!
 
         [Header("Alvo")]
         public Transform target;
@@ -37,6 +38,8 @@ namespace VileMod.Survivors.Vile.Components
         protected float FireCooldown = 0.5f; // Tempo de recarga entre disparos
         protected float FireTimer; // Tempo de recarga entre disparos
         protected float healCoefficient;
+        protected bool isShield = false; // Se o ataque cura escudo ou vida
+
 
         public bool IsIdle { get; private set; }
         public bool IsRunning { get; private set; }
@@ -76,37 +79,6 @@ namespace VileMod.Survivors.Vile.Components
             // Atualiza as animações
             UpdateAnims();
 
-            // Verifica se há inimigos próximos
-            //bool hasNearbyEnemies = CheckForEnemiesNearby();
-            allyBody = FindAllyToHeal();
-
-            // Atira se houver inimigos
-            if (allyBody)
-            {
-                SetState(false, false, true); // Shooting
-                
-                shootDir = (allyBody.healthComponent.body.corePosition - projectileController.transform.position).normalized;
-
-                FireTimer -= Time.fixedDeltaTime;
-
-                if (FireTimer <= 0f)
-                {
-                    lookDirection = new Vector3(shootDir.x, 0, shootDir.z); // Só gira no eixo Y
-
-                    if (lookDirection != Vector3.zero)
-                    {
-                        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
-                    }
-
-                    StartHeal(allyBody);
-                    FireTimer = FireCooldown; // Reinicia o tempo de recarga
-                }
-
-
-                return;
-            }
-
             // Movimento baseado na distância
             if (distance < minDistance)
             {
@@ -127,6 +99,7 @@ namespace VileMod.Survivors.Vile.Components
             {
                 SetState(true, false, false); // Idle
             }
+
             StickToGround();
 
             Vector3 flatDirection = new Vector3(direction.x, 0, direction.z);
@@ -136,6 +109,32 @@ namespace VileMod.Survivors.Vile.Components
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
             }
 
+            // TENTA CURAR DEPOIS DE AJUSTAR POSIÇÃO
+            allyBody = FindAllyToHeal();
+
+            if (allyBody && Vector3.Distance(transform.position, target.position) <= healMaxDistanceFromPlayer)
+            {
+                SetState(false, false, true); // Shooting
+
+                shootDir = (allyBody.healthComponent.body.corePosition - projectileController.transform.position).normalized;
+
+                FireTimer -= Time.fixedDeltaTime;
+
+                if (FireTimer <= 0f)
+                {
+                    lookDirection = new Vector3(shootDir.x, 0, shootDir.z); // Só gira no eixo Y
+
+                    if (lookDirection != Vector3.zero)
+                    {
+                        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
+                    }
+
+                    animator.Play("Shoot", 0, 0f);
+                    StartHeal(allyBody);
+                    FireTimer = FireCooldown; // Reinicia o tempo de recarga
+                }
+            }
         }
 
         private void MoveTowardsTarget(float targetDistance)
@@ -169,8 +168,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private void UpdateAnims()
         {
-            if (IsShooting && animator.GetCurrentStateName(0) != "Shoot")
-                animator.Play("Shoot");
+            //if (IsShooting && animator.GetCurrentStateName(0) != "Shoot")
+            //    animator.Play("Shoot");
 
             if (IsRunning && animator.GetCurrentStateName(0) != "Run")
                 animator.Play("Run");
@@ -222,24 +221,51 @@ namespace VileMod.Survivors.Vile.Components
 
                 CharacterBody body = hb.healthComponent.body;
                 //Debug.Log($"Body: {body}");
-                if (body && body.healthComponent.alive && body.healthComponent.health < body.healthComponent.fullHealth)
+
+                if (!isShield)
                 {
-                    return body;
-                }
-
-                if (body.HasBuff(VileBuffs.RideArmorEnabledBuff))
-                {
-
-                    //Debug.Log($"Body RideArmorComp: {body.GetComponent<VileRideArmorComponent>()}");
-
-                    if (body.GetComponent<VileRideArmorComponent>())
+                    if (body && body.healthComponent.alive && body.healthComponent.health < body.healthComponent.fullHealth)
                     {
-                        // Se o corpo tem RideArmor, repara o RideArmor
-                        if(!body.GetComponent<VileRideArmorComponent>().IsRideArmorFullHealth())
-                            return body;
+                        return body;
                     }
 
+                    if (body.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                    {
+
+                        //Debug.Log($"Body RideArmorComp: {body.GetComponent<VileRideArmorComponent>()}");
+
+                        if (body.GetComponent<VileRideArmorComponent>())
+                        {
+                            // Se o corpo tem RideArmor, repara o RideArmor
+                            if (!body.GetComponent<VileRideArmorComponent>().IsRideArmorFullHealth())
+                                return body;
+                        }
+
+                    }
                 }
+                else
+                {
+                    if (body && body.healthComponent.alive && body.healthComponent.shield < body.healthComponent.fullShield)
+                    {
+                        return body;
+                    }
+
+                    if (body.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                    {
+
+                        //Debug.Log($"Body RideArmorComp: {body.GetComponent<VileRideArmorComponent>()}");
+
+                        if (body.GetComponent<VileRideArmorComponent>())
+                        {
+                            // Se o corpo tem RideArmor, repara o RideArmor
+                            if (!body.GetComponent<VileRideArmorComponent>().IsRideArmorFullShield())
+                                return body;
+                        }
+
+                    }
+                }
+
+                
 
             }
 
