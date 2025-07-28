@@ -68,6 +68,7 @@ namespace VileMod.Survivors.Vile
 
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
+        internal static SkillDef zipZapperSkillDef;
 
         //SECONDARY SKILL DEFS
 
@@ -85,11 +86,11 @@ namespace VileMod.Survivors.Vile
             bodyNameToken = VILE_PREFIX + "NAME",
             subtitleNameToken = VILE_PREFIX + "SUBTITLE",
 
-            characterPortrait = assetBundle.LoadAsset<Texture>("texHenryIcon"),
+            characterPortrait = assetBundle.LoadAsset<Texture>("VileTexIcon"),
             bodyColor = new Color(0.35f, 0.05f, 0.4f),
             sortPosition = 100,
 
-            crosshair = Asset.LoadCrosshair("SMGCrosshair"),
+            crosshair = Asset.LoadCrosshair("SMG"),
             podPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
 
             armor = 30f,
@@ -297,7 +298,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "EnterGoliath",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.CallGoliathSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EnterGoliath)),
                 activationStateMachineName = "Body",
@@ -327,7 +328,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "EnterGoliath",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.ExitGoliathSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitGoliath)),
                 activationStateMachineName = "Body",
@@ -357,7 +358,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "EnterGoliath",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.ResumeGoliathSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeGoliath)),
                 activationStateMachineName = "Body",
@@ -543,7 +544,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "EnterGoliath",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.CallHawkSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EnterHawk)),
                 activationStateMachineName = "Body",
@@ -573,7 +574,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "EnterGoliath",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.ExitHawkSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitHawk)),
                 activationStateMachineName = "Body",
@@ -603,7 +604,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "EnterGoliath",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.ResumeHawkSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeHawk)),
                 activationStateMachineName = "Body",
@@ -841,9 +842,39 @@ namespace VileMod.Survivors.Vile
                 skillName = "CherryBlast",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.CherryBlastSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CherryBlast)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 0f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            zipZapperSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "ZipZapper",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.CherryBlastSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ZipZapper)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -875,7 +906,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "VShotgunIce",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.ShotgunIceSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VShotgunIce)),
                 activationStateMachineName = "Weapon",
@@ -940,7 +971,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "VBurningDrive",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.BurningDriveSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VBurningDrive)),
                 activationStateMachineName = "Body",
@@ -1029,23 +1060,24 @@ namespace VileMod.Survivors.Vile
 
             //the primary skill is created using a constructor for a typical primary
             //it is also a SteppedSkillDef. Custom Skilldefs are very useful for custom behaviors related to casting a skill. see ror2's different skilldefs for reference
-            SteppedSkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
-                (
-                    "HenrySlash",
-                    VILE_PREFIX + "PRIMARY_SLASH_NAME",
-                    VILE_PREFIX + "PRIMARY_SLASH_DESCRIPTION",
-                    assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
-                    new EntityStates.SerializableEntityStateType(typeof(SkillStates.GPunch0)),
-                    "Weapon",
-                    true
-                ));
-            //custom Skilldefs can have additional fields that you can set manually
-            primarySkillDef1.stepCount = 2;
-            primarySkillDef1.stepGraceDuration = 0.5f;
+            //SteppedSkillDef primarySkillDef1 = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
+            //    (
+            //        "HenrySlash",
+            //        VILE_PREFIX + "PRIMARY_SLASH_NAME",
+            //        VILE_PREFIX + "PRIMARY_SLASH_DESCRIPTION",
+            //        assetBundle.LoadAsset<Sprite>("texPrimaryIcon"),
+            //        new EntityStates.SerializableEntityStateType(typeof(SkillStates.GPunch0)),
+            //        "Weapon",
+            //        true
+            //    ));
+            ////custom Skilldefs can have additional fields that you can set manually
+            //primarySkillDef1.stepCount = 2;
+            //primarySkillDef1.stepGraceDuration = 0.5f;
 
             //Skills.AddPrimarySkills(bodyPrefab, primarySkillDef1);
             //Skills.AddPrimarySkills(bodyPrefab, goliathPunchComboSkillDef);
             Skills.AddPrimarySkills(bodyPrefab, cherryBlastSkillDef);
+            Skills.AddPrimarySkills(bodyPrefab, zipZapperSkillDef);
         }
 
         private void AddSecondarySkills()
@@ -1197,7 +1229,7 @@ namespace VileMod.Survivors.Vile
             #region DefaultSkin
             //this creates a SkinDef with all default fields
             SkinDef defaultSkin = Skins.CreateSkinDef("DEFAULT_SKIN",
-                assetBundle.LoadAsset<Sprite>("texMainSkin"),
+                VileAssets.VileSkinIcon,
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 
@@ -1244,7 +1276,7 @@ namespace VileMod.Survivors.Vile
 
             //creating a new skindef as we did before
             SkinDef mk2Skin = Modules.Skins.CreateSkinDef(VILE_PREFIX + "MASTERY_SKIN_NAME",
-                assetBundle.LoadAsset<Sprite>("texMasteryAchievement"),
+                VileAssets.VileMK2SkinIcon,
                 defaultRendererinfos,
                 prefabCharacterModel.gameObject);
 

@@ -7,17 +7,18 @@ using VileMod.Survivors.Vile.Components;
 
 namespace VileMod.Survivors.Vile.SkillStates
 {
-    public class CherryBlast : BaseSkillState
+    public class ZipZapper : BaseSkillState
     {
         public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
-        public static float baseDuration = 0.6f;
+        public static float baseDuration = 0.4f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
         public static float firePercentTime = 0.0f;
         public static float force = 400f;
         public static float recoil = 3f;
-        public static float range = 200f;
-        public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerBanditPistol");
+        public static float range = 50f;
+        //public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerBanditPistol");
+        public static GameObject tracerEffectPrefab;
         public static GameObject hitEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/impacteffects/Hitspark1");
 
 
@@ -44,11 +45,13 @@ namespace VileMod.Survivors.Vile.SkillStates
             characterBody.isSprinting = false;
             VC = GetComponent<VileComponent>();
 
-            shootDelay = 1.5f;
-            maxShootDelay = 1.25f;
-            minShootDelay = 0.15f;
+            shootDelay = 0.8f;
+            maxShootDelay = 0.8f;
+            minShootDelay = 0.08f;
             spinLevel = VC.GetBaseHeatValue();
             stopwatch = 999f; // for immediate fire
+
+            tracerEffectPrefab = VileAssets.vileGreenTracerPrefab;
 
             if (NetworkServer.active)
             {
@@ -92,8 +95,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
                 if (characterBody.HasBuff(VileBuffs.OverHeatDebuff))
                 {
-                    CherryBlastEnd CBE = new CherryBlastEnd();
-                    outer.SetNextState(CBE);
+                    //CherryBlastEnd CBE = new CherryBlastEnd();
+                    outer.SetNextState(new ZipZapperEnd());
                 }
 
             }
@@ -102,8 +105,8 @@ namespace VileMod.Survivors.Vile.SkillStates
             if (!inputBank.skill1.down && base.fixedAge >= 0.1f)
             {
                 //this.outer.SetNextStateToMain();
-                CherryBlastEnd CBE = new CherryBlastEnd();
-                outer.SetNextState(CBE);
+                //CherryBlastEnd CBE = new CherryBlastEnd();
+                outer.SetNextState(new ZipZapperEnd());
             }
         }
 
@@ -177,9 +180,12 @@ namespace VileMod.Survivors.Vile.SkillStates
 
 
                 // Recoil dinâmico
-                float recoilFactor = Mathf.Lerp(0.1f, 1.5f, spinLevel);
+                float recoilFactor = Mathf.Lerp(0.1f, 1f, spinLevel);
                 AddRecoil(-0.5f * recoilFactor, -1f * recoilFactor, 0.5f * recoilFactor, 1f * recoilFactor);
                 characterBody.AddSpreadBloom(recoilFactor);
+
+                //ExtraHeat
+                VC.SetExtraHeatValues(0.02f);
 
                 // Som e tiro
                 //Util.PlaySound(Sounds.vileCherryBlast, gameObject);

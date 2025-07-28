@@ -32,6 +32,9 @@ namespace VileMod.Survivors.Vile
         public static GameObject vileShotgunIcePrefab;
         public static GameObject vileEletricSparkPrefab;
 
+        //Tracers
+        public static GameObject vileGreenTracerPrefab;
+
         //UnitsProjectiles
         public static GameObject unitPreonEPrefab;
         public static GameObject unitPreonEPrefabTest;
@@ -43,6 +46,25 @@ namespace VileMod.Survivors.Vile
         public static GameObject unitNightmareVPrefab;
 
         public static GameObject unitMettaurCommanderPrefab;
+
+        //Icons
+        public static Sprite VileSkinIcon;
+        public static Sprite VileMK2SkinIcon;
+
+
+        public static Sprite CherryBlastSkillIcon;
+
+        public static Sprite ShotgunIceSkillIcon;
+
+        public static Sprite BurningDriveSkillIcon;
+
+        public static Sprite CallGoliathSkillIcon;
+        public static Sprite ResumeGoliathSkillIcon;
+        public static Sprite ExitGoliathSkillIcon;
+
+        public static Sprite CallHawkSkillIcon;
+        public static Sprite ResumeHawkSkillIcon;
+        public static Sprite ExitHawkSkillIcon;
 
         private static AssetBundle _assetBundle;
 
@@ -56,6 +78,27 @@ namespace VileMod.Survivors.Vile
             CreateEffects();
 
             CreateProjectiles();
+
+            CreateIcons();
+
+        }
+
+        private static void CreateIcons()
+        {
+            VileSkinIcon = _assetBundle.LoadAsset<Sprite>("VileSkinIcon");
+            VileMK2SkinIcon = _assetBundle.LoadAsset<Sprite>("VileMK2SkinIcon");
+
+            CherryBlastSkillIcon = _assetBundle.LoadAsset<Sprite>("CherryBlastSkillIcon");
+            ShotgunIceSkillIcon = _assetBundle.LoadAsset<Sprite>("ShotgunIceSkillIcon");
+            BurningDriveSkillIcon = _assetBundle.LoadAsset<Sprite>("BurningDriveSkillIcon");
+
+            CallGoliathSkillIcon = _assetBundle.LoadAsset<Sprite>("CallGoliathSkillIcon");
+            ResumeGoliathSkillIcon = _assetBundle.LoadAsset<Sprite>("ResumeGoliathSkillIcon");
+            ExitGoliathSkillIcon = _assetBundle.LoadAsset<Sprite>("ExitGoliathSkillIcon");
+
+            CallHawkSkillIcon = _assetBundle.LoadAsset<Sprite>("CallHawkSkillIcon");
+            ResumeHawkSkillIcon = _assetBundle.LoadAsset<Sprite>("ResumeHawkSkillIcon");
+            ExitHawkSkillIcon = _assetBundle.LoadAsset<Sprite>("ExitHawkSkillIcon");
 
         }
 
@@ -72,6 +115,8 @@ namespace VileMod.Survivors.Vile
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
 
             nightmareVMaterial = _assetBundle.LoadMaterial("NightmareVMaterial");
+
+            vileGreenTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VGreenTacer", new Color(0.2f, 1f, 0.2f, 1f), 180f, 5f);
 
         }
 
@@ -119,6 +164,77 @@ namespace VileMod.Survivors.Vile
 
         }
         #endregion effects
+
+        public static GameObject CreateColoredTracerPrefab(string originalTracerPath, string newname, Color newColor, float tspeed, float tlenght)
+        {
+
+            GameObject clone = Asset.CloneTracer(originalTracerPath, newname);
+            Debug.Log($"[TracerUtils] Cloned tracer prefab: {clone.name} from {originalTracerPath}");
+
+            // LineRenderers
+            foreach (var lr in clone.GetComponentsInChildren<LineRenderer>())
+            {
+                // ⚠️ Salvar os pontos antes de alterar qualquer coisa
+                Vector3[] positions = new Vector3[lr.positionCount];
+                lr.GetPositions(positions);
+
+                lr.startColor = newColor;
+                lr.endColor = newColor;
+
+                if (lr.material != null)
+                {
+                    lr.material = UnityEngine.Object.Instantiate(lr.material);
+                    if (lr.material.HasProperty("_Color")) lr.material.SetColor("_Color", newColor);
+                    if (lr.material.HasProperty("_TintColor")) lr.material.SetColor("_TintColor", newColor);
+                }
+
+                // 🔁 Restaurar os pontos para evitar deformação
+                lr.positionCount = positions.Length;
+                lr.SetPositions(positions);
+
+            }
+
+            // TrailRenderers
+            foreach (var tr in clone.GetComponentsInChildren<TrailRenderer>())
+            {
+
+                tr.startColor = newColor;
+                tr.endColor = newColor;
+
+                if (tr.material != null)
+                {
+                    tr.material = UnityEngine.Object.Instantiate(tr.material);
+                    if (tr.material.HasProperty("_Color")) tr.material.SetColor("_Color", newColor);
+                    if (tr.material.HasProperty("_TintColor")) tr.material.SetColor("_TintColor", newColor);
+                }
+            }
+
+            //// ParticleSystems
+            foreach (var ps in clone.GetComponentsInChildren<ParticleSystem>())
+            {
+                var main = ps.main;
+                main.startColor = newColor;
+
+                // Tentar mudar a cor do material, se possível
+                var psRenderer = ps.GetComponent<ParticleSystemRenderer>();
+                if (psRenderer != null && psRenderer.material != null)
+                {
+                    psRenderer.material = UnityEngine.Object.Instantiate(psRenderer.material);
+                    if (psRenderer.material.HasProperty("_Color")) psRenderer.material.SetColor("_Color", newColor);
+                    if (psRenderer.material.HasProperty("_TintColor")) psRenderer.material.SetColor("_TintColor", newColor);
+                }
+            }
+
+            //Tracer configs
+            Tracer tracer = clone.GetComponent<Tracer>();
+            if (tracer != null)
+            {
+                tracer.speed = tspeed;
+                tracer.length = tlenght;
+            }
+
+            return clone;
+        }
 
         #region projectiles
         private static void CreateProjectiles()
