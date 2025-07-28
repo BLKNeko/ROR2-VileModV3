@@ -34,6 +34,8 @@ namespace VileMod.Survivors.Vile
 
         //Tracers
         public static GameObject vileGreenTracerPrefab;
+        public static GameObject vileCyanTracerPrefab;
+        public static GameObject vileBlueTracerPrefab;
 
         //UnitsProjectiles
         public static GameObject unitPreonEPrefab;
@@ -117,6 +119,8 @@ namespace VileMod.Survivors.Vile
             nightmareVMaterial = _assetBundle.LoadMaterial("NightmareVMaterial");
 
             vileGreenTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VGreenTacer", new Color(0.2f, 1f, 0.2f, 1f), 180f, 5f);
+            vileCyanTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VCyanTacer", new Color(0.4f, 0.8f, 1f, 1f), 170f, 5f);
+            vileBlueTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VBlueTacer", new Color(0.1f, 0.2f, 0.8f, 1f), 150f, 5f);
 
         }
 

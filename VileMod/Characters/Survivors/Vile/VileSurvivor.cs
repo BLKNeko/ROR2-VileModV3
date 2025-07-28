@@ -69,6 +69,8 @@ namespace VileMod.Survivors.Vile
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
         internal static SkillDef zipZapperSkillDef;
+        internal static SkillDef triple7SkillDef;
+        internal static SkillDef distanceNeedlerSkillDef;
 
         //SECONDARY SKILL DEFS
 
@@ -897,6 +899,66 @@ namespace VileMod.Survivors.Vile
                 forceSprintDuringState = false,
             });
 
+            triple7SkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "Triple7",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.CherryBlastSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(Triple7)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 0f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            distanceNeedlerSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "DistanceNeedler",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.CherryBlastSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(DistanceNeedler)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 0f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
             #endregion
 
             #region Utility
@@ -1078,6 +1140,8 @@ namespace VileMod.Survivors.Vile
             //Skills.AddPrimarySkills(bodyPrefab, goliathPunchComboSkillDef);
             Skills.AddPrimarySkills(bodyPrefab, cherryBlastSkillDef);
             Skills.AddPrimarySkills(bodyPrefab, zipZapperSkillDef);
+            Skills.AddPrimarySkills(bodyPrefab, triple7SkillDef);
+            Skills.AddPrimarySkills(bodyPrefab, distanceNeedlerSkillDef);
         }
 
         private void AddSecondarySkills()
