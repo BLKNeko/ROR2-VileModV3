@@ -190,6 +190,37 @@ Transform:
   m_Father: {fileID: 3917469966359990296}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.00043324239, y: 0.0030778341, z: -71.50099}
+--- !u!1 &349287347146317882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7958475510014876535}
+  m_Layer: 0
+  m_Name: HKGunRMuzz
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7958475510014876535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349287347146317882}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3412447942334626151}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &442143577190683887
 GameObject:
   m_ObjectHideFlags: 0
@@ -1061,7 +1092,8 @@ Transform:
   m_LocalPosition: {x: 0.3980002, y: 0.0019998534, z: 0.02699996}
   m_LocalScale: {x: 0.79999954, y: 0.7999994, z: 0.7999996}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8155115365449527667}
   m_Father: {fileID: 5035187543120423940}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4701,6 +4733,10 @@ MonoBehaviour:
     transform: {fileID: 6568039811852365785}
   - name: HK_VLMKC_Mesh
     transform: {fileID: 4231964220106109691}
+  - name: HKGunRMuzz
+    transform: {fileID: 7958475510014876535}
+  - name: HKGunLMuzz
+    transform: {fileID: 8155115365449527667}
 --- !u!1 &5526072745023632896
 GameObject:
   m_ObjectHideFlags: 0
@@ -5039,7 +5075,8 @@ Transform:
   m_LocalPosition: {x: 0.432, y: 0.02, z: -0.077}
   m_LocalScale: {x: 0.7999996, y: 0.7999996, z: 0.7999999}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7958475510014876535}
   m_Father: {fileID: 5195838988371712843}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -6.19, y: -94.087, z: -90.419}
@@ -6870,6 +6907,37 @@ Transform:
   m_Father: {fileID: 6334688894436510903}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -73.75737, y: -90, z: 179.99998}
+--- !u!1 &8175650875504563343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8155115365449527667}
+  m_Layer: 0
+  m_Name: HKGunLMuzz
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8155115365449527667
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8175650875504563343}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7506291437633510564}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8187868105110477467
 GameObject:
   m_ObjectHideFlags: 0

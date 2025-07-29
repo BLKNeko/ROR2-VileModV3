@@ -50,6 +50,7 @@ namespace VileMod.Survivors.Vile
         internal static SkillDef resumeHawkSkillDef;
 
         internal static HuntressTrackerSkillDef hawkGunSkillDef;
+        internal static HuntressTrackerSkillDef hawkGunBarrageSkillDef;
 
         //RIDE ARMOR GENERAL
         internal static SkillDef rideRapairSkillDef;
@@ -666,6 +667,39 @@ namespace VileMod.Survivors.Vile
                 forceSprintDuringState = false,
                 
                 
+            });
+
+            hawkGunBarrageSkillDef = Skills.CreateSkillDef<HuntressTrackerSkillDef>(new SkillDefInfo
+            {
+                skillName = "HawkGunBarrage",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                // skillIcon = XAssets.IconHomingTorpedo,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(HGunBarrage)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 15f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
             });
 
 

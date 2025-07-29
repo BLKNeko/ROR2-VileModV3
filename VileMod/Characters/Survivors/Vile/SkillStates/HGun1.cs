@@ -42,7 +42,8 @@ namespace MegamanXMod.Survivors.X.SkillStates
             fireTime = firePercentTime * duration;
             base.characterBody.SetAimTimer(2f);
             this.animator = base.GetModelAnimator();
-            this.muzzleString = "BasePos";
+            this.muzzleString = "HKGunLMuzz";
+            this.muzzleString2 = "HKGunRMuzz";
 
             this.modelTransform = base.GetModelTransform();
             this.animator = base.GetModelAnimator();
@@ -105,7 +106,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
                     genericDamageOrb.attacker = base.gameObject;
                     genericDamageOrb.procCoefficient = procCoefficient;
                     genericDamageOrb.damageType |= DamageType.Generic;
-                    genericDamageOrb.damageType |= DamageTypeCombo.GenericSpecial;
+                    genericDamageOrb.damageType |= DamageTypeCombo.GenericPrimary;
                     genericDamageOrb.damageColorIndex = DamageColorIndex.Default;
 
                     //genericDamageOrb.damageType = DamageType.ApplyMercExpose;
@@ -116,7 +117,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
                     if (hurtBox)
                     {
                         Transform transform = this.childLocator.FindChild(this.muzzleString);
-                        Transform transform2 = this.childLocator.FindChild(this.muzzleString);
+                        Transform transform2 = this.childLocator.FindChild(this.muzzleString2);
 
                         EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, base.gameObject, this.muzzleString, true);
                         genericDamageOrb.origin = transform.position;
