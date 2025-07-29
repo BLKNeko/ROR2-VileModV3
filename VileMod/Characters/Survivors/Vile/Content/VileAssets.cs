@@ -18,6 +18,8 @@ namespace VileMod.Survivors.Vile
 
         public static GameObject rideExplosionEffect;
 
+        public static GameObject gFallEffect;
+
         // networked hit sounds
         public static NetworkSoundEventDef swordHitSoundEvent;
 
@@ -31,6 +33,10 @@ namespace VileMod.Survivors.Vile
         public static GameObject bombProjectilePrefab;
         public static GameObject vileShotgunIcePrefab;
         public static GameObject vileEletricSparkPrefab;
+        public static GameObject BumpityBombProjectile;
+        public static GameObject FrontRunnerFireBallProjectile;
+        public static GameObject CerberusPhantonFMJProjectile;
+        public static GameObject NapalmBombProjectile;
 
         //Tracers
         public static GameObject vileGreenTracerPrefab;
@@ -55,6 +61,9 @@ namespace VileMod.Survivors.Vile
 
 
         public static Sprite CherryBlastSkillIcon;
+        public static Sprite ZipZapperSkillIcon;
+        public static Sprite Triple7SkillIcon;
+        public static Sprite DistanceNeedlerSkillIcon;
 
         public static Sprite ShotgunIceSkillIcon;
 
@@ -67,6 +76,12 @@ namespace VileMod.Survivors.Vile
         public static Sprite CallHawkSkillIcon;
         public static Sprite ResumeHawkSkillIcon;
         public static Sprite ExitHawkSkillIcon;
+
+        public static Sprite UnitBigBitSkillIcon;
+        public static Sprite UnitMetComSkillIcon;
+        public static Sprite UnitMetCurSkillIcon;
+        public static Sprite UnitNightmareVSkillIcon;
+        public static Sprite UnitPreonESkillIcon;
 
         private static AssetBundle _assetBundle;
 
@@ -91,7 +106,12 @@ namespace VileMod.Survivors.Vile
             VileMK2SkinIcon = _assetBundle.LoadAsset<Sprite>("VileMK2SkinIcon");
 
             CherryBlastSkillIcon = _assetBundle.LoadAsset<Sprite>("CherryBlastSkillIcon");
+            ZipZapperSkillIcon = _assetBundle.LoadAsset<Sprite>("ZipZapperSkillIcon");
+            Triple7SkillIcon = _assetBundle.LoadAsset<Sprite>("Triple7SkillIcon");
+            DistanceNeedlerSkillIcon = _assetBundle.LoadAsset<Sprite>("DistanceNeedlerSkillIcon");
+
             ShotgunIceSkillIcon = _assetBundle.LoadAsset<Sprite>("ShotgunIceSkillIcon");
+
             BurningDriveSkillIcon = _assetBundle.LoadAsset<Sprite>("BurningDriveSkillIcon");
 
             CallGoliathSkillIcon = _assetBundle.LoadAsset<Sprite>("CallGoliathSkillIcon");
@@ -101,6 +121,12 @@ namespace VileMod.Survivors.Vile
             CallHawkSkillIcon = _assetBundle.LoadAsset<Sprite>("CallHawkSkillIcon");
             ResumeHawkSkillIcon = _assetBundle.LoadAsset<Sprite>("ResumeHawkSkillIcon");
             ExitHawkSkillIcon = _assetBundle.LoadAsset<Sprite>("ExitHawkSkillIcon");
+
+            UnitBigBitSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitBigBitSkillIcon");
+            UnitMetComSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitMetComSkillIcon");
+            UnitMetCurSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitMetCurSkillIcon");
+            UnitNightmareVSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitNightmareVSkillIcon");
+            UnitPreonESkillIcon = _assetBundle.LoadAsset<Sprite>("UnitPreonESkillIcon");
 
         }
 
@@ -114,9 +140,12 @@ namespace VileMod.Survivors.Vile
             swordSwingEffect = _assetBundle.LoadEffect("HenrySwordSwingEffect", true);
             swordHitImpactEffect = _assetBundle.LoadEffect("ImpactHenrySlash");
 
+
+            gFallEffect = _assetBundle.LoadEffect("GFallVFX");
+
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
 
-            nightmareVMaterial = _assetBundle.LoadMaterial("NightmareVMaterial");
+            nightmareVMaterial = _assetBundle.LoadMaterial("matNightmareVirus");
 
             vileGreenTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VGreenTacer", new Color(0.2f, 1f, 0.2f, 1f), 180f, 5f);
             vileCyanTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VCyanTacer", new Color(0.4f, 0.8f, 1f, 1f), 170f, 5f);
@@ -247,15 +276,28 @@ namespace VileMod.Survivors.Vile
             CreateVileShotgunIce();
             CreateVileEletricSpark();
 
+            CreateBumpityBoomProjectile();
+            CreateNapalmBombProjectile();
+
+            CreateFrontRunnerProjectile();
+            CreateCerberusPhantonProjectile();
+
             CreateUnitPreonEProjectile();
             CreateUnitMettaurcureProjectile();
             CreateUnitBigBitProjectile();
             CreateUnitNightmareVProjectile();
             CreateUnitMetComProjectile();
 
+
             Content.AddProjectilePrefab(bombProjectilePrefab);
             Content.AddProjectilePrefab(vileShotgunIcePrefab);
             Content.AddProjectilePrefab(vileEletricSparkPrefab);
+
+            Content.AddProjectilePrefab(BumpityBombProjectile);
+            Content.AddProjectilePrefab(NapalmBombProjectile);
+
+            Content.AddProjectilePrefab(FrontRunnerFireBallProjectile);
+            Content.AddProjectilePrefab(CerberusPhantonFMJProjectile);
 
             Content.AddProjectilePrefab(unitPreonEPrefab);
             Content.AddProjectilePrefab(unitMettaurcurePrefab);
@@ -290,6 +332,8 @@ namespace VileMod.Survivors.Vile
             
             bombController.startSound = "";
         }
+
+        #region Units
 
         private static void CreateUnitPreonEProjectile()
         {
@@ -396,6 +440,8 @@ namespace VileMod.Survivors.Vile
             unitMetComController.startSound = "";
         }
 
+        #endregion
+
 
         private static void CreateVileShotgunIce()
         {
@@ -458,6 +504,126 @@ namespace VileMod.Survivors.Vile
             eletricSparkController.startSound = "";
 
         }
+
+        private static void CreateBumpityBoomProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            BumpityBombProjectile = Asset.CloneProjectilePrefab("CommandoGrenadeProjectile", "BumpityBoomProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            //UnityEngine.Object.Destroy(BumpityBombProjectile.GetComponent<ProjectileImpactExplosion>());
+            //ProjectileImpactExplosion bumpityImpactExplosion = BumpityBombProjectile.AddComponent<ProjectileImpactExplosion>();
+
+            //bumpityImpactExplosion.blastRadius = 16f;
+            //bumpityImpactExplosion.blastDamageCoefficient = 1f;
+            //bumpityImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
+            //bumpityImpactExplosion.destroyOnEnemy = true;
+            //bumpityImpactExplosion.lifetime = 12f;
+            //bumpityImpactExplosion.impactEffect = bombExplosionEffect;
+            //bumpityImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
+            //bumpityImpactExplosion.timerAfterImpact = true;
+            //bumpityImpactExplosion.lifetimeAfterImpact = 0.1f;
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            BumpityBombProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            BumpityBombProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            BumpityBombProjectile.GetComponent<ProjectileDamage>().damageType |= DamageType.Stun1s;
+            BumpityBombProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
+
+            ProjectileController bumpityController = BumpityBombProjectile.GetComponent<ProjectileController>();
+
+            //if (_assetBundle.LoadAsset<GameObject>("HenryBombGhost") != null)
+            //    bombController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("HenryBombGhost");
+
+            //bombController.startSound = "";
+        }
+
+        private static void CreateNapalmBombProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            NapalmBombProjectile = Asset.CloneProjectilePrefab("CryoCanisterProjectile", "NapalmBombProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            //UnityEngine.Object.Destroy(BumpityBombProjectile.GetComponent<ProjectileImpactExplosion>());
+            //ProjectileImpactExplosion bumpityImpactExplosion = BumpityBombProjectile.AddComponent<ProjectileImpactExplosion>();
+
+            //bumpityImpactExplosion.blastRadius = 16f;
+            //bumpityImpactExplosion.blastDamageCoefficient = 1f;
+            //bumpityImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
+            //bumpityImpactExplosion.destroyOnEnemy = true;
+            //bumpityImpactExplosion.lifetime = 12f;
+            //bumpityImpactExplosion.impactEffect = bombExplosionEffect;
+            //bumpityImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
+            //bumpityImpactExplosion.timerAfterImpact = true;
+            //bumpityImpactExplosion.lifetimeAfterImpact = 0.1f;
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            NapalmBombProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            NapalmBombProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            NapalmBombProjectile.GetComponent<ProjectileDamage>().damageType |= DamageType.Freeze2s;
+            NapalmBombProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
+
+            ProjectileController napalmController = NapalmBombProjectile.GetComponent<ProjectileController>();
+
+            //if (_assetBundle.LoadAsset<GameObject>("HenryBombGhost") != null)
+            //    bombController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("HenryBombGhost");
+
+            //bombController.startSound = "";
+        }
+
+        private static void CreateFrontRunnerProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            FrontRunnerFireBallProjectile = Asset.CloneProjectilePrefab("MageFireBombProjectile", "FrontRunnerProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            //UnityEngine.Object.Destroy(BumpityBombProjectile.GetComponent<ProjectileImpactExplosion>());
+            //ProjectileImpactExplosion bumpityImpactExplosion = BumpityBombProjectile.AddComponent<ProjectileImpactExplosion>();
+
+            //bumpityImpactExplosion.blastRadius = 16f;
+            //bumpityImpactExplosion.blastDamageCoefficient = 1f;
+            //bumpityImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
+            //bumpityImpactExplosion.destroyOnEnemy = true;
+            //bumpityImpactExplosion.lifetime = 12f;
+            //bumpityImpactExplosion.impactEffect = bombExplosionEffect;
+            //bumpityImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
+            //bumpityImpactExplosion.timerAfterImpact = true;
+            //bumpityImpactExplosion.lifetimeAfterImpact = 0.1f;
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            FrontRunnerFireBallProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            FrontRunnerFireBallProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            FrontRunnerFireBallProjectile.GetComponent<ProjectileDamage>().damageType |= DamageType.IgniteOnHit;
+            FrontRunnerFireBallProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
+
+            ProjectileController frontRunnerController = FrontRunnerFireBallProjectile.GetComponent<ProjectileController>();
+
+            //if (_assetBundle.LoadAsset<GameObject>("HenryBombGhost") != null)
+            //    bombController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("HenryBombGhost");
+
+            //bombController.startSound = "";
+        }
+
+        private static void CreateCerberusPhantonProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            CerberusPhantonFMJProjectile = Asset.CloneProjectilePrefab("FMJ", "CerberusPhantonProjectile");
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            CerberusPhantonFMJProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            CerberusPhantonFMJProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            CerberusPhantonFMJProjectile.GetComponent<ProjectileDamage>().damageType |= DamageType.Generic;
+            CerberusPhantonFMJProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSpecial;
+
+            ProjectileController CerberusPhantonController = CerberusPhantonFMJProjectile.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("CerberusPhantonProjectille") != null)
+                CerberusPhantonController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("CerberusPhantonProjectille");
+
+            CerberusPhantonController.startSound = "";
+        }
+
+
 
 
         #endregion projectiles

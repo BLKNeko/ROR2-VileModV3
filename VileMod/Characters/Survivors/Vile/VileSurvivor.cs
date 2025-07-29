@@ -73,6 +73,9 @@ namespace VileMod.Survivors.Vile
         internal static SkillDef distanceNeedlerSkillDef;
 
         //SECONDARY SKILL DEFS
+        internal static SkillDef vileBumbpityBoomSkillDef;
+        internal static SkillDef vileNapalmBombSkillDef;
+        internal static SkillDef vileFrontRunnerSkillDef;
 
         //UTILITY SKILL DEFS
         internal static SkillDef vileShotgunIceSkillDef;
@@ -80,6 +83,7 @@ namespace VileMod.Survivors.Vile
 
         //SPECIAL SKILL DEFS
         internal static SkillDef vileBurningDriveSkillDef;
+        internal static SkillDef vileCerberusPhantonSkillDef;
 
 
         public override BodyInfo bodyInfo => new BodyInfo
@@ -336,7 +340,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 20f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -366,7 +370,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 20f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -675,7 +679,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "Mettaurcure",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                // skillIcon = XAssets.IconHomingTorpedo,
+                skillIcon = VileAssets.UnitMetCurSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitMettaurcure)),
@@ -708,7 +712,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "MettaurCommander",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                // skillIcon = XAssets.IconHomingTorpedo,
+                skillIcon = VileAssets.UnitMetComSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitMettaurCommander)),
@@ -741,7 +745,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "BigBit",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                // skillIcon = XAssets.IconHomingTorpedo,
+                skillIcon = VileAssets.UnitBigBitSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitBigBit)),
@@ -774,7 +778,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "PreonE",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                // skillIcon = XAssets.IconHomingTorpedo,
+                skillIcon = VileAssets.UnitPreonESkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitPreonE)),
@@ -807,7 +811,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "NightmareVirus",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                // skillIcon = XAssets.IconHomingTorpedo,
+                skillIcon = VileAssets.UnitNightmareVSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitNightmareV)),
@@ -874,7 +878,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "ZipZapper",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.CherryBlastSkillIcon,
+                skillIcon = VileAssets.ZipZapperSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ZipZapper)),
                 activationStateMachineName = "Weapon",
@@ -904,7 +908,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "Triple7",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.CherryBlastSkillIcon,
+                skillIcon = VileAssets.Triple7SkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(Triple7)),
                 activationStateMachineName = "Weapon",
@@ -934,7 +938,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "DistanceNeedler",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.CherryBlastSkillIcon,
+                skillIcon = VileAssets.DistanceNeedlerSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(DistanceNeedler)),
                 activationStateMachineName = "Weapon",
@@ -956,6 +960,100 @@ namespace VileMod.Survivors.Vile
                 isCombatSkill = true,
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+
+            #endregion
+
+            #region Secondary
+
+            vileBumbpityBoomSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "BumpityBoom",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.ShotgunIceSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VBumpityBoom)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 5f,
+                baseMaxStock = 3,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            vileNapalmBombSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "NapalmBomb",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.ShotgunIceSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VNapalmBomb)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 5f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            vileFrontRunnerSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "FrontRunner",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.ShotgunIceSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VFrontRunner)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 8f,
+                baseMaxStock = 3,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
                 forceSprintDuringState = false,
             });
 
@@ -1036,6 +1134,36 @@ namespace VileMod.Survivors.Vile
                 skillIcon = VileAssets.BurningDriveSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VBurningDrive)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 7f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            vileCerberusPhantonSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "CerberusPhanton",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.BurningDriveSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VCerberusPhanton)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -1181,7 +1309,10 @@ namespace VileMod.Survivors.Vile
 
             });
 
-            Skills.AddSecondarySkills(bodyPrefab, secondarySkillDef1);
+            //Skills.AddSecondarySkills(bodyPrefab, secondarySkillDef1);
+            Skills.AddSecondarySkills(bodyPrefab, vileBumbpityBoomSkillDef);
+            Skills.AddSecondarySkills(bodyPrefab, vileNapalmBombSkillDef);
+            Skills.AddSecondarySkills(bodyPrefab, vileFrontRunnerSkillDef);
         }
 
         private void AddUtiitySkills()
@@ -1249,6 +1380,7 @@ namespace VileMod.Survivors.Vile
 
             //Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
             Skills.AddSpecialSkills(bodyPrefab, vileBurningDriveSkillDef);
+            Skills.AddSpecialSkills(bodyPrefab, vileCerberusPhantonSkillDef);
         }
 
         private void AddExtraFirstSkills()

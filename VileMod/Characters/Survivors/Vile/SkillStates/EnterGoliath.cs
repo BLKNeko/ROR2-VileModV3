@@ -21,7 +21,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void OnEnter()
         {
             base.OnEnter();
-            duration = baseDuration / attackSpeedStat;
+            duration = baseDuration;
             characterBody.SetAimTimer(1f);
             boltCost = 1; //Set the cost of entering Goliath mode
 
@@ -65,7 +65,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             if (fixedAge >= duration && isAuthority)
             {
-                outer.SetNextState(new EnterGoliathAnim());
+                //outer.SetNextState(new EnterGoliathAnim());
+                outer.SetNextState(new EnterGoliathEnd());
                 return;
             }
         }

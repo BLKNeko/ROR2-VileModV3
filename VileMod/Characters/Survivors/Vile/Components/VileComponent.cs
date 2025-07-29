@@ -486,6 +486,10 @@ namespace VileMod.Survivors.Vile.Components
             VileSurvivor.exitGoliathSkillDef,
             VileSurvivor.resumeGoliathSkillDef,
 
+            VileSurvivor.enterHawkSkillDef,
+            VileSurvivor.exitHawkSkillDef,
+            VileSurvivor.resumeHawkSkillDef,
+
             VileSurvivor.rideRapairSkillDef,
 
 

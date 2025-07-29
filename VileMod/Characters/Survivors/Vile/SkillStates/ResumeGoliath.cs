@@ -38,6 +38,12 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             playbackRateParam = "Slash.playbackRate";
 
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
+            {
+                origin = transform.position,
+                rotation = transform.rotation
+            }, transmit: true);
+
             VC.EnterGoliath();
 
             PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);

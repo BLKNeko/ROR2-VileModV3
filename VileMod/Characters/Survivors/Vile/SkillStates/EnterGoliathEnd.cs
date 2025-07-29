@@ -38,7 +38,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             playbackRateParam = "Slash.playbackRate";
 
-            VC.EnterGoliath();
+            EffectManager.SimpleMuzzleFlash(VileAssets.gFallEffect, gameObject, "BasePos", true);
 
             PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
@@ -46,6 +46,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override void OnExit()
         {
+            VC.EnterGoliath();
 
             if (NetworkServer.active)
             {
