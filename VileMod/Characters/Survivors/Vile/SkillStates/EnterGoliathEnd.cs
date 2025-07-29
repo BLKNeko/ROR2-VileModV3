@@ -23,6 +23,10 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         private string playbackRateParam;
 
+        private bool rideFinished = false;
+
+        private GameObject rideArmorInstance;
+
 
         public override void OnEnter()
         {
@@ -38,20 +42,29 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             playbackRateParam = "Slash.playbackRate";
 
-            EffectManager.SimpleMuzzleFlash(VileAssets.gFallEffect, gameObject, "BasePos", true);
+            //EffectManager.SimpleMuzzleFlash(VileAssets.gFallEffect, gameObject, "BasePos", true);
 
-            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
+            Vector3 spawnPosition = characterBody.corePosition + Vector3.up * 20f;
+            Quaternion rotation = Quaternion.identity;
+            rideArmorInstance = UnityEngine.Object.Instantiate(VileAssets.gFallEffect, spawnPosition, rotation);
+
+
+            //PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
         }
 
         public override void OnExit()
         {
-            VC.EnterGoliath();
+            
+
+            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
             if (NetworkServer.active)
             {
                 characterBody.AddBuff(VileBuffs.GoliathBuff);
             }
+
+            rideFinished = false;
 
             base.OnExit();
         }
@@ -60,11 +73,41 @@ namespace VileMod.Survivors.Vile.SkillStates
         {
             base.FixedUpdate();
 
-            if (fixedAge >= duration && isAuthority)
+            rideArmorInstance.transform.position = Vector3.MoveTowards(rideArmorInstance.transform.position, characterBody.transform.position, 60f * Time.fixedDeltaTime);
+
+            if (!rideFinished && Vector3.Distance(rideArmorInstance.transform.position, characterBody.corePosition) < 0.1f)
             {
-                outer.SetNextStateToMain();
-                return;
+                RideFinished();
             }
+
+        }
+
+        private void RideFinished()
+        {
+            if (!isAuthority || rideFinished) return;
+
+            // Impacto
+            Util.PlaySound("Play_missile_impact", gameObject);
+
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/CharacterLandImpact"), new EffectData
+            {
+                origin = characterBody.corePosition,
+                scale = 4f
+            }, true);
+
+            if (rideArmorInstance)
+            {
+                GameObject.Destroy(rideArmorInstance);
+                rideArmorInstance = null;
+            }
+
+            VC.EnterGoliath();
+
+            rideFinished = true;
+
+            // Pule direto pro estado principal
+            outer.SetNextStateToMain();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

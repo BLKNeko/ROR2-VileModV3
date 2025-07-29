@@ -65,7 +65,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             if (fixedAge >= duration && isAuthority)
             {
-                outer.SetNextState(new EnterHawkAnim());
+                outer.SetNextState(new EnterHawkEnd());
                 return;
             }
         }

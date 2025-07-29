@@ -337,7 +337,7 @@ namespace VileMod.Survivors.Vile
                 skillIcon = VileAssets.ExitGoliathSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitGoliath)),
-                activationStateMachineName = "Body",
+                activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 10f,
@@ -583,7 +583,7 @@ namespace VileMod.Survivors.Vile
                 skillIcon = VileAssets.ExitHawkSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitHawk)),
-                activationStateMachineName = "Body",
+                activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 20f,

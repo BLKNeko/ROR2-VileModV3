@@ -19,6 +19,7 @@ namespace VileMod.Survivors.Vile
         public static GameObject rideExplosionEffect;
 
         public static GameObject gFallEffect;
+        public static GameObject hFallEffect;
 
         // networked hit sounds
         public static NetworkSoundEventDef swordHitSoundEvent;
@@ -142,6 +143,7 @@ namespace VileMod.Survivors.Vile
 
 
             gFallEffect = _assetBundle.LoadEffect("GFallVFX");
+            hFallEffect = _assetBundle.LoadEffect("HFallVFX");
 
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
 

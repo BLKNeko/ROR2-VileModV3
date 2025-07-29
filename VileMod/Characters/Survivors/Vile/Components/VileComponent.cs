@@ -486,6 +486,8 @@ namespace VileMod.Survivors.Vile.Components
             VileSurvivor.exitGoliathSkillDef,
             VileSurvivor.resumeGoliathSkillDef,
 
+            VileSurvivor.hawkGunSkillDef,
+
             VileSurvivor.enterHawkSkillDef,
             VileSurvivor.exitHawkSkillDef,
             VileSurvivor.resumeHawkSkillDef,
@@ -494,9 +496,18 @@ namespace VileMod.Survivors.Vile.Components
 
 
             VileSurvivor.cherryBlastSkillDef,
-            VileSurvivor.vileBurningDriveSkillDef
-            
-        };
+            VileSurvivor.zipZapperSkillDef,
+            VileSurvivor.triple7SkillDef,
+            VileSurvivor.distanceNeedlerSkillDef,
+            VileSurvivor.vileBumbpityBoomSkillDef,
+            VileSurvivor.vileNapalmBombSkillDef,
+            VileSurvivor.vileFrontRunnerSkillDef,
+            VileSurvivor.vileShotgunIceSkillDef,
+            VileSurvivor.vileEletricSparkSkillDef,
+            VileSurvivor.vileBurningDriveSkillDef,
+            VileSurvivor.vileCerberusPhantonSkillDef,
+
+    };
 
     }
 }

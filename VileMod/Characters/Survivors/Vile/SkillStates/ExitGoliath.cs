@@ -37,6 +37,12 @@ namespace VileMod.Survivors.Vile.SkillStates
                 }
             }
 
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
+            {
+                origin = transform.position,
+                rotation = transform.rotation
+            }, transmit: true);
+
             VC.ExitGoliath();
 
         }

@@ -23,6 +23,10 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         private string playbackRateParam;
 
+        private bool rideFinished = false;
+
+        private GameObject rideArmorInstance;
+
 
         public override void OnEnter()
         {
@@ -38,7 +42,12 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             playbackRateParam = "Slash.playbackRate";
 
-            VC.EnterHawk();
+            //EffectManager.SimpleMuzzleFlash(VileAssets.gFallEffect, gameObject, "BasePos", true);
+
+            Vector3 spawnPosition = characterBody.corePosition + Vector3.up * 20f;
+            Quaternion rotation = Quaternion.identity;
+            rideArmorInstance = UnityEngine.Object.Instantiate(VileAssets.hFallEffect, spawnPosition, rotation);
+
 
             //PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
@@ -47,10 +56,15 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void OnExit()
         {
 
+
+            //PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
+
             if (NetworkServer.active)
             {
                 characterBody.AddBuff(VileBuffs.HawkBuff);
             }
+
+            rideFinished = false;
 
             base.OnExit();
         }
@@ -59,11 +73,41 @@ namespace VileMod.Survivors.Vile.SkillStates
         {
             base.FixedUpdate();
 
-            if (fixedAge >= duration && isAuthority)
+            rideArmorInstance.transform.position = Vector3.MoveTowards(rideArmorInstance.transform.position, characterBody.transform.position, 60f * Time.fixedDeltaTime);
+
+            if (!rideFinished && Vector3.Distance(rideArmorInstance.transform.position, characterBody.corePosition) < 0.1f)
             {
-                outer.SetNextStateToMain();
-                return;
+                RideFinished();
             }
+
+        }
+
+        private void RideFinished()
+        {
+            if (!isAuthority || rideFinished) return;
+
+            // Impacto
+            Util.PlaySound("Play_missile_impact", gameObject);
+
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/CharacterLandImpact"), new EffectData
+            {
+                origin = characterBody.corePosition,
+                scale = 4f
+            }, true);
+
+            if (rideArmorInstance)
+            {
+                GameObject.Destroy(rideArmorInstance);
+                rideArmorInstance = null;
+            }
+
+            VC.EnterHawk();
+
+            rideFinished = true;
+
+            // Pule direto pro estado principal
+            outer.SetNextStateToMain();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
