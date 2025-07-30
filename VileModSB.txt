@@ -1,0 +1,80 @@
+Event	ID	Name			Wwise Object Path	Notes
+	107783961	Play_Vile_Take_This			\Default Work Unit\Play_Vile_Take_This	
+	214521609	Play_Vile_Missile_SFX			\Default Work Unit\Play_Vile_Missile_SFX	
+	301532333	Play_Vile_Ride_Armor_Explosion			\Default Work Unit\Play_Vile_Ride_Armor_Explosion	
+	323590777	Play_Vile_Frag_Drop			\Default Work Unit\Play_Vile_Frag_Drop	
+	525793487	Play_Vile_SFX_Shock			\Default Work Unit\Play_Vile_SFX_Shock	
+	738427375	Play_Vile_Hahahaha			\Default Work Unit\Play_Vile_Hahahaha	
+	742254679	Play_Vile_Attack			\Default Work Unit\Play_Vile_Attack	
+	923304244	Play_Vile_Ready			\Default Work Unit\Play_Vile_Ready	
+	936355078	Play_Vile_Heree			\Default Work Unit\Play_Vile_Heree	
+	1000358738	Play_Vile_Ride_Armor_FootStep			\Default Work Unit\Play_Vile_Ride_Armor_FootStep	
+	1082856650	Play_Vile_TP_Out			\Default Work Unit\Play_Vile_TP_Out	
+	1134431405	Play_Vile_Return			\Default Work Unit\Play_Vile_Return	
+	1158024480	Play_Vile_Haaa			\Default Work Unit\Play_Vile_Haaa	
+	1489893072	Play_Vile_RideArmor_In			\Default Work Unit\Play_Vile_RideArmor_In	
+	1495285260	Play_Vile_Come_Here			\Default Work Unit\Play_Vile_Come_Here	
+	1498749987	Play_Vile_Ride_Armor_Lose			\Default Work Unit\Play_Vile_Ride_Armor_Lose	
+	1698460080	Play_Vile_Footstep_X8_SFX			\Default Work Unit\Play_Vile_Footstep_X8_SFX	
+	1805261703	Play_Vile_SFX_Recov_HP			\Default Work Unit\Play_Vile_SFX_Recov_HP	
+	2026014361	Play_Vile_Ride_Armor_Boost			\Default Work Unit\Play_Vile_Ride_Armor_Boost	
+	2159645708	Play_Vile_Ride_Armor_Out			\Default Work Unit\Play_Vile_Ride_Armor_Out	
+	2263661317	Play_Vile_Ride_Armor_In			\Default Work Unit\Play_Vile_Ride_Armor_In	
+	3012741402	Play_Vile_Eat_This			\Default Work Unit\Play_Vile_Eat_This	
+	3128230105	Play_Vile_Ride_Armor_FootStep_2			\Default Work Unit\Play_Vile_Ride_Armor_FootStep_2	
+	3140733435	Play_Vile_Cherry_Blast			\Default Work Unit\Play_Vile_Cherry_Blast	
+	3201666147	Play_Vile_Die			\Default Work Unit\Play_Vile_Die	
+	3343923811	Play_Vile_Fury			\Default Work Unit\Play_Vile_Fury	
+	3459851417	Play_Vile_Footstep_SFX			\Default Work Unit\Play_Vile_Footstep_SFX	
+	3525663006	Play_Vile_Ha			\Default Work Unit\Play_Vile_Ha	
+	3579896108	Play_Vile_Armed			\Default Work Unit\Play_Vile_Armed	
+	3862754203	Play_Vile_Charge_Shoot			\Default Work Unit\Play_Vile_Charge_Shoot	
+	3941153195	Play_Vile_Laser_Shot			\Default Work Unit\Play_Vile_Laser_Shot	
+	4014034595	Play_Vile_Error			\Default Work Unit\Play_Vile_Error	
+	4103301416	Play_Vile_I_Cant_Lose_To_X			\Default Work Unit\Play_Vile_I_Cant_Lose_To_X	
+	4120866432	Play_Vile_Spawn			\Default Work Unit\Play_Vile_Spawn	
+	4253025335	Play_Vile_TP_In			\Default Work Unit\Play_Vile_TP_In	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	3673881719	Volume_SFX			\Default Work Unit\Volume_SFX	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	15148355	Vile_Hope_You_Ready_X	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Hope_You_Ready_X_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_RideArmor_In\Vile_Hope_You_Ready_X		9191
+	34199891	Vile_Footstep_X8_SFX	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Footstep_X8_SFX_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Footstep_X8_SFX		3736
+	42905641	Vile_Hey_Not_Bad	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Hey_Not_Bad_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_Lose\Vile_Hey_Not_Bad		9656
+	84787643	Vile_Take_This	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Take_This_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Take_This		5632
+	88118441	Vile_Armed	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Armed_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Armed		5483
+	132120522	Vile_Ha	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ha_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ha		3441
+	227281121	Vile_Footstep_SFX	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Footstep_SFX_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Footstep_SFX		3421
+	273514321	Vile_I-Cant_Lose_To_X	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I-Cant_Lose_To_X_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_I-Cant_Lose_To_X		14166
+	274338854	Vile_Ride_Armor_In	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ride_Armor_In_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_In		15619
+	274362432	Vile_Return	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Return_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Return		7591
+	278077623	Vile_Ready	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ready_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ready		10529
+	340049457	Vile_Missile_SFX	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Missile_SFX_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Missile_SFX		10086
+	406042102	Vile_Ride_Armor_Explosion	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ride_Armor_Explosion_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_Explosion		27672
+	436735630	Vile_Frag_Drop	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Frag_Drop_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Frag_Drop		7721
+	444367833	Vile_Ride_Armor_FootStep	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ride_Armor_FootStep_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_FootStep		8072
+	506504623	Vile_Ahaha	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ahaha_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_RideArmor_In\Vile_Ahaha		15619
+	524594366	Vile_Error	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Error_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Error		3351
+	556752349	Vile_This_Is_Fun	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_This_Is_Fun_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_RideArmor_In\Vile_This_Is_Fun		17186
+	586767424	Vile_Come_Here	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Come_Here_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Come_Here		6833
+	598412184	Vile_Interesting	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Interesting_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_Lose\Vile_Interesting		11617
+	631298226	Vile_SFX_Recov_HP	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_SFX_Recov_HP_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_SFX_Recov_HP		4522
+	648815430	Vile_I_Not_Done_Yet	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Not_Done_Yet_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Fury\Vile_I_Not_Done_Yet		9637
+	722609609	Vile_SFX_Shock	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_SFX_Shock_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_SFX_Shock		8306
+	755228233	Vile_TP_In	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_TP_In_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_TP_In		14600
+	799034785	Vile_I_Show_You_How_Strong_I_Am	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Show_You_How_Strong_I_Am_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Fury\Vile_I_Show_You_How_Strong_I_Am		11748
+	816862079	Vile_Lets_Have_Some_Fun	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Lets_Have_Some_Fun_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_RideArmor_In\Vile_Lets_Have_Some_Fun		21891
+	818253211	Vile_Charge_Shoot	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Charge_Shoot_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Charge_Shoot		3933
+	826137063	Vile_Heree	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Heree_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Attack\Vile_Heree		3549
+	827226009	Vile_TP_Out	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_TP_Out_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_TP_Out		6961
+	827592597	Vile_I_Am_Ready_To_Give_It_A_Shot	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Am_Ready_To_Give_It_A_Shot_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Spawn\Vile_I_Am_Ready_To_Give_It_A_Shot		10301
+	858434255	Vile_Ride_Armor_Out	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ride_Armor_Out_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_Out		13243
+	864161943	Vile_Laser_Shot	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Laser_Shot_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Laser_Shot		4575
+	866767915	Vile_Haaa	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Haaa_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Haaa		6473
+	872729793	Vile_Cherry_Blast	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Cherry_Blast_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Cherry_Blast		3112
+	873969121	Vile_Ride_Armor_Boost	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ride_Armor_Boost_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_Boost		9894
+	875827053	Vile_Eat_This	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Eat_This_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Attack\Vile_Eat_This		5375
+	933048967	Vile_Ride_Armor_FootStep_2	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ride_Armor_FootStep_2_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_FootStep_2		5514
+	1029458072	Vile_Hahahaha	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Hahahaha_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Hahahaha		9022
+

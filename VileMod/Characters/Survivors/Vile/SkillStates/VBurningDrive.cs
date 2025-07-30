@@ -18,7 +18,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             damageType |= DamageTypeCombo.GenericSpecial;
             damageType |= DamageType.IgniteOnHit;
-            damageCoefficient = HenryStaticValues.swordDamageCoefficient;
+            damageCoefficient = VileStaticValues.swordDamageCoefficient;
             procCoefficient = 1f;
             pushForce = 500f;
             bonusForce = Vector3.zero;
@@ -55,7 +55,11 @@ namespace VileMod.Survivors.Vile.SkillStates
             float elementBonus = (0.1f + characterBody.level / 100f) + ((VC.GetBaseHeatValue() + VC.GetBaseOverHeatValue() / 2f));
 
             VC.SetElementValues(0f, 0f, elementBonus, true, true, false);
-            
+
+            if (VileConfig.enableVoiceBool.Value)
+            {
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Attack, this.gameObject);
+            }
 
             base.OnEnter();
         }

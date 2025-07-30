@@ -11,7 +11,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 {
     public class VCerberusPhanton : BaseSkillState
     {
-        public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.8f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
@@ -88,6 +88,13 @@ namespace VileMod.Survivors.Vile.SkillStates
                         Quaternion.AngleAxis(-angleSpread, Vector3.up) * aimRay.direction, // esquerda
                         Quaternion.AngleAxis(angleSpread, Vector3.up) * aimRay.direction  // direita
                     };
+
+                    if (VileConfig.enableVoiceBool.Value)
+                    {
+                        AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Attack, this.gameObject);
+                    }
+
+                    AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Laser_Shot, this.gameObject);
 
                     foreach (Vector3 direction in directions)
                     {

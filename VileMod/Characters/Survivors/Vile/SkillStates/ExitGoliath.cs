@@ -25,6 +25,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             VC = GetComponent<VileComponent>();
 
+            PlayAnimation("Body", "Idle", "ShootGun.playbackRate", 0f);
 
             if (NetworkServer.active)
             {
@@ -43,12 +44,19 @@ namespace VileMod.Survivors.Vile.SkillStates
                 rotation = transform.rotation
             }, transmit: true);
 
+            if (VileConfig.enableVoiceBool.Value)
+            {
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Return, this.gameObject);
+            }
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_Out, this.gameObject);
             VC.ExitGoliath();
 
         }
 
         public override void OnExit()
         {
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_Out, this.gameObject);
             base.OnExit();
         }
 

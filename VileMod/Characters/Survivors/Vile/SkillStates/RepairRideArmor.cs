@@ -91,6 +91,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             }
 
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_SFX_Recov_HP, this.gameObject);
+
         }
 
         public override void OnExit()

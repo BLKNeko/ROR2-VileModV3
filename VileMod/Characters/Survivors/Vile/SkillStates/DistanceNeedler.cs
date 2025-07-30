@@ -9,7 +9,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 {
     public class DistanceNeedler : BaseSkillState
     {
-        public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 1f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
@@ -181,8 +181,11 @@ namespace VileMod.Survivors.Vile.SkillStates
                 AddRecoil(-0.5f * recoilFactor, -1f * recoilFactor, 0.5f * recoilFactor, 1f * recoilFactor);
                 characterBody.AddSpreadBloom(recoilFactor);
 
+                //Effect
+                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
+
                 // Som e tiro
-                //Util.PlaySound(Sounds.vileCherryBlast, gameObject);
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Cherry_Blast, this.gameObject);
                 bullet.Fire();
             }
         }

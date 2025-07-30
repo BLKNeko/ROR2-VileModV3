@@ -73,6 +73,14 @@ namespace VileMod.Survivors.Vile.Components
             moveSpeed += ownerBody.moveSpeed * 1.5f;
             FireTimer = FireCooldown;
 
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, this.gameObject);
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
+            {
+                origin = transform.position,
+                rotation = transform.rotation
+            }, transmit: true);
+
         }
 
         public virtual void FixedUpdate()
@@ -392,6 +400,18 @@ namespace VileMod.Survivors.Vile.Components
         public virtual void FireAttack()
         {
             //Precisa ser sobrescrito com o ataque desejado.
+        }
+
+        void OnDestroy()
+        {
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_Out, this.gameObject);
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
+            {
+                origin = transform.position,
+                rotation = transform.rotation
+            }, transmit: true);
         }
 
         public void SetState(bool idle, bool run, bool shoot)

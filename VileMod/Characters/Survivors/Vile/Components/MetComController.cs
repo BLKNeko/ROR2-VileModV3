@@ -22,6 +22,11 @@ namespace VileMod.Survivors.Vile.Components
             healCoefficient = 2f;
             FireCooldown = 4f; // Tempo de recarga entre disparos
 
+            minDistance = 1f;
+            maxDistance = 20f;
+            frontSafeDistance = 8f;
+            backToDistance = 13f;
+
             allyCheckRadius = 15f;
 
             groundOffset = 0.1f; // Quanto acima do chão o projetil deve ficar
@@ -30,11 +35,6 @@ namespace VileMod.Survivors.Vile.Components
 
             model = ownerBody.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
 
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
-            {
-                origin = transform.position,
-                rotation = transform.rotation
-            }, transmit: true);
 
         }
 
@@ -75,14 +75,6 @@ namespace VileMod.Survivors.Vile.Components
 
         }
 
-        void OnDestroy()
-        {
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
-            {
-                origin = transform.position,
-                rotation = transform.rotation
-            }, transmit: true);
-        }
 
     }
 }

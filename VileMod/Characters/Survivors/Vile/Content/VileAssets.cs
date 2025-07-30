@@ -157,7 +157,7 @@ namespace VileMod.Survivors.Vile
 
         private static void CreateRideExplosionEffect()
         {
-            rideExplosionEffect = _assetBundle.LoadEffect("RideArmorExplosionVFX", "HenryBombExplosion", false);
+            rideExplosionEffect = _assetBundle.LoadEffect("RideArmorExplosionVFX", VileStaticValues.Play_Vile_Ride_Armor_Explosion, false);
 
             if (!rideExplosionEffect)
                 return;

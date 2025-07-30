@@ -41,13 +41,13 @@ namespace VileMod.Survivors.Vile
                 false);
 
             GoliathBuff = Modules.Content.CreateAndAddBuff("GoliathBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.CallGoliathSkillIcon,
                 Color.white,
                 false,
                 false);
 
             HawkBuff = Modules.Content.CreateAndAddBuff("HawkBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.CallHawkSkillIcon,
                 Color.white,
                 false,
                 false);
@@ -77,7 +77,7 @@ namespace VileMod.Survivors.Vile
                 false);
 
             MetComBuff = Modules.Content.CreateAndAddBuff("MetComBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.UnitMetComSkillIcon,
                 Color.white,
                 false,
                 true);

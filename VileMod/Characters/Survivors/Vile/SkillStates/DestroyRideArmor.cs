@@ -12,7 +12,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public static float baseDuration = 1f;
         public static float force = 1500f;
-        public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         private float duration;
         private VileComponent VC;
 
@@ -26,6 +26,8 @@ namespace VileMod.Survivors.Vile.SkillStates
             //PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
 
             VC = GetComponent<VileComponent>();
+
+            PlayAnimation("Body", "Idle", "ShootGun.playbackRate", 0f);
 
 
             if (NetworkServer.active)
@@ -93,6 +95,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override void OnExit()
         {
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_Lose, this.gameObject);
+
             base.OnExit();
         }
 

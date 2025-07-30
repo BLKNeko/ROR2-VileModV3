@@ -66,7 +66,15 @@ namespace VileMod.Survivors.Vile.Components
             FireTimer = FireCooldown;
 
             firePoint = projectileController.ghost.gameObject.transform;
-            Debug.Log($"FirePoint: {firePoint}");
+            //Debug.Log($"FirePoint: {firePoint}");
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, this.gameObject);
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
+            {
+                origin = transform.position,
+                rotation = transform.rotation
+            }, transmit: true);
 
         }
 
@@ -275,6 +283,18 @@ namespace VileMod.Survivors.Vile.Components
         public virtual void StartHeal(CharacterBody body)
         {
             //To be overrited
+        }
+
+        void OnDestroy()
+        {
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_Out, this.gameObject);
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
+            {
+                origin = transform.position,
+                rotation = transform.rotation
+            }, transmit: true);
         }
 
         public void SetState(bool idle, bool run, bool shoot)

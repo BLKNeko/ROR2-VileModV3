@@ -28,11 +28,6 @@ namespace VileMod.Survivors.Vile.Components
 
             model = ownerBody.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
 
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
-            {
-                origin = transform.position,
-                rotation = transform.rotation
-            }, transmit: true);
 
         }
 
@@ -76,14 +71,6 @@ namespace VileMod.Survivors.Vile.Components
 
         }
 
-        void OnDestroy()
-        {
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
-            {
-                origin = transform.position,
-                rotation = transform.rotation
-            }, transmit: true);
-        }
 
     }
 }

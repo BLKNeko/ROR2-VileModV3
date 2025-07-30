@@ -44,6 +44,8 @@ namespace VileMod.Survivors.Vile.SkillStates
                 rotation = transform.rotation
             }, transmit: true);
 
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, this.gameObject);
+
             VC.EnterGoliath();
 
             PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
@@ -52,6 +54,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override void OnExit()
         {
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_In_SFX, this.gameObject);
 
             if (NetworkServer.active)
             {

@@ -13,7 +13,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
 {
     public class HGunBarrage : BaseSkillState
     {
-        public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 1f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
@@ -44,6 +44,9 @@ namespace MegamanXMod.Survivors.X.SkillStates
 
         private float missleAmount;
         private VileComponent VC;
+
+        private Animator customAnimator;
+        private string playbackRateParam = "ShootGun.playbackRate";
 
         public override void OnEnter()
         {
@@ -83,8 +86,17 @@ namespace MegamanXMod.Survivors.X.SkillStates
             fireTimer = 0f;
             missilesFired = 0;
 
+            customAnimator = childLocator.FindChildGameObject("HAWK").GetComponents<Animator>()[0];
+
             //totalMissiles = Mathf.RoundToInt(10f + VC.GetBaseHeatValue() * 5f + VC.GetBaseOverHeatValue() * 10f);
             totalMissiles = Mathf.RoundToInt(10f + (characterBody.level / 2) + (damageStat / 10f));
+
+            if (VileConfig.enableVoiceBool.Value)
+            {
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Attack, this.gameObject);
+            }
+
+            
 
 
         }
@@ -99,119 +111,6 @@ namespace MegamanXMod.Survivors.X.SkillStates
         {
             return new HomingTorpedoOrb();
         }
-
-        //private void FireHT()
-        //{
-        //    if (!this.hasFired)
-        //    {
-
-        //        this.hasFired = true;
-
-        //        if (NetworkServer.active)
-        //        {
-
-                    
-
-        //            //PlayAnimation("Gesture, Override", "XBusterChargeAttack", "attackSpeed", this.duration);
-
-        //            //Debug.Log("Create arrow:" + CreateArrowOrb());
-
-        //            //if (XConfig.enableVoiceBool.Value)
-        //            //{
-        //            //    AkSoundEngine.PostEvent(XStaticValues.X_HomingTorpedo_VSFX, this.gameObject);
-        //            //}
-        //            //AkSoundEngine.PostEvent(XStaticValues.X_HomingTorpedo_SFX, this.gameObject);
-
-        //            GenericDamageOrb genericDamageOrb = this.CreateArrowOrb();
-        //            genericDamageOrb.damageValue = damageCoefficient * damageStat;
-        //            genericDamageOrb.isCrit = RollCrit();
-        //            genericDamageOrb.teamIndex = TeamComponent.GetObjectTeam(base.gameObject);
-        //            genericDamageOrb.attacker = base.gameObject;
-        //            genericDamageOrb.procCoefficient = procCoefficient;
-        //            genericDamageOrb.damageType |= DamageType.Generic;
-        //            genericDamageOrb.damageType |= DamageType.Stun1s;
-        //            genericDamageOrb.damageType |= DamageTypeCombo.GenericSecondary;
-        //            genericDamageOrb.damageColorIndex = DamageColorIndex.Default;
-
-        //            //genericDamageOrb.damageType = DamageType.ApplyMercExpose;
-
-        //            //Debug.Log("GenereciDamageOrb:" + genericDamageOrb);
-
-
-
-        //            for (int i = 0; i < missleAmount; i++)
-        //            {
-        //                HurtBox hurtBox = this.initialOrbTarget;
-        //                if (hurtBox)
-        //                {
-        //                    Transform muzzleTransform = this.childLocator.FindChild(this.muzzleString);
-        //                    Transform muzzleTransform2 = this.childLocator.FindChild(this.muzzleString2);
-
-        //                    if(i % 2 == 0)
-        //                    {
-        //                        if (muzzleTransform)
-        //                        {
-        //                            EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, base.gameObject, this.muzzleString, true);
-
-        //                            GenericDamageOrb orb = new GenericDamageOrb
-        //                            {
-        //                                origin = muzzleTransform.position,
-        //                                damageValue = damageStat * 1f,
-        //                                isCrit = RollCrit(),
-        //                                teamIndex = TeamComponent.GetObjectTeam(base.gameObject),
-        //                                attacker = base.gameObject,
-        //                                target = hurtBox,
-        //                                damageColorIndex = DamageColorIndex.Default,
-        //                                procChainMask = default,
-        //                                procCoefficient = 1f,
-        //                                speed = 100f
-        //                            };
-
-        //                            OrbManager.instance.AddOrb(orb);
-        //                            base.characterBody.AddSpreadBloom(0.15f);
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (muzzleTransform2)
-        //                        {
-        //                            EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, base.gameObject, this.muzzleString2, true);
-
-        //                            GenericDamageOrb orb = new GenericDamageOrb
-        //                            {
-        //                                origin = muzzleTransform2.position,
-        //                                damageValue = damageStat * 1f,
-        //                                isCrit = RollCrit(),
-        //                                teamIndex = TeamComponent.GetObjectTeam(base.gameObject),
-        //                                attacker = base.gameObject,
-        //                                target = hurtBox,
-        //                                damageColorIndex = DamageColorIndex.Default,
-        //                                procChainMask = default,
-        //                                procCoefficient = 1f,
-        //                                speed = 100f
-        //                            };
-
-        //                            OrbManager.instance.AddOrb(orb);
-        //                            base.characterBody.AddSpreadBloom(0.15f);
-        //                        }
-        //                    }
-
-                            
-        //                }
-        //            }
-
-        //            //Debug.Log("HurbBox2:" + hurtBox);
-
-
-
-                    
-        //        }
-
-                    
-                
-                
-        //    }
-        //}
 
 
 
@@ -265,6 +164,17 @@ namespace MegamanXMod.Survivors.X.SkillStates
             {
                 EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, base.gameObject, muzzleName, true);
 
+                if(index % 2 == 0)
+                {
+                    PlayAnimationOnAnimator(customAnimator, "LeftArm, Override", "HKShootL", playbackRateParam, duration * 0.5f, 0.1f * duration);
+                }
+                else
+                {
+                    PlayAnimationOnAnimator(customAnimator, "RightArm, Override", "HKShootR", playbackRateParam, duration * 0.5f, 0.1f * duration);
+                }
+
+                
+
                 GenericDamageOrb orb = CreateArrowOrb();
                 orb.origin = muzzleTransform.position;
                 orb.damageValue = damageStat * 1f;
@@ -277,7 +187,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
                 orb.procCoefficient = 1f;
                 orb.speed = 100;
 
-
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Missile_SFX, this.gameObject);
                 OrbManager.instance.AddOrb(orb);
                 base.characterBody.AddSpreadBloom(0.15f);
                 characterBody.SetAimTimer(2f);

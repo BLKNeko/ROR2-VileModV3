@@ -9,7 +9,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 {
     public class Triple7 : BaseSkillState
     {
-        public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.4f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
@@ -187,8 +187,11 @@ namespace VileMod.Survivors.Vile.SkillStates
                 //ExtraHeat
                 VC.SetExtraHeatValues(0.025f);
 
+                //Effect
+                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
+
                 // Som e tiro
-                //Util.PlaySound(Sounds.vileCherryBlast, gameObject);
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Cherry_Blast, this.gameObject);
                 bullet.Fire();
             }
         }

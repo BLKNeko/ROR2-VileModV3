@@ -55,8 +55,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override void OnExit()
         {
-            
 
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_In_SFX, this.gameObject);
             PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
             if (NetworkServer.active)
@@ -65,6 +65,8 @@ namespace VileMod.Survivors.Vile.SkillStates
             }
 
             rideFinished = false;
+
+            PlayAnimation("Body", "IdleLock", "ShootGun.playbackRate", 1.8f);
 
             base.OnExit();
         }
@@ -87,7 +89,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             if (!isAuthority || rideFinished) return;
 
             // Impacto
-            Util.PlaySound("Play_missile_impact", gameObject);
+            //Util.PlaySound("Play_missile_impact", gameObject);
 
 
             EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/CharacterLandImpact"), new EffectData

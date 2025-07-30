@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: maskHKL
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Footsteps
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      L Thigh
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      L Thigh/Bip L Calf
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      L Thigh/Bip L Calf/Bip L HorseLink
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      L Thigh/Bip L Calf/Bip L HorseLink/Bip L Foot
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      L Thigh/Bip L Calf/Bip L HorseLink/Bip L Foot/Bip L Toe0
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      L Thigh/Bip L Calf/Bip L HorseLink/Bip L Foot/Bip L Toe0/Bip L Toe0Nub
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip Head
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip Head/Bip HeadNub
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip L Clavicle
+    m_Weight: 1
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip L Clavicle/Bip L UpperArm
+    m_Weight: 1
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip L Clavicle/Bip L UpperArm/Bip L Forearm
+    m_Weight: 1
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip L Clavicle/Bip L UpperArm/Bip L Forearm/Bip L Hand
+    m_Weight: 1
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip R Clavicle
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip R Clavicle/Bip R UpperArm
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip R Clavicle/Bip R UpperArm/Bip R Forearm
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      Neck/Bip R Clavicle/Bip R UpperArm/Bip R Forearm/Bip R Hand
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      R Thigh
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      R Thigh/Bip R Calf
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      R Thigh/Bip R Calf/Bip R HorseLink
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      R Thigh/Bip R Calf/Bip R HorseLink/Bip R Foot
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      R Thigh/Bip R Calf/Bip R HorseLink/Bip R Foot/Bip R Toe0
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/Bip
+      R Thigh/Bip R Calf/Bip R HorseLink/Bip R Foot/Bip R Toe0/Bip R Toe0Nub
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/BoostPoint_L
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/BoostPoint_R
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/ExhaustPoint_L
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/ExhaustPoint_R
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/SeatPoint
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Root/Bip/Bip Pelvis/Bip Spine/SeatPoint/EM067_PilotMesh_G
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G/Rig_Sub
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes/EM067_BrokenMesh_00
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes/EM067_BrokenMesh_01
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes/EM067_BrokenMesh_02
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes/EM067_BrokenMesh_03
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes.001
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes.001/EM067_BrokenMesh_00.001
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes.001/EM067_BrokenMesh_01.001
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes.001/EM067_BrokenMesh_02.001
+    m_Weight: 0
+  - m_Path: Armature/EM067_G_2 (merge)/EM067_G_BrokenMeshes.001/EM067_BrokenMesh_03.001
+    m_Weight: 0
+  - m_Path: EM067_Mesh_G
+    m_Weight: 0

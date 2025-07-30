@@ -11,7 +11,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 {
     public class UnitMettaurcure : BaseSkillState
     {
-        public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.8f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
@@ -82,12 +82,10 @@ namespace VileMod.Survivors.Vile.SkillStates
                 if (isAuthority)
                 {
 
-                    //if (XConfig.enableVoiceBool.Value)
-                    //{
-                    //    AkSoundEngine.PostEvent(XStaticValues.X_shotgunIce_VSFX, this.gameObject);
-                    //}
-
-                    //PlayAnimation("Gesture, Override", "XBusterChargeAttack", "attackSpeed", this.duration);
+                    if (VileConfig.enableVoiceBool.Value)
+                    {
+                        AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Come_Here, this.gameObject);
+                    }
 
                     Ray aimRay = GetAimRay();
 

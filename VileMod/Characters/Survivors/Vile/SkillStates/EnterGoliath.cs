@@ -10,7 +10,7 @@ namespace VileMod.Survivors.Vile.SkillStates
     public class EnterGoliath : BaseSkillState
     {
 
-        public static float baseDuration = 1f;
+        public static float baseDuration = 0.8f;
         private float duration;
         private int boltCost;
         private VileComponent VC;
@@ -32,8 +32,9 @@ namespace VileMod.Survivors.Vile.SkillStates
             VRAC = GetComponent<VileRideArmorComponent>();
 
             if(VBC.GetBoltValue() < boltCost && !characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff)) 
-            { 
+            {
                 //Play sound
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Error, this.gameObject);
 
                 Chat.AddMessage($"You need at least {boltCost} Vile Bolts to enter Goliath mode! You currently have {VBC.GetBoltValue()} Vile Bolts.");
 
@@ -56,6 +57,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override void OnExit()
         {
+
+
             base.OnExit();
         }
 
@@ -66,6 +69,12 @@ namespace VileMod.Survivors.Vile.SkillStates
             if (fixedAge >= duration && isAuthority)
             {
                 //outer.SetNextState(new EnterGoliathAnim());
+
+                if (VileConfig.enableVoiceBool.Value)
+                {
+                    AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_RideArmor_In_VSFX, this.gameObject);
+                }
+
                 outer.SetNextState(new EnterGoliathEnd());
                 return;
             }

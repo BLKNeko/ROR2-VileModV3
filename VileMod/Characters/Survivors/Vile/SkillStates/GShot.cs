@@ -11,7 +11,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 {
     public class GShot : BaseSkillState
     {
-        public static float damageCoefficient = HenryStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 1f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
@@ -86,12 +86,12 @@ namespace VileMod.Survivors.Vile.SkillStates
                     EffectManager.SimpleMuzzleFlash(EntityStates.Mage.Weapon.IceNova.impactEffectPrefab, gameObject, muzzleString, true);
                     AddRecoil(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
 
-                    //if (XConfig.enableVoiceBool.Value)
-                    //{
-                    //    AkSoundEngine.PostEvent(XStaticValues.X_shotgunIce_VSFX, this.gameObject);
-                    //}
+                    if (VileConfig.enableVoiceBool.Value)
+                    {
+                        AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Attack, this.gameObject);
+                    }
 
-                    //PlayAnimation("Gesture, Override", "XBusterChargeAttack", "attackSpeed", this.duration);
+                    AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Charge_Shoot, this.gameObject);
 
                     Ray aimRay = GetAimRay();
 

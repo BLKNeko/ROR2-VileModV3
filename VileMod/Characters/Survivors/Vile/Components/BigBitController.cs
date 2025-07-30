@@ -36,12 +36,6 @@ namespace VileMod.Survivors.Vile.Components
             shouldFollowGroundOffset = true; // Deve seguir o offset do chão
             shouldRotateY = true; // Deve rotacionar no eixo Y
 
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
-            {
-                origin = transform.position,
-                rotation = transform.rotation
-            }, transmit: true);
-
         }
 
 
@@ -78,15 +72,6 @@ namespace VileMod.Survivors.Vile.Components
                 hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireShotgun.hitEffectPrefab,
             }.Fire();
 
-        }
-
-        void OnDestroy()
-        {
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
-            {
-                origin = transform.position,
-                rotation = transform.rotation
-            }, transmit: true);
         }
 
     }

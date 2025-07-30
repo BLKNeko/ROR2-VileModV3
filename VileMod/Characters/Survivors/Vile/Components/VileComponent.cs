@@ -89,25 +89,7 @@ namespace VileMod.Survivors.Vile.Components
 
             //Debug.Log("footstepHandler: " + footstepHandler);
 
-            //switch (XConfig.enableXFootstep.Value)
-            //{
-            //    case 0:
-            //        footstepHandler.baseFootstepString = "";
-            //        footstepHandler.sprintFootstepOverrideString = "";
-            //        break;
-            //    case 1:
-            //        footstepHandler.baseFootstepString = "Play_X_Footstep_SFX";
-            //        footstepHandler.sprintFootstepOverrideString = "Play_X_Footstep_SFX";
-            //        break;
-            //    case 2:
-            //        footstepHandler.baseFootstepString = "Play_X_Footstep_X8_SFX";
-            //        footstepHandler.sprintFootstepOverrideString = "Play_X_Footstep_X8_SFX";
-            //        break;
-            //    default:
-            //        footstepHandler.baseFootstepString = "";
-            //        footstepHandler.sprintFootstepOverrideString = "";
-            //        break;
-            //}
+            FootstepChanger(false);
 
 
         }
@@ -117,6 +99,7 @@ namespace VileMod.Survivors.Vile.Components
             if(!Body.hasAuthority) return;
 
             IsWeak();
+            onRideArmor();
             VHeatUpdate();
             VElementUpdate();
             VElementBuffUpdate();
@@ -133,6 +116,16 @@ namespace VileMod.Survivors.Vile.Components
             if (Body.HasBuff(VileBuffs.HawkBuff))
                 UpdateHawkAnimator();
 
+            AnimatorStateInfo stateInfo = Anim.GetCurrentAnimatorStateInfo(0); // camada 0 normalmente é a base layer
+            string currentAnimation = Anim.GetCurrentAnimatorClipInfo(0).Length > 0
+                ? Anim.GetCurrentAnimatorClipInfo(0)[0].clip.name
+                : "Unknown";
+
+            float normalizedTime = stateInfo.normalizedTime; // 0.0 a 1.0 ou mais (loopando)
+            float currentTime = normalizedTime * stateInfo.length;
+
+            Debug.Log($"Animação atual: {currentAnimation}, tempo: {currentTime:F2}s");
+
         }
 
         private void IsWeak()
@@ -143,12 +136,61 @@ namespace VileMod.Survivors.Vile.Components
 
         }
 
+        private void onRideArmor()
+        {
+            Anim.SetBool("onRideArmor", RidingRideArmor());
+            Anim.SetBool("OnGoliath", Body.HasBuff(VileBuffs.GoliathBuff));
+            Anim.SetBool("OnHawk", Body.HasBuff(VileBuffs.HawkBuff));
+
+            Debug.Log($"OnGoliath: {Anim.GetBool("OnGoliath")}");
+            Debug.Log($"OnHawk: {Anim.GetBool("OnHawk")}");
+            Debug.Log($"isMoving: {Anim.GetBool("isMoving")}");
+        }
+
         public CharacterBody GetVileBody()
         {
             return Body;
         }
 
-        
+        private void FootstepChanger(bool ridearmorfootstep)
+        {
+            if (ridearmorfootstep && VileConfig.enableFootstep.Value != 0)
+            {
+
+                footstepHandler.baseFootstepString = VileStaticValues.Play_Vile_Ride_Armor_FootStep;
+                footstepHandler.sprintFootstepOverrideString = VileStaticValues.Play_Vile_Ride_Armor_FootStep;
+            }
+            else
+            {
+                switch (VileConfig.enableFootstep.Value)
+                {
+                    case 0:
+                        footstepHandler.baseFootstepString = "";
+                        footstepHandler.sprintFootstepOverrideString = "";
+                        break;
+                    case 1:
+                        footstepHandler.baseFootstepString = VileStaticValues.Play_Vile_Footstep_SFX;
+                        footstepHandler.sprintFootstepOverrideString = VileStaticValues.Play_Vile_Footstep_SFX;
+                        break;
+                    case 2:
+                        footstepHandler.baseFootstepString = VileStaticValues.Play_Vile_Footstep_X8_SFX;
+                        footstepHandler.sprintFootstepOverrideString = VileStaticValues.Play_Vile_Footstep_X8_SFX;
+                        break;
+                    default:
+                        footstepHandler.baseFootstepString = VileStaticValues.Play_Vile_Footstep_SFX;
+                        footstepHandler.sprintFootstepOverrideString = VileStaticValues.Play_Vile_Footstep_SFX;
+                        break;
+                }
+            }
+
+            
+        }
+
+        public bool RidingRideArmor()
+        {
+            return Body.HasBuff(VileBuffs.GoliathBuff) || Body.HasBuff(VileBuffs.HawkBuff);
+        }
+
 
         private void VHeatUpdate()
         {
@@ -321,6 +363,7 @@ namespace VileMod.Survivors.Vile.Components
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
 
             RemoveSkills();
+            FootstepChanger(true);
 
             Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.goliathShootSkillDef, GenericSkill.SkillOverridePriority.Contextual);
@@ -349,6 +392,7 @@ namespace VileMod.Survivors.Vile.Components
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
 
             RemoveSkills();
+            FootstepChanger(false);
 
             extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.resumeGoliathSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
@@ -360,6 +404,7 @@ namespace VileMod.Survivors.Vile.Components
             AnimVeh.SetBool("isSprinting", Anim.GetBool("isSprinting"));
             AnimVeh.SetBool("isGrounded", Anim.GetBool("isGrounded"));
             AnimVeh.SetBool("inCombat", Anim.GetBool("inCombat"));
+            AnimVeh.SetFloat("walkSpeed", Anim.GetFloat("walkSpeed"));
 
 
         }
@@ -389,6 +434,7 @@ namespace VileMod.Survivors.Vile.Components
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
 
             RemoveSkills();
+            FootstepChanger(true);
 
             Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.hawkGunSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.hawkGunBarrageSkillDef, GenericSkill.SkillOverridePriority.Contextual);
@@ -419,6 +465,7 @@ namespace VileMod.Survivors.Vile.Components
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
 
             RemoveSkills();
+            FootstepChanger(false);
 
             extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.resumeHawkSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
@@ -430,7 +477,8 @@ namespace VileMod.Survivors.Vile.Components
             AnimHK.SetBool("isSprinting", Anim.GetBool("isSprinting"));
             AnimHK.SetBool("isGrounded", Anim.GetBool("isGrounded"));
             AnimHK.SetBool("inCombat", Anim.GetBool("inCombat"));
-
+            AnimHK.SetFloat("walkSpeed", Anim.GetFloat("walkSpeed"));
+            AnimHK.SetFloat("upSpeed", Anim.GetFloat("upSpeed"));
 
         }
 
@@ -445,6 +493,7 @@ namespace VileMod.Survivors.Vile.Components
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
 
             RemoveSkills();
+            FootstepChanger(false);
         }
 
         private void DeactivateChilds()

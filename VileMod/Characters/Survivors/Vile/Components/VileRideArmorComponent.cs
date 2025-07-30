@@ -163,6 +163,8 @@ namespace VileMod.Survivors.Vile.Components
             r_InitializeSuperRegem = true;
             r_InitializeSuperRegemTimer = 0f;
 
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_SFX_Recov_HP, this.gameObject);
+
             Debug.Log($"VileRideArmorComponent - Initialized Ride Armor with Max Health: {r_MaxHealth}");
 
         }
@@ -175,7 +177,7 @@ namespace VileMod.Survivors.Vile.Components
                 r_Health = Mathf.Clamp(r_Health, 1f, r_MaxHealth);
 
                 r_InitializeSuperRegemTimer += Time.fixedDeltaTime;
-                
+
             }
             else
             {

@@ -5,9 +5,11 @@ namespace VileMod.Survivors.Vile
 {
     public static class VileConfig
     {
-        public static ConfigEntry<bool> someConfigBool;
-        public static ConfigEntry<float> someConfigFloat;
-        public static ConfigEntry<float> someConfigFloatWithCustomRange;
+
+        public static ConfigEntry<bool> enableVoiceBool;
+        public static ConfigEntry<int> enableFootstep;
+
+        public static ConfigEntry<float> rideArmorDestroyPenalty;
 
         public static ConfigEntry<float> hk_flyingSpeedMultiplier;
 
@@ -15,24 +17,19 @@ namespace VileMod.Survivors.Vile
         {
             string section = "Vile";
 
-            someConfigBool = Config.BindAndOptions(
+            enableVoiceBool = Config.BindAndOptions(
                 section,
-                "someConfigBool",
+                "EnableVoice",
                 true,
-                "this creates a bool config, and a checkbox option in risk of options");
+                "At certain moments or when using a skill, Vile may talk or scream. If you prefer to disable this feature, you can turn it off here.");
 
-            someConfigFloat = Config.BindAndOptions(
+            enableFootstep = Config.BindAndOptions(
                 section,
-                "someConfigfloat",
-                5f);//blank description will default to just the name
-
-            someConfigFloatWithCustomRange = Config.BindAndOptions(
-                section,
-                "someConfigfloat2",
-                5f,
+                "Enable Vile Footstep",
+                1,
                 0,
-                50,
-                "if a custom range is not passed in, a float will default to a slider with range 0-20. risk of options only has sliders");
+                2,
+                "Vile footstep SFX. \n\n Turn it OFF also turns ride armor footstep OFF \n\n 0 = OFF \n\n 1 = Comand Mission SFX \n\n 2 = MegamanX8 SFX");
 
             hk_flyingSpeedMultiplier = Config.BindAndOptions(
                 section,

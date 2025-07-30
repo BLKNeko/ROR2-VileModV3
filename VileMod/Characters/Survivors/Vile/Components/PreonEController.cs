@@ -26,12 +26,6 @@ namespace VileMod.Survivors.Vile.Components
 
             groundOffset = 0.1f; // Quanto acima do chão o projetil deve ficar
 
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
-            {
-                origin = transform.position,
-                rotation = transform.rotation
-            }, transmit: true);
-
         }
 
 
@@ -72,14 +66,7 @@ namespace VileMod.Survivors.Vile.Components
 
         }
 
-        void OnDestroy()
-        {
-            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
-            {
-                origin = transform.position,
-                rotation = transform.rotation
-            }, transmit: true);
-        }
+        
 
     }
 }

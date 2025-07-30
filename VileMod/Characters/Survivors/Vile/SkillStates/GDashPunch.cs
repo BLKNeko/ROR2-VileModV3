@@ -25,7 +25,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             hitboxGroupName = "GoliathHitbox";
 
             damageType = DamageTypeCombo.GenericPrimary;
-            damageCoefficient = HenryStaticValues.swordDamageCoefficient;
+            damageCoefficient = VileStaticValues.swordDamageCoefficient;
             procCoefficient = 1f;
             pushForce = 300f;
             bonusForce = Vector3.zero;
@@ -88,6 +88,8 @@ namespace VileMod.Survivors.Vile.SkillStates
             characterModel = characterBody.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
 
             CreateAfterImage();
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_Boost, this.gameObject);
 
             base.OnEnter();
         }
