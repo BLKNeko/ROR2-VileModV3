@@ -52,6 +52,11 @@ namespace VileMod.Survivors.Vile
         internal static HuntressTrackerSkillDef hawkGunSkillDef;
         internal static HuntressTrackerSkillDef hawkGunBarrageSkillDef;
 
+        //CYCLOPS SKILL DEFS
+        internal static SkillDef enterCyclopsSkillDef;
+        internal static SkillDef exitCyclopsSkillDef;
+        internal static SkillDef resumeCyclopsSkillDef;
+
         //RIDE ARMOR GENERAL
         internal static SkillDef rideRapairSkillDef;
         internal static SkillDef destroyRideArmorSkillDef;
@@ -66,6 +71,10 @@ namespace VileMod.Survivors.Vile
         internal static SkillDef unitPreonESkillDef;
 
         internal static SkillDef unitNightmareVSkillDef;
+
+        internal static SkillDef unitMameQSkillDef;
+
+        internal static SkillDef unitSpikySkillDef;
 
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
@@ -164,6 +173,22 @@ namespace VileMod.Survivors.Vile
                 new CustomRendererInfo
                 {
                     childName = "HK_VLMKC_Mesh",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "CY",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "CY_Mesh",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "CY_VLC_Mesh",
+                },
+                new CustomRendererInfo
+                {
+                    childName = "CY_VLMKC_Mesh",
                 }
         };
 
@@ -199,7 +224,7 @@ namespace VileMod.Survivors.Vile
             base.InitializeCharacter();
 
             VileConfig.Init();
-            HenryStates.Init();
+            VileStates.Init();
             HenryTokens.Init();
 
             VileAssets.Init(assetBundle);
@@ -706,6 +731,100 @@ namespace VileMod.Survivors.Vile
 
             #endregion
 
+            #region Cyclops
+
+            enterCyclopsSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "EnterCyclops",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.CallHawkSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EnterCyclops)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 60f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            exitCyclopsSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "ExitCyclops",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.ExitHawkSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ExitCyclops)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 20f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            resumeCyclopsSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "ResumeCyclops",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.ResumeHawkSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeCyclops)),
+                activationStateMachineName = "Body",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 20f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            #endregion
+
             #region Units
 
             unitMettaurcureSkillDef = Skills.CreateSkillDef(new SkillDefInfo
@@ -863,6 +982,72 @@ namespace VileMod.Survivors.Vile
                 fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = false,
                 mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
+            unitMameQSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "MAME-Q",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillIcon = VileAssets.UnitNightmareVSkillIcon,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitMameQ)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
+            unitSpikySkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "Spiky",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillIcon = VileAssets.UnitNightmareVSkillIcon,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitSpiky)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
                 beginSkillCooldownOnSkillEnd = true,
 
                 isCombatSkill = false,
@@ -1198,7 +1383,7 @@ namespace VileMod.Survivors.Vile
                 skillIcon = VileAssets.BurningDriveSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VCerberusPhanton)),
-                activationStateMachineName = "Body",
+                activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 7f,
@@ -1421,20 +1606,23 @@ namespace VileMod.Survivors.Vile
         {
 
             Skills.AddFirstExtraSkill(bodyPrefab, unitMettaurcureSkillDef);
+            Skills.AddFirstExtraSkill(bodyPrefab, unitBigBitSkillDef);
+            Skills.AddFirstExtraSkill(bodyPrefab, unitSpikySkillDef);
         }
 
         private void AddExtraSecondSkills()
         {
 
+            Skills.AddSecondExtraSkill(bodyPrefab, unitPreonESkillDef);
             Skills.AddSecondExtraSkill(bodyPrefab, unitMettaurCommanderSkillDef);
-            Skills.AddSecondExtraSkill(bodyPrefab, unitBigBitSkillDef);
+            
         }
 
         private void AddExtraThirdSkills()
         {
 
             Skills.AddThirdExtraSkill(bodyPrefab, unitNightmareVSkillDef);
-            Skills.AddThirdExtraSkill(bodyPrefab, unitPreonESkillDef);
+            Skills.AddThirdExtraSkill(bodyPrefab, unitMameQSkillDef);
         }
 
         private void AddExtraFourthSkills()
@@ -1442,6 +1630,7 @@ namespace VileMod.Survivors.Vile
 
             Skills.AddFourthExtraSkill(bodyPrefab, enterGoliathSkillDef);
             Skills.AddFourthExtraSkill(bodyPrefab, enterHawkSkillDef);
+            Skills.AddFourthExtraSkill(bodyPrefab, enterCyclopsSkillDef);
         }
 
         #endregion skills
@@ -1478,6 +1667,10 @@ namespace VileMod.Survivors.Vile
                 null,
                 null,
                 null,
+                null,
+                null,
+                null,
+                null,
                 null);
 
             defaultSkin.rendererInfos[0].defaultMaterial = assetBundle.LoadMaterial("matVile");
@@ -1494,6 +1687,11 @@ namespace VileMod.Survivors.Vile
                 new SkinDef.GameObjectActivation
                 {
                     gameObject = childLocator.FindChildGameObject("HAWK"),
+                    shouldActivate = false,
+                },
+                new SkinDef.GameObjectActivation
+                {
+                    gameObject = childLocator.FindChildGameObject("CY"),
                     shouldActivate = false,
                 }
             };
@@ -1523,6 +1721,10 @@ namespace VileMod.Survivors.Vile
                 null,
                 null,
                 null,
+                null,
+                null,
+                null,
+                null,
                 null);
 
             //masterySkin has a new set of RendererInfos (based on default rendererinfos)
@@ -1541,6 +1743,11 @@ namespace VileMod.Survivors.Vile
                 new SkinDef.GameObjectActivation
                 {
                     gameObject = childLocator.FindChildGameObject("HAWK"),
+                    shouldActivate = false,
+                },
+                new SkinDef.GameObjectActivation
+                {
+                    gameObject = childLocator.FindChildGameObject("CY"),
                     shouldActivate = false,
                 }
             };
@@ -1638,21 +1845,42 @@ namespace VileMod.Survivors.Vile
 
             if (sender.HasBuff(VileBuffs.HawkBuff))
             {
-                args.armorAdd += 100;
+                args.armorAdd += 80;
                 args.armorAdd += sender.baseArmor * 2f;
-                args.healthMultAdd += 3f;
+                args.healthMultAdd += 1.5f;
                 args.damageMultAdd += 1.8f;
                 args.attackSpeedMultAdd += 0.25f;
                 args.regenMultAdd += 1f;
-                args.jumpPowerMultAdd += 0.3f;
+                args.jumpPowerMultAdd += 0.2f;
                 args.moveSpeedMultAdd += 0.25f;
-                args.shieldMultAdd += 3f;
+                args.shieldMultAdd += 1f;
+                args.critDamageMultAdd += 2f;
+            }
+
+            if (sender.HasBuff(VileBuffs.CyclopsBuff))
+            {
+                args.armorAdd += 100;
+                args.armorAdd += sender.baseArmor * 3f;
+                args.healthMultAdd += 2f;
+                args.damageMultAdd += 2f;
+                args.regenMultAdd += 1f;
+                args.jumpPowerMultAdd -= 0.1f;
+                args.moveSpeedMultAdd -= 0.05f;
+                args.shieldMultAdd += 2f;
                 args.critDamageMultAdd += 1f;
             }
 
             if (sender.HasBuff(VileBuffs.MetComBuff))
             {
                 args.shieldMultAdd += 3f;
+            }
+
+            if (sender.HasBuff(VileBuffs.MameqBuff))
+            {
+                args.armorAdd += 50;
+                args.baseMoveSpeedAdd += 0.2f;
+                args.critAdd += 0.25f;
+                args.damageMultAdd += 2f;
             }
 
             if (sender.HasBuff(VileBuffs.nightmareVirusDebuff))

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MegamanXMod.Survivors.X.SkillStates;
+using System;
+using VileMod.Survivors.Vile.SkillStates;
 
 namespace VileMod.Survivors.Vile
 {
@@ -9,6 +11,91 @@ namespace VileMod.Survivors.Vile
         public const float gunDamageCoefficient = 4.2f;
 
         public const float bombDamageCoefficient = 16f;
+
+        //VILE
+
+        // PRIMARY
+
+        public const float CherryBlastDamageCoefficient = 0.3f;
+
+        public const float DistanceNeedlerDamageCoefficient = 0.7f;
+
+        public const float Triple7DamageCoefficient = 0.2f;
+
+        public const float ZipZapperDamageCoefficient = 0.2f;
+
+        // SECONDARY
+
+        public const float VBumpityBoomDamageCoefficient = 2.5f;
+
+        public const float VNapalmBombDamageCoefficient = 3f;
+
+        public const float VFrontRunnerDamageCoefficient = 3f;
+
+        
+
+
+        // UTILITY
+
+        public const float VShotgunIceDamageCoefficient = 6f;
+
+        public const float VEletricSparkDamageCoefficient = 7f;
+
+
+        // SPECIAL
+
+        public const float VBurningDriveDamageCoefficient = 8f;
+
+        public const float VCerberusPhantonDamageCoefficient = 3f;
+
+
+        // RIDE ARMOR
+
+        public const float GPunch0DamageCoefficient = 5f;
+
+        public const float GPunch1DamageCoefficient = 5f;
+
+        public const float GPunch2DamageCoefficient = 5f;
+
+        public const float GDashPunchDamageCoefficient = 8f;
+
+        public const float GShotDamageCoefficient = 4f;
+
+        public const float HGun1DamageCoefficient = 1f;
+
+        public const float HGunBarrageDamageCoefficient = 2f;
+
+        public const float RepairRideArmorDamageCoefficient = 1f;
+
+        public const float DestroyRideArmorDamageCoefficient = 15f;
+
+        // UNIT
+
+        public const float UnitBigBitDamageCoefficient = 1f;
+
+        public const float UnitMettaurCommanderDamageCoefficient = 1f;
+
+        public const float UnitMettaurcureDamageCoefficient = 1f;
+
+        public const float UnitNightmareVDamageCoefficient = 3f;
+
+        public const float UnitPreonEDamageCoefficient = 2.5f;
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
 
 
         //SOUND STRINGS

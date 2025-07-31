@@ -72,7 +72,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         protected override void PlayAttackAnimation()
         {
-            //PlayCrossfade("Gesture, Override", "VEH_ATK0_S", playbackRateParam, duration, 0.1f * duration);
+            PlayCrossfade("FullBody, Override", "BurningDrive", playbackRateParam, duration * 0.4f, 0.3f * duration);
             //PlayAnimationOnAnimator(customAnimator, "Gesture, Override", "VEH_ATK0_S", playbackRateParam, duration * 0.3f, 0.1f * duration);
         }
 

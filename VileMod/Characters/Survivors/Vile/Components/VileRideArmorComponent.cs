@@ -100,7 +100,7 @@ namespace VileMod.Survivors.Vile.Components
 
         private bool HasRideArmorBuff()
         {
-            return Body.HasBuff(VileBuffs.GoliathBuff) || Body.HasBuff(VileBuffs.HawkBuff);
+            return Body.HasBuff(VileBuffs.GoliathBuff) || Body.HasBuff(VileBuffs.HawkBuff) || Body.HasBuff(VileBuffs.CyclopsBuff);
         }
 
         private void UpdateMaxHealth()
@@ -358,7 +358,7 @@ namespace VileMod.Survivors.Vile.Components
             if (damageInfo.attacker.name != Body.name && self == HealthComp)
             {
 
-                if (self.GetComponent<CharacterBody>().HasBuff(VileBuffs.GoliathBuff) || self.GetComponent<CharacterBody>().HasBuff(VileBuffs.HawkBuff))
+                if (self.GetComponent<CharacterBody>().HasBuff(VileBuffs.GoliathBuff) || self.GetComponent<CharacterBody>().HasBuff(VileBuffs.HawkBuff) || self.GetComponent<CharacterBody>().HasBuff(VileBuffs.CyclopsBuff))
                 {
                     float finalDamage = damageInfo.damage;
 

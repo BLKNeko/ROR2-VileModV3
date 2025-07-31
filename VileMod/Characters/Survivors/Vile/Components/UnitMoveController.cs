@@ -28,6 +28,7 @@ namespace VileMod.Survivors.Vile.Components
         protected bool shouldRotateY = false;
         protected bool shouldFollowGroundOffset = false;
         protected bool shouldMoveTowardEnemy = false;
+        protected bool shouldAnimate = true;
 
         [Header("Alvo")]
         public Transform playerTarget;
@@ -99,7 +100,8 @@ namespace VileMod.Survivors.Vile.Components
             }
 
             // Atualiza as animações
-            UpdateAnims();
+            if(shouldAnimate)
+                UpdateAnims();
 
             // Verifica se há inimigos próximos
             //bool hasNearbyEnemies = CheckForEnemiesNearby();

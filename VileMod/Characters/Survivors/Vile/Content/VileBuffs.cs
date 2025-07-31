@@ -12,6 +12,7 @@ namespace VileMod.Survivors.Vile
 
         public static BuffDef GoliathBuff;
         public static BuffDef HawkBuff;
+        public static BuffDef CyclopsBuff;
 
         public static BuffDef PrimaryHeatBuff;
 
@@ -25,6 +26,7 @@ namespace VileMod.Survivors.Vile
 
 
         public static BuffDef MetComBuff;
+        public static BuffDef MameqBuff;
 
         public static void Init(AssetBundle assetBundle)
         {
@@ -47,6 +49,12 @@ namespace VileMod.Survivors.Vile
                 false);
 
             HawkBuff = Modules.Content.CreateAndAddBuff("HawkBuff",
+                VileAssets.CallHawkSkillIcon,
+                Color.white,
+                false,
+                false);
+
+            CyclopsBuff = Modules.Content.CreateAndAddBuff("CyclopsBuff",
                 VileAssets.CallHawkSkillIcon,
                 Color.white,
                 false,
@@ -77,6 +85,12 @@ namespace VileMod.Survivors.Vile
                 false);
 
             MetComBuff = Modules.Content.CreateAndAddBuff("MetComBuff",
+                VileAssets.UnitMetComSkillIcon,
+                Color.white,
+                false,
+                true);
+
+            MameqBuff = Modules.Content.CreateAndAddBuff("MAME-QBuff",
                 VileAssets.UnitMetComSkillIcon,
                 Color.white,
                 false,

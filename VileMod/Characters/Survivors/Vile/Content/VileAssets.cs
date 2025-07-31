@@ -20,6 +20,7 @@ namespace VileMod.Survivors.Vile
 
         public static GameObject gFallEffect;
         public static GameObject hFallEffect;
+        public static GameObject cFallEffect;
 
         // networked hit sounds
         public static NetworkSoundEventDef swordHitSoundEvent;
@@ -55,6 +56,10 @@ namespace VileMod.Survivors.Vile
         public static GameObject unitNightmareVPrefab;
 
         public static GameObject unitMettaurCommanderPrefab;
+
+        public static GameObject unitMameqPrefab;
+
+        public static GameObject unitSpikyPrefab;
 
         //Icons
         public static Sprite VileSkinIcon;
@@ -144,6 +149,7 @@ namespace VileMod.Survivors.Vile
 
             gFallEffect = _assetBundle.LoadEffect("GFallVFX");
             hFallEffect = _assetBundle.LoadEffect("HFallVFX");
+            cFallEffect = _assetBundle.LoadEffect("CFallVFX");
 
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
 
@@ -289,6 +295,8 @@ namespace VileMod.Survivors.Vile
             CreateUnitBigBitProjectile();
             CreateUnitNightmareVProjectile();
             CreateUnitMetComProjectile();
+            CreateUnitMameqProjectile();
+            CreateUnitSpikyProjectile();
 
 
             Content.AddProjectilePrefab(bombProjectilePrefab);
@@ -306,6 +314,8 @@ namespace VileMod.Survivors.Vile
             Content.AddProjectilePrefab(unitBigBitPrefab);
             Content.AddProjectilePrefab(unitNightmareVPrefab);
             Content.AddProjectilePrefab(unitMettaurCommanderPrefab);
+            Content.AddProjectilePrefab(unitMameqPrefab);
+            Content.AddProjectilePrefab(unitSpikyPrefab);
         }
 
         private static void CreateBombProjectile()
@@ -334,6 +344,8 @@ namespace VileMod.Survivors.Vile
             
             bombController.startSound = "";
         }
+
+        
 
         #region Units
 
@@ -440,6 +452,57 @@ namespace VileMod.Survivors.Vile
                 unitMetComController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("MetCom");
 
             unitMetComController.startSound = "";
+        }
+
+        private static void CreateUnitMameqProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            unitMameqPrefab = Asset.CloneProjectilePrefab("FMJ", "MameQProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            UnityEngine.Object.Destroy(unitMameqPrefab.GetComponent<ProjectileImpactExplosion>());
+            //ProjectileImpactExplosion bombImpactExplosion = bombProjectilePrefab.AddComponent<ProjectileImpactExplosion>();
+
+            unitMameqPrefab.GetComponent<ProjectileSimple>().lifetime = 60f;
+
+            unitMameqPrefab.AddComponent<MameqController>();
+
+            ProjectileController unitMameqController = unitMameqPrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("MAMEQ") != null)
+                unitMameqController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("MAMEQ");
+
+            unitMameqController.startSound = "";
+        }
+
+        private static void CreateUnitSpikyProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            unitSpikyPrefab = Asset.CloneProjectilePrefab("Sawmerang", "SpikyProjecile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            UnityEngine.Object.Destroy(unitSpikyPrefab.GetComponent<ProjectileImpactExplosion>());
+            //UnityEngine.Object.Destroy(shieldBoomerangProjectilePrefab.GetComponent<ProjectileSimple>());
+            UnityEngine.Object.Destroy(unitSpikyPrefab.GetComponent<ProjectileStickOnImpact>());
+
+            var simple = unitSpikyPrefab.GetComponent<ProjectileSimple>();
+
+            if (simple)
+            {
+                simple.lifetime = 41f;
+            }
+
+
+            unitSpikyPrefab.AddComponent<OrbitAroundOwner>();
+
+
+
+            ProjectileController spikyController = unitSpikyPrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("Spiky") != null)
+                spikyController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("Spiky");
+
+            spikyController.startSound = "";
         }
 
         #endregion

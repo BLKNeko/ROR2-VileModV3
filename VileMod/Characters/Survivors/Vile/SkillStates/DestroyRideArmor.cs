@@ -4,6 +4,7 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 using VileMod.Survivors.Vile.Components;
+using ExtraSkillSlots;
 
 namespace VileMod.Survivors.Vile.SkillStates
 {
@@ -15,6 +16,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         private float duration;
         private VileComponent VC;
+        private ExtraSkillLocator extraSkill;
 
 
         public override void OnEnter()
@@ -26,6 +28,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             //PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
 
             VC = GetComponent<VileComponent>();
+            extraSkill = GetComponent<ExtraSkillLocator>();
 
             PlayAnimation("Body", "Idle", "ShootGun.playbackRate", 0f);
 
@@ -44,6 +47,11 @@ namespace VileMod.Survivors.Vile.SkillStates
                 if (characterBody.HasBuff(VileBuffs.HawkBuff))
                 {
                     characterBody.RemoveBuff(VileBuffs.HawkBuff);
+                }
+
+                if (characterBody.HasBuff(VileBuffs.CyclopsBuff))
+                {
+                    characterBody.RemoveBuff(VileBuffs.CyclopsBuff);
                 }
 
                 if (characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff))
@@ -96,6 +104,8 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void OnExit()
         {
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_Lose, this.gameObject);
+
+            extraSkill.extraFourth.temporaryCooldownPenalty = 120f;
 
             base.OnExit();
         }

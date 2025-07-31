@@ -31,7 +31,8 @@ namespace VileMod.Survivors.Vile.SkillStates
         private float stopwatch;
         private float spinLevel;
         private Animator animator;
-        private string muzzleString = "Weapon";
+        private string muzzleString = "VLVulcanMuzz";
+        private string playbackRateParam = "ShootGun.playbackRate";
 
         private VileComponent VC;
 
@@ -57,6 +58,8 @@ namespace VileMod.Survivors.Vile.SkillStates
                     characterBody.AddBuff(VileBuffs.PrimaryHeatBuff);
                 }
             }
+
+            PlayCrossfade("LeftArm, Override", "VulcanLoop", playbackRateParam, shootDelay * 0.7f, 0.1f * shootDelay);
 
         }
 
@@ -88,7 +91,12 @@ namespace VileMod.Survivors.Vile.SkillStates
 
                 //Debug.Log("spinLevel: " + spinLevel);
 
-                PlayCrossfade("Gesture, Override", "CannonShoot", "attackSpeed", shootDelay, 0.05f);
+                //if(animator.GetBool("isMoving"))
+                //    PlayCrossfade("LeftArm, Override", "VulcanLoopRun", playbackRateParam, shootDelay * 0.7f, 0.5f * shootDelay);
+                //else if(!characterMotor.isGrounded)
+                //    PlayCrossfade("LeftArm, Override", "VulcanLoopJump", playbackRateParam, shootDelay * 0.7f, 0.5f * shootDelay);
+                //else
+                //    PlayCrossfade("LeftArm, Override", "VulcanLoop", playbackRateParam, shootDelay * 0.7f, 0.5f * shootDelay);
 
                 if (characterBody.HasBuff(VileBuffs.OverHeatDebuff))
                 {

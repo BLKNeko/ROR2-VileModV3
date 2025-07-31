@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using static Wamp;
 using ExtraSkillSlots;
+using System;
 
 namespace VileMod.Survivors.Vile.Components
 {
@@ -17,6 +18,7 @@ namespace VileMod.Survivors.Vile.Components
         private Animator Anim;
         private Animator AnimVeh;
         private Animator AnimHK;
+        private Animator AnimCY;
 
         private HealthComponent HealthComp;
 
@@ -46,6 +48,14 @@ namespace VileMod.Survivors.Vile.Components
         private float flameElementValue;
         private float iceElementValue;
 
+        public Transform clavicleBone; // Bip R Clavicle
+        public float smoothSpeed = 15f; // quanto maior, mais rápido se ajusta
+        public Vector3 localEulerOffset; // compensação se o bone estiver girado por padrão
+
+        private Ray aimRay;
+
+        private Quaternion initialLocalRotation;
+
         private void Start()
         {
             //any funny custom behavior you want here
@@ -71,6 +81,8 @@ namespace VileMod.Survivors.Vile.Components
 
             AnimHK = childLocator.FindChildGameObject("HAWK").GetComponents<Animator>()[0];
 
+            AnimCY = childLocator.FindChildGameObject("CY").GetComponents<Animator>()[0];
+
             cameraTargetParams = Body.GetComponent<CameraTargetParams>();
 
             extraskillLocator = GetComponent<ExtraSkillLocator>();
@@ -80,6 +92,13 @@ namespace VileMod.Survivors.Vile.Components
             tracker = GetComponent<HuntressTracker>();
 
             tracker.enabled = false;
+
+            clavicleBone = childLocator.FindChildGameObject("LClavicle").transform;
+
+            if (clavicleBone)
+            {
+                initialLocalRotation = clavicleBone.localRotation;
+            }
 
             //Debug.Log(AnimVeh);
             //Debug.Log("Camera: " + cameraTargetParams);
@@ -116,17 +135,83 @@ namespace VileMod.Survivors.Vile.Components
             if (Body.HasBuff(VileBuffs.HawkBuff))
                 UpdateHawkAnimator();
 
-            AnimatorStateInfo stateInfo = Anim.GetCurrentAnimatorStateInfo(0); // camada 0 normalmente é a base layer
-            string currentAnimation = Anim.GetCurrentAnimatorClipInfo(0).Length > 0
-                ? Anim.GetCurrentAnimatorClipInfo(0)[0].clip.name
-                : "Unknown";
+            if (Body.HasBuff(VileBuffs.CyclopsBuff))
+                UpdateCyclopsAnimator();
 
-            float normalizedTime = stateInfo.normalizedTime; // 0.0 a 1.0 ou mais (loopando)
-            float currentTime = normalizedTime * stateInfo.length;
+            //AnimatorStateInfo stateInfo = Anim.GetCurrentAnimatorStateInfo(0); // camada 0 normalmente é a base layer
+            //string currentAnimation = Anim.GetCurrentAnimatorClipInfo(0).Length > 0
+            //    ? Anim.GetCurrentAnimatorClipInfo(0)[0].clip.name
+            //    : "Unknown";
 
-            Debug.Log($"Animação atual: {currentAnimation}, tempo: {currentTime:F2}s");
+            //float normalizedTime = stateInfo.normalizedTime; // 0.0 a 1.0 ou mais (loopando)
+            //float currentTime = normalizedTime * stateInfo.length;
+
+            //Debug.Log($"Animação atual: {currentAnimation}, tempo: {currentTime:F2}s");
 
         }
+
+        //private void LateUpdate()
+        //{
+
+        //    if (Body.HasBuff(VileBuffs.PrimaryHeatBuff))
+        //        ClaviceAimOverride();
+
+        //}
+
+        //private void ClaviceAimOverride()
+        //{
+
+        //    Debug.Log("ARMOVERRIDE------");
+
+        //    if (clavicleBone == null || Body == null) return;
+
+        //    Debug.Log("ARMOVERRIDE---2------");
+
+        //    // Só aplica durante a skill primária ativa
+        //    // Você precisa adaptar esse check pro seu estado/skill. Exemplo genérico:
+        //    //bool primaryActive = /* sua condição: ex: currentSkill == primarySkill && está sendo usada */ true;
+        //    //if (Body.HasBuff(VileBuffs.PrimaryHeatBuff))
+        //    //{
+        //    //    // opcional: voltar suavemente à rotação original
+        //    //    clavicleBone.localRotation = Quaternion.Slerp(clavicleBone.localRotation, initialLocalRotation, Time.deltaTime * smoothSpeed);
+        //    //    return;
+        //    //}
+
+        //    Debug.Log("ARMOVERRIDE---3------");
+
+        //    // Pega a direção da mira
+        //    Vector3 aimOrigin = Body.aimOrigin; // ponto de origem da mira
+        //    Vector3 aimDirection = Body.inputBank.aimDirection; // direção da mira em world space
+
+        //    Debug.Log($"aimDirection: {aimDirection}");
+
+        //    if (aimDirection.sqrMagnitude < 0.0001f) return;
+
+        //    Debug.Log("ARMOVERRIDE---4------");
+
+        //    aimRay = new Ray(aimOrigin, aimDirection);
+
+        //    // Queremos que a clavícula "olhe" para frente da mira, projetando um alvo à frente
+        //    Vector3 targetPoint = aimRay.GetPoint(10f); // 10 unidades à frente da mira, ajuste se quiser
+
+        //    // Calcula rotação desejada: fazer o eixo da clavícula apontar na direção da mira.
+        //    // Dependendo da orientação do seu rig, pode precisar ajustar o eixo.
+        //    Vector3 toTarget = targetPoint - clavicleBone.position;
+        //    if (toTarget.sqrMagnitude < 0.0001f) return;
+
+        //    Debug.Log("ARMOVERRIDE---5------");
+
+        //    Quaternion desiredWorldRot = Quaternion.LookRotation(toTarget.normalized, Vector3.up);
+        //    // aplica offset local se necessário
+        //    desiredWorldRot *= Quaternion.Euler(localEulerOffset);
+
+        //    // Suaviza e aplica
+        //    clavicleBone.rotation = Quaternion.Slerp(clavicleBone.rotation, desiredWorldRot, Time.deltaTime * smoothSpeed);
+
+
+        //    Debug.Log("ARMOVERRIDE---F------");
+
+        //}
 
         private void IsWeak()
         {
@@ -141,10 +226,11 @@ namespace VileMod.Survivors.Vile.Components
             Anim.SetBool("onRideArmor", RidingRideArmor());
             Anim.SetBool("OnGoliath", Body.HasBuff(VileBuffs.GoliathBuff));
             Anim.SetBool("OnHawk", Body.HasBuff(VileBuffs.HawkBuff));
+            Anim.SetBool("OnCyclops", Body.HasBuff(VileBuffs.CyclopsBuff));
 
-            Debug.Log($"OnGoliath: {Anim.GetBool("OnGoliath")}");
-            Debug.Log($"OnHawk: {Anim.GetBool("OnHawk")}");
-            Debug.Log($"isMoving: {Anim.GetBool("isMoving")}");
+            //Debug.Log($"OnGoliath: {Anim.GetBool("OnGoliath")}");
+            //Debug.Log($"OnHawk: {Anim.GetBool("OnHawk")}");
+            //Debug.Log($"isMoving: {Anim.GetBool("isMoving")}");
         }
 
         public CharacterBody GetVileBody()
@@ -188,7 +274,7 @@ namespace VileMod.Survivors.Vile.Components
 
         public bool RidingRideArmor()
         {
-            return Body.HasBuff(VileBuffs.GoliathBuff) || Body.HasBuff(VileBuffs.HawkBuff);
+            return Body.HasBuff(VileBuffs.GoliathBuff) || Body.HasBuff(VileBuffs.HawkBuff) || Body.HasBuff(VileBuffs.CyclopsBuff);
         }
 
 
@@ -482,6 +568,81 @@ namespace VileMod.Survivors.Vile.Components
 
         }
 
+        //CYCLOPS
+
+        public void EnterCyclops()
+        {
+
+            DeactivateChilds();
+
+            tracker.enabled = false;
+
+            childLocator.FindChildGameObject("CY").SetActive(true);
+
+            if (Body.skinIndex == 0)
+            {
+                childLocator.FindChildGameObject("CY_VLC_Mesh").SetActive(true);
+            }
+            else
+            {
+                childLocator.FindChildGameObject("CY_VLMKC_Mesh").SetActive(true);
+            }
+
+
+            //cameraTargetParams.fovOverride = 60f;
+            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+
+            RemoveSkills();
+            FootstepChanger(true);
+
+            Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.goliathDashPunchSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.special.SetSkillOverride(Body.skillLocator.special, VileSurvivor.rideRapairSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+
+            extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.exitCyclopsSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+
+            Body.skillLocator.primary.Reset();
+            Body.skillLocator.secondary.Reset();
+            Body.skillLocator.utility.Reset();
+            Body.skillLocator.special.Reset();
+            extraskillLocator.extraFourth.Reset();
+
+            if (!Body.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                rideArmorComponent.InitializeRideArmor();
+
+            Debug.LogError("Cyclops Exit WITHOUT SKILL");
+
+        }
+
+        public void ExitCyclops()
+        {
+            DeactivateChilds();
+
+            tracker.enabled = false;
+
+            childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
+
+            cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
+
+            RemoveSkills();
+            FootstepChanger(false);
+
+            extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.resumeCyclopsSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+
+        }
+
+        private void UpdateCyclopsAnimator()
+        {
+            AnimCY.SetBool("isMoving", Anim.GetBool("isMoving"));
+            AnimCY.SetBool("isSprinting", Anim.GetBool("isSprinting"));
+            AnimCY.SetBool("isGrounded", Anim.GetBool("isGrounded"));
+            AnimCY.SetBool("inCombat", Anim.GetBool("inCombat"));
+            AnimCY.SetFloat("walkSpeed", Anim.GetFloat("walkSpeed"));
+            AnimCY.SetFloat("upSpeed", Anim.GetFloat("upSpeed"));
+
+        }
+
         public void DestroyRideArmor()
         {
             DeactivateChilds();
@@ -507,6 +668,10 @@ namespace VileMod.Survivors.Vile.Components
             childLocator.FindChildGameObject("HAWK").SetActive(false);
             childLocator.FindChildGameObject("HK_VLC_Mesh").SetActive(false);
             childLocator.FindChildGameObject("HK_VLMKC_Mesh").SetActive(false);
+
+            childLocator.FindChildGameObject("CY").SetActive(false);
+            childLocator.FindChildGameObject("CY_VLC_Mesh").SetActive(false);
+            childLocator.FindChildGameObject("CY_VLMKC_Mesh").SetActive(false);
 
         }
 
@@ -541,6 +706,10 @@ namespace VileMod.Survivors.Vile.Components
             VileSurvivor.enterHawkSkillDef,
             VileSurvivor.exitHawkSkillDef,
             VileSurvivor.resumeHawkSkillDef,
+
+            VileSurvivor.enterCyclopsSkillDef,
+            VileSurvivor.exitCyclopsSkillDef,
+            VileSurvivor.resumeCyclopsSkillDef,
 
             VileSurvivor.rideRapairSkillDef,
 

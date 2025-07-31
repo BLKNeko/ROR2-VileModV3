@@ -25,6 +25,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         private float fireTime;
         private bool hasFired;
         private string muzzleString;
+        private string playbackRateParam;
 
         private VileComponent VC;
         private float elementBonus;
@@ -35,7 +36,8 @@ namespace VileMod.Survivors.Vile.SkillStates
             duration = baseDuration / attackSpeedStat;
             fireTime = firePercentTime * duration;
             characterBody.SetAimTimer(2f);
-            muzzleString = "Muzzle";
+            muzzleString = "VLCannonMuzz";
+            playbackRateParam = "ShootGun.playbackRate";
             elementBonus = 0.5f + characterBody.level / 100f;
             VC = GetComponent<VileComponent>();
 
@@ -85,7 +87,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                     AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_SFX_Shock, this.gameObject);
                     AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Charge_Shoot, this.gameObject);
 
-                    //PlayAnimation("Gesture, Override", "XBusterChargeAttack", "attackSpeed", this.duration);
+                    PlayCrossfade("Gesture, Override", "VileCannon", playbackRateParam, duration * 0.7f, 0.1f * duration);
 
                     Ray aimRay = GetAimRay();
 

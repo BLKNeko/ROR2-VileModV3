@@ -32,6 +32,8 @@ namespace VileMod.Survivors.Vile.SkillStates
                 
             }
 
+            PlayCrossfade("LeftArm, Override", "BufferEmpty", "ShootGun.playbackRate", duration * 0.7f, 0.7f * duration);
+
         }
 
         public override void OnExit()
