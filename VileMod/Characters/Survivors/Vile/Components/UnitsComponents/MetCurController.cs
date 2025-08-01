@@ -7,8 +7,10 @@ using UnityEngine;
 using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
+using VileMod.Survivors.Vile;
+using VileMod.Survivors.Vile.Components;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class MetCurController : UnitMoveControllerMC
     {
@@ -40,7 +42,7 @@ namespace VileMod.Survivors.Vile.Components
                 body.healthComponent.Heal(healCoefficient * ownerBody.damage, default, true);
 
                 Debug.Log($"Body Name: {body.name}");
-                Debug.Log($"Body Heal: {body.healthComponent.health} + {healCoefficient * ownerBody.damage} = {body.healthComponent.health + (healCoefficient * ownerBody.damage)}");
+                Debug.Log($"Body Heal: {body.healthComponent.health} + {healCoefficient * ownerBody.damage} = {body.healthComponent.health + healCoefficient * ownerBody.damage}");
 
                 if (body.HasBuff(VileBuffs.RideArmorEnabledBuff))
                 {

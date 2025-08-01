@@ -524,7 +524,7 @@ namespace VileMod.Survivors.Vile.Components
 
             Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.hawkGunSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.hawkGunBarrageSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.goliathDashPunchSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.hawkDashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             Body.skillLocator.special.SetSkillOverride(Body.skillLocator.special, VileSurvivor.rideRapairSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.exitHawkSkillDef, GenericSkill.SkillOverridePriority.Contextual);
@@ -596,8 +596,8 @@ namespace VileMod.Survivors.Vile.Components
             FootstepChanger(true);
 
             Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.goliathDashPunchSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.CyclopsShotSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.CyclopsDashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             Body.skillLocator.special.SetSkillOverride(Body.skillLocator.special, VileSurvivor.rideRapairSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             extraskillLocator.extraFourth.SetSkillOverride(extraskillLocator.extraFourth, VileSurvivor.exitCyclopsSkillDef, GenericSkill.SkillOverridePriority.Contextual);
@@ -710,6 +710,8 @@ namespace VileMod.Survivors.Vile.Components
             VileSurvivor.enterCyclopsSkillDef,
             VileSurvivor.exitCyclopsSkillDef,
             VileSurvivor.resumeCyclopsSkillDef,
+
+            VileSurvivor.CyclopsShotSkillDef,
 
             VileSurvivor.rideRapairSkillDef,
 

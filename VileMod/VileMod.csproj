@@ -43,6 +43,15 @@
 	  <Reference Include="MMHOOK_RoR2">
 	    <HintPath>..\libs\MMHOOK_RoR2.dll</HintPath>
 	  </Reference>
+	  <Reference Include="R2API.DamageType">
+	    <HintPath>..\libs\R2API.DamageType.dll</HintPath>
+	  </Reference>
+	  <Reference Include="R2API.DamageType.Interop">
+	    <HintPath>..\libs\R2API.DamageType.Interop.dll</HintPath>
+	  </Reference>
+	  <Reference Include="R2API.DamageType.Patcher">
+	    <HintPath>..\libs\R2API.DamageType.Patcher.dll</HintPath>
+	  </Reference>
 	  <Reference Include="RiskOfOptions">
 	    <HintPath>..\libs\RiskOfOptions.dll</HintPath>
 	  </Reference>

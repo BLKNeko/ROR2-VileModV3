@@ -7,8 +7,10 @@ using UnityEngine;
 using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
+using VileMod.Survivors.Vile;
+using VileMod.Survivors.Vile.Components;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class MetComController : UnitMoveControllerMC
     {
@@ -53,7 +55,7 @@ namespace VileMod.Survivors.Vile.Components
 
                     if (body.GetComponent<VileRideArmorComponent>())
                     {
-                        body.GetComponent<VileRideArmorComponent>().AddShieldRA((healCoefficient * ownerBody.damage) * 0.5f);
+                        body.GetComponent<VileRideArmorComponent>().AddShieldRA(healCoefficient * ownerBody.damage * 0.5f);
                     }
 
                 }

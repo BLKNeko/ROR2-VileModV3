@@ -6,10 +6,11 @@ using UnityEngine.Networking;
 using VileMod.Survivors.Vile.Components;
 using RoR2.Projectile;
 using VileMod.Modules;
+using R2API;
 
 namespace VileMod.Survivors.Vile.SkillStates
 {
-    public class GShot : BaseSkillState
+    public class CYShot : BaseSkillState
     {
         public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
         public static float procCoefficient = 1f;
@@ -39,13 +40,13 @@ namespace VileMod.Survivors.Vile.SkillStates
             duration = baseDuration / attackSpeedStat;
             fireTime = firePercentTime * duration;
             characterBody.SetAimTimer(2f);
-            muzzleString = "Muzzle";
+            muzzleString = "CYLMuzz";
             playbackRateParam = "Slash.playbackRate";
             VC = GetComponent<VileComponent>();
 
             childLocator = GetModelTransform().GetComponent<ChildLocator>();
 
-            customAnimator = childLocator.FindChildGameObject("VEH").GetComponents<Animator>()[0];
+            customAnimator = childLocator.FindChildGameObject("CY").GetComponents<Animator>()[0];
 
             PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "VEHShootS", playbackRateParam, duration * 0.3f, 0.1f * duration);
 
@@ -96,7 +97,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                     Ray aimRay = GetAimRay();
 
                     FireProjectileInfo VShotgunIceProjectille = new FireProjectileInfo();
-                    VShotgunIceProjectille.projectilePrefab = VileAssets.GShotProjectile;
+                    VShotgunIceProjectille.projectilePrefab = VileAssets.CYPlasmaProjectile;
                     VShotgunIceProjectille.position = aimRay.origin;
                     VShotgunIceProjectille.rotation = Util.QuaternionSafeLookRotation(aimRay.direction);
                     VShotgunIceProjectille.owner = gameObject;
@@ -104,7 +105,9 @@ namespace VileMod.Survivors.Vile.SkillStates
                     VShotgunIceProjectille.force = force;
                     VShotgunIceProjectille.crit = RollCrit();
                     //XBusterMediumProjectille.speedOverride = XBusterMediumProjectille.speedOverride * 0.8f;
-                    VShotgunIceProjectille.damageColorIndex = DamageColorIndex.Default;
+                    VShotgunIceProjectille.damageColorIndex = DamageColorIndex.Luminous;
+                    
+
 
                     ProjectileManager.instance.FireProjectile(VShotgunIceProjectille);
 

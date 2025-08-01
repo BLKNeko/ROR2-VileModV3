@@ -9,8 +9,10 @@ using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 using TMPro;
 using UnityEngine.EventSystems;
+using VileMod.Survivors.Vile;
+using VileMod.Survivors.Vile.Components;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class UnitMoveControllerMC : MonoBehaviour
     {
@@ -25,7 +27,7 @@ namespace VileMod.Survivors.Vile.Components
 
         [Header("Alvo")]
         public Transform target;
-        
+
 
         [Header("Detecção de inimigos")]
         protected float allyCheckRadius = 10f;
@@ -68,7 +70,7 @@ namespace VileMod.Survivors.Vile.Components
             firePoint = projectileController.ghost.gameObject.transform;
             //Debug.Log($"FirePoint: {firePoint}");
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, this.gameObject);
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, gameObject);
 
             EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
             {
@@ -273,7 +275,7 @@ namespace VileMod.Survivors.Vile.Components
                     }
                 }
 
-                
+
 
             }
 
@@ -288,7 +290,7 @@ namespace VileMod.Survivors.Vile.Components
         void OnDestroy()
         {
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_Out, this.gameObject);
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_Out, gameObject);
 
             EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
             {

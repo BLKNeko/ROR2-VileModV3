@@ -8,7 +8,7 @@ using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class MameqController : UnitMoveController
     {
@@ -24,7 +24,7 @@ namespace VileMod.Survivors.Vile.Components
             rotationSpeed = 5f;
             shouldAnimate = false;
 
-            moveSpeed += (ownerBody.moveSpeed * 2f) + 1f;
+            moveSpeed += ownerBody.moveSpeed * 2f + 1f;
             damageCoefficient = 1f;
             FireCooldown = 0.4f; // Tempo de recarga entre disparos
 

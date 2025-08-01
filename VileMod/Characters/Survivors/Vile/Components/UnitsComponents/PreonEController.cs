@@ -8,7 +8,7 @@ using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class PreonEController : UnitMoveController
     {
@@ -66,7 +66,7 @@ namespace VileMod.Survivors.Vile.Components
 
         }
 
-        
+
 
     }
 }

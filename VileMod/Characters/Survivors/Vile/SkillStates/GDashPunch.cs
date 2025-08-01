@@ -29,7 +29,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             procCoefficient = 1f;
             pushForce = 300f;
             bonusForce = Vector3.zero;
-            baseDuration = 1.5f;
+            baseDuration = 1f;
             childLocator = GetModelTransform().GetComponent<ChildLocator>();
 
             //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)

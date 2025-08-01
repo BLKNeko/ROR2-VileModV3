@@ -5,6 +5,7 @@ using System;
 using RoR2.Projectile;
 using VileMod.Survivors.Vile.Components;
 using R2API;
+using VileMod.Characters.Survivors.Vile.Components.UnitsComponents;
 
 namespace VileMod.Survivors.Vile
 {
@@ -39,6 +40,9 @@ namespace VileMod.Survivors.Vile
         public static GameObject FrontRunnerFireBallProjectile;
         public static GameObject CerberusPhantonFMJProjectile;
         public static GameObject NapalmBombProjectile;
+        public static GameObject ShockSphereProjectile;
+        public static GameObject CYPlasmaProjectile;
+        public static GameObject GShotProjectile;
 
         //Tracers
         public static GameObject vileGreenTracerPrefab;
@@ -298,6 +302,11 @@ namespace VileMod.Survivors.Vile
             CreateUnitMameqProjectile();
             CreateUnitSpikyProjectile();
 
+            GShotPhantonProjectile();
+
+            CreateCYPlasmaProjectile();
+            CreateShockSphereProjectile();
+
 
             Content.AddProjectilePrefab(bombProjectilePrefab);
             Content.AddProjectilePrefab(vileShotgunIcePrefab);
@@ -316,6 +325,12 @@ namespace VileMod.Survivors.Vile
             Content.AddProjectilePrefab(unitMettaurCommanderPrefab);
             Content.AddProjectilePrefab(unitMameqPrefab);
             Content.AddProjectilePrefab(unitSpikyPrefab);
+
+            Content.AddProjectilePrefab(GShotProjectile);
+
+            Content.AddProjectilePrefab(CYPlasmaProjectile);
+            Content.AddProjectilePrefab(ShockSphereProjectile);
+
         }
 
         private static void CreateBombProjectile()
@@ -688,6 +703,64 @@ namespace VileMod.Survivors.Vile
             CerberusPhantonController.startSound = "";
         }
 
+        private static void GShotPhantonProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            GShotProjectile = Asset.CloneProjectilePrefab("FMJ", "GShotProjectile");
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            GShotProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            GShotProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            GShotProjectile.GetComponent<ProjectileDamage>().damageType |= DamageType.Generic;
+            GShotProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
+
+        }
+
+        private static void CreateCYPlasmaProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            CYPlasmaProjectile = Asset.CloneProjectilePrefab("FMJ", "CYPlasmaProjectile");
+
+
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            CYPlasmaProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            CYPlasmaProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            CYPlasmaProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
+            CYPlasmaProjectile.GetComponent<ProjectileDamage>().damageColorIndex = DamageColorIndex.Luminous;
+
+            CYPlasmaProjectile.GetComponent<ProjectileDamage>().damageType.AddModdedDamageType(VileCustomDamageType.PlasmaSphereDamage);
+
+            ProjectileController cyPlasmaController = CYPlasmaProjectile.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("UltimateBusterChargeProjectille") != null)
+                cyPlasmaController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("UltimateBusterChargeProjectille");
+
+            //cyPlasmaController.startSound = "";
+        }
+
+        private static void CreateShockSphereProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            ShockSphereProjectile = Asset.CloneProjectilePrefab("FMJ", "ShockSphereProjectile");
+
+            ShockSphereProjectile.AddComponent<XShockSphereComponent>(); // Adicionar o script
+
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            ShockSphereProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            ShockSphereProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            ShockSphereProjectile.GetComponent<ProjectileDamage>().damageType = DamageType.Shock5s;
+            ShockSphereProjectile.GetComponent<ProjectileDamage>().damageColorIndex = DamageColorIndex.Luminous;
+
+            ProjectileController ShockSphereController = ShockSphereProjectile.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("ShockSphere") != null)
+                ShockSphereController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("ShockSphere");
+
+            ShockSphereController.startSound = "";
+            ShockSphereController.shouldPlaySounds = false;
+        }
 
 
 

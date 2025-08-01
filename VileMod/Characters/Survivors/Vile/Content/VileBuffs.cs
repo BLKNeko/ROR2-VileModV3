@@ -12,6 +12,7 @@ namespace VileMod.Survivors.Vile
 
         public static BuffDef GoliathBuff;
         public static BuffDef HawkBuff;
+        public static BuffDef HawkDashBuff;
         public static BuffDef CyclopsBuff;
 
         public static BuffDef PrimaryHeatBuff;
@@ -49,6 +50,12 @@ namespace VileMod.Survivors.Vile
                 false);
 
             HawkBuff = Modules.Content.CreateAndAddBuff("HawkBuff",
+                VileAssets.CallHawkSkillIcon,
+                Color.white,
+                false,
+                false);
+
+            HawkDashBuff = Modules.Content.CreateAndAddBuff("HawkDashBuff",
                 VileAssets.CallHawkSkillIcon,
                 Color.white,
                 false,

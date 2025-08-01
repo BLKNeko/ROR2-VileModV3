@@ -7,8 +7,11 @@ using UnityEngine;
 using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
+using VileMod.Survivors.Vile;
+using R2API;
+using VileMod.Survivors.Vile.Components;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class NightmareVController : UnitMoveController
     {
@@ -72,17 +75,19 @@ namespace VileMod.Survivors.Vile.Components
                     CSBlastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
                     CSBlastAttack.impactEffect = effectIndex;
 
+                    CSBlastAttack.AddModdedDamageType(VileCustomDamageType.NightmareDamage);
+
                     //CSBlastAttack.Fire();
 
-                    Debug.Log($"NightmareVController: FireAttack - Damage: {CSBlastAttack.baseDamage}, Position: {CSBlastAttack.position}, Radius: {CSBlastAttack.radius}, DamageType: {CSBlastAttack.damageType}");
+                    //Debug.Log($"NightmareVController: FireAttack - Damage: {CSBlastAttack.baseDamage}, Position: {CSBlastAttack.position}, Radius: {CSBlastAttack.radius}, DamageType: {CSBlastAttack.damageType}");
 
                     BlastAttack.Result result = CSBlastAttack.Fire();
 
                     // Aplica debuff apenas se algum inimigo foi atingido
-                    if (result.hitCount > 0 && enemyHurtbox)
-                    {
-                        enemyHurtbox.healthComponent.body.AddBuff(VileBuffs.nightmareVirusDebuff);
-                    }
+                    //if (result.hitCount > 0 && enemyHurtbox)
+                    //{
+                    //    enemyHurtbox.healthComponent.body.AddBuff(VileBuffs.nightmareVirusDebuff);
+                    //}
 
                 }
 

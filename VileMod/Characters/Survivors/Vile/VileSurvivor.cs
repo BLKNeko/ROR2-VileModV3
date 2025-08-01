@@ -11,6 +11,8 @@ using UnityEngine;
 using RoR2.UI;
 using MegamanXMod.Survivors.X.SkillStates;
 using EntityStates;
+using R2API;
+using RoR2.Projectile;
 
 namespace VileMod.Survivors.Vile
 {
@@ -51,11 +53,15 @@ namespace VileMod.Survivors.Vile
 
         internal static HuntressTrackerSkillDef hawkGunSkillDef;
         internal static HuntressTrackerSkillDef hawkGunBarrageSkillDef;
+        internal static SkillDef hawkDashSkillDef;
 
         //CYCLOPS SKILL DEFS
         internal static SkillDef enterCyclopsSkillDef;
         internal static SkillDef exitCyclopsSkillDef;
         internal static SkillDef resumeCyclopsSkillDef;
+
+        internal static SkillDef CyclopsShotSkillDef;
+        internal static SkillDef CyclopsDashSkillDef;
 
         //RIDE ARMOR GENERAL
         internal static SkillDef rideRapairSkillDef;
@@ -221,6 +227,9 @@ namespace VileMod.Survivors.Vile
             //need the character unlockable before you initialize the survivordef
             HenryUnlockables.Init();
 
+            //Custom DamageTypes
+            VileCustomDamageType.RegisterDamageTypes();
+
             base.InitializeCharacter();
 
             VileConfig.Init();
@@ -236,6 +245,8 @@ namespace VileMod.Survivors.Vile
             InitializeCharacterMaster();
 
             AdditionalBodySetup();
+
+            
 
             AddHooks();
         }
@@ -727,6 +738,36 @@ namespace VileMod.Survivors.Vile
 
             });
 
+            hawkDashSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "HawkDash",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.ResumeHawkSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(HawkDash)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 10f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = true,
+            });
+
 
 
             #endregion
@@ -821,6 +862,66 @@ namespace VileMod.Survivors.Vile
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = true,
                 forceSprintDuringState = false,
+            });
+
+            CyclopsShotSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "CyclopsShot",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.ResumeHawkSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(CYShot)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 20f,
+                baseMaxStock = 3,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            CyclopsDashSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "CyclopsDash",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.ResumeHawkSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(CYDash)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 15f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = true,
             });
 
             #endregion
@@ -1817,9 +1918,62 @@ namespace VileMod.Survivors.Vile
         private void AddHooks()
         {
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
+            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
 
         }
 
+
+        private void OnServerDamageDealt(DamageReport report)
+        {
+            // Checa se esse dano tinha o seu DamageType
+            if (DamageAPI.HasModdedDamageType(report.damageInfo, VileCustomDamageType.PlasmaSphereDamage))
+            {
+                // Aqui você aplica efeitos especiais, DOT, explosões, buffs, etc
+                Chat.AddMessage($"{report.victimBody.baseNameToken} levou meu dano customizado!");
+
+                // Cria o ShockSphere
+                ProjectileManager.instance.FireProjectile(new FireProjectileInfo
+                {
+                    projectilePrefab = VileAssets.ShockSphereProjectile,
+                    position = report.victimBody.transform.position,
+                    rotation = Quaternion.identity,
+                    owner = report.attacker,
+                    damage = 1f,
+                    force = 200f,
+                    crit = Util.CheckRoll(report.attackerBody.crit),
+                    speedOverride = 0f,
+                    damageColorIndex = DamageColorIndex.Luminous,
+                });
+
+            }
+
+            if (DamageAPI.HasModdedDamageType(report.damageInfo, VileCustomDamageType.NightmareDamage))
+            {
+                // Aqui você aplica efeitos especiais, DOT, explosões, buffs, etc
+                Chat.AddMessage($"{report.victimBody.baseNameToken} levou meu dano customizado!");
+
+                report.victimBody.AddBuff(VileBuffs.nightmareVirusDebuff);
+
+                if (report.victimBody.transform)
+                {
+                    CharacterModel model = report.victimBody.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
+
+                    model.baseRendererInfos[0].defaultMaterial = VileAssets.nightmareVMaterial;
+
+                    //TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(sender.transform.gameObject);
+                    //temporaryOverlayInstance.duration = 1f;
+                    //temporaryOverlayInstance.animateShaderAlpha = true;
+                    //temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                    //temporaryOverlayInstance.destroyComponentOnEnd = true;
+                    //temporaryOverlayInstance.originalMaterial = VileAssets.nightmareVMaterial;
+                    //temporaryOverlayInstance.inspectorCharacterModel = model;
+                    //temporaryOverlayInstance.AddToCharacterModel(model);
+                }
+
+            }
+
+
+        }
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
@@ -1852,9 +2006,17 @@ namespace VileMod.Survivors.Vile
                 args.attackSpeedMultAdd += 0.25f;
                 args.regenMultAdd += 1f;
                 args.jumpPowerMultAdd += 0.2f;
-                args.moveSpeedMultAdd += 0.25f;
+                args.moveSpeedMultAdd += 0.2f;
                 args.shieldMultAdd += 1f;
                 args.critDamageMultAdd += 2f;
+            }
+
+            if (sender.HasBuff(VileBuffs.HawkDashBuff))
+            {
+                args.attackSpeedMultAdd += 0.25f;
+                args.jumpPowerMultAdd += 0.2f;
+                args.moveSpeedMultAdd += 0.25f;
+
             }
 
             if (sender.HasBuff(VileBuffs.CyclopsBuff))
@@ -1890,23 +2052,8 @@ namespace VileMod.Survivors.Vile
                 args.attackSpeedMultAdd -= 0.25f;
                 args.regenMultAdd -= 1f;
                 args.jumpPowerMultAdd -= 0.3f;
-                args.moveSpeedMultAdd -= 0.25f;
-
-                if (sender.transform)
-                {
-                    CharacterModel model = sender.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
-
-                    model.baseRendererInfos[0].defaultMaterial = VileAssets.nightmareVMaterial;
-
-                    //TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(sender.transform.gameObject);
-                    //temporaryOverlayInstance.duration = 1f;
-                    //temporaryOverlayInstance.animateShaderAlpha = true;
-                    //temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
-                    //temporaryOverlayInstance.destroyComponentOnEnd = true;
-                    //temporaryOverlayInstance.originalMaterial = VileAssets.nightmareVMaterial;
-                    //temporaryOverlayInstance.inspectorCharacterModel = model;
-                    //temporaryOverlayInstance.AddToCharacterModel(model);
-                }
+                args.moveSpeedMultAdd -= 0.35f;
+                
 
             }
 

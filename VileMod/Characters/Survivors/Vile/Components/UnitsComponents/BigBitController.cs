@@ -8,7 +8,7 @@ using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class BigBitController : UnitMoveController
     {
@@ -23,7 +23,7 @@ namespace VileMod.Survivors.Vile.Components
             backToDistance = 10f;
             rotationSpeed = 5f;
 
-            moveSpeed += (ownerBody.moveSpeed * 2f) + 2f;
+            moveSpeed += ownerBody.moveSpeed * 2f + 2f;
             damageCoefficient = 1f;
             FireCooldown = 0.4f; // Tempo de recarga entre disparos
 

@@ -8,7 +8,7 @@ using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class PreonEController_BKP : MonoBehaviour
     {
@@ -88,7 +88,7 @@ namespace VileMod.Survivors.Vile.Components
                 }
             }
 
-            if(projectileGhostGameObj && !animator)
+            if (projectileGhostGameObj && !animator)
             {
                 if (projectileController.ghost.gameObject.GetComponent<Animator>() != null)
                 {
@@ -97,7 +97,7 @@ namespace VileMod.Survivors.Vile.Components
                 }
             }
 
-            if(!animator && !projectileGhostGameObj)
+            if (!animator && !projectileGhostGameObj)
             {
                 Debug.LogWarning("Animator not found on projectileGhostGameObj.");
                 return;
@@ -185,7 +185,7 @@ namespace VileMod.Survivors.Vile.Components
 
         private void UpdateAnims()
         {
-            if(currentState == ProjectileState.Shooting && animator.GetCurrentStateName(0) != "Shoot")
+            if (currentState == ProjectileState.Shooting && animator.GetCurrentStateName(0) != "Shoot")
                 animator.Play("Shoot");
 
             if (currentState == ProjectileState.Running && animator.GetCurrentStateName(0) != "Run")
@@ -218,7 +218,7 @@ namespace VileMod.Survivors.Vile.Components
                 // Dentro da distância ideal: opcionalmente, pare ou flutue
                 // Aqui você pode rodar idle ou animações, etc.
 
-                if(FindTarget() != null)
+                if (FindTarget() != null)
                     currentState = ProjectileState.Idle;
 
             }
@@ -227,7 +227,7 @@ namespace VileMod.Survivors.Vile.Components
         private void CheckIfShouldMove()
         {
 
-            if(distance > maxDistance)
+            if (distance > maxDistance)
             {
                 shouldMoveAway = false;
                 shouldMoveCloser = true;

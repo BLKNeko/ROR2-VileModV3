@@ -9,8 +9,9 @@ using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 using TMPro;
 using UnityEngine.EventSystems;
+using VileMod.Survivors.Vile;
 
-namespace VileMod.Survivors.Vile.Components
+namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class UnitMoveController : MonoBehaviour
     {
@@ -32,7 +33,7 @@ namespace VileMod.Survivors.Vile.Components
 
         [Header("Alvo")]
         public Transform playerTarget;
-        
+
 
         [Header("Detecção de inimigos")]
         protected float enemyCheckRadius = 10f;
@@ -41,7 +42,7 @@ namespace VileMod.Survivors.Vile.Components
         public HurtBox enemyHurtbox;
         public Vector3 shootDir;
         private float enemyDistance;
-        
+
 
         [Header("Ataque")]
         protected float FireCooldown = 0.5f; // Tempo de recarga entre disparos
@@ -74,7 +75,7 @@ namespace VileMod.Survivors.Vile.Components
             moveSpeed += ownerBody.moveSpeed * 1.5f;
             FireTimer = FireCooldown;
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, this.gameObject);
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, gameObject);
 
             EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
             {
@@ -100,7 +101,7 @@ namespace VileMod.Survivors.Vile.Components
             }
 
             // Atualiza as animações
-            if(shouldAnimate)
+            if (shouldAnimate)
                 UpdateAnims();
 
             // Verifica se há inimigos próximos
@@ -112,10 +113,10 @@ namespace VileMod.Survivors.Vile.Components
             {
                 //Moved to FIRE
                 //SetState(false, false, true); // Shooting
-                
+
                 shootDir = (enemyHurtbox.healthComponent.body.corePosition - projectileController.transform.position).normalized;
 
-                
+
 
                 enemyDistance = Vector3.Distance(transform.position, enemyHurtbox.healthComponent.body.corePosition);
 
@@ -143,7 +144,7 @@ namespace VileMod.Survivors.Vile.Components
                     }
                     else
                     {
-                        
+
 
                         if (FireTimer <= 0f)
                         {
@@ -156,7 +157,7 @@ namespace VileMod.Survivors.Vile.Components
                     }
                 }
 
-                
+
 
 
                 return;
@@ -278,7 +279,7 @@ namespace VileMod.Survivors.Vile.Components
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
                 }
             }
-            
+
         }
 
         private void MoveTowardsEnemy(float enemyDistance, Transform enemyTransform)
@@ -306,7 +307,7 @@ namespace VileMod.Survivors.Vile.Components
             {
 
                 // Se deve seguir o offset do chão, calcula a posição alvo com o offset
-                playerTarget.position = new Vector3(playerTarget.position.x,playerTarget.position.y + groundOffset, playerTarget.position.z);
+                playerTarget.position = new Vector3(playerTarget.position.x, playerTarget.position.y + groundOffset, playerTarget.position.z);
 
                 direction = (playerTarget.position - transform.position).normalized;
                 Vector3 moveTarget = playerTarget.position - direction * targetDistance;
@@ -314,7 +315,7 @@ namespace VileMod.Survivors.Vile.Components
                 transform.position = Vector3.MoveTowards(transform.position, moveTarget, moveSpeed * Time.deltaTime);
             }
 
-            
+
         }
 
         private void MoveAwayFromTarget()
@@ -382,7 +383,7 @@ namespace VileMod.Survivors.Vile.Components
 
         private HurtBox FindTarget()
         {
-            if(firePoint == null)
+            if (firePoint == null)
             {
                 Debug.LogWarning("FirePoint is not assigned.");
                 return null;
@@ -407,7 +408,7 @@ namespace VileMod.Survivors.Vile.Components
         void OnDestroy()
         {
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_Out, this.gameObject);
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_Out, gameObject);
 
             EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
             {
