@@ -119,7 +119,7 @@ namespace VileMod.Survivors.Vile
             armorGrowth = 1.8f,
             shield = 25f,
             shieldGrowth = 2f,
-            damage = 25f,
+            damage = 18f,
             healthGrowth = 25f,
             healthRegen = 1.8f,
             jumpCount = 1,
@@ -765,7 +765,7 @@ namespace VileMod.Survivors.Vile
                 isCombatSkill = false,
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
-                forceSprintDuringState = true,
+                forceSprintDuringState = false,
             });
 
 
@@ -921,7 +921,7 @@ namespace VileMod.Survivors.Vile
                 isCombatSkill = false,
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
-                forceSprintDuringState = true,
+                forceSprintDuringState = false,
             });
 
             #endregion

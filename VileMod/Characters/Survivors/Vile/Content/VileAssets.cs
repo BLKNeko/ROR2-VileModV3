@@ -19,6 +19,8 @@ namespace VileMod.Survivors.Vile
 
         public static GameObject rideExplosionEffect;
 
+        public static GameObject bdriveEffect;
+
         public static GameObject gFallEffect;
         public static GameObject hFallEffect;
         public static GameObject cFallEffect;
@@ -154,6 +156,8 @@ namespace VileMod.Survivors.Vile
             gFallEffect = _assetBundle.LoadEffect("GFallVFX");
             hFallEffect = _assetBundle.LoadEffect("HFallVFX");
             cFallEffect = _assetBundle.LoadEffect("CFallVFX");
+
+            bdriveEffect = _assetBundle.LoadEffect("BurningDriveVFX");
 
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
 

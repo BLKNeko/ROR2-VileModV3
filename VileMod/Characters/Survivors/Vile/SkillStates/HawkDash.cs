@@ -57,6 +57,11 @@ namespace VileMod.Survivors.Vile.SkillStates
                 characterMotor.velocity = forwardDirection.normalized * moveSpeedStat * initialSpeedCoefficient;
             }
 
+            childLocator = GetModelTransform().GetComponent<ChildLocator>();
+
+            childLocator.FindChildGameObject("HKBoostVFX").SetActive(true);
+            
+
             //base.PlayAnimation("FullBody, Override", "DashStart", "attackSpeed", duration);
 
             base.OnEnter();
@@ -91,6 +96,8 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void OnExit()
         {
             characterMotor.velocity = forwardDirection.normalized * moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);
+
+            childLocator.FindChildGameObject("HKBoostVFX").SetActive(false);
 
             //base.PlayAnimation("FullBody, Override", "DashEnd", "attackSpeed", duration);
 

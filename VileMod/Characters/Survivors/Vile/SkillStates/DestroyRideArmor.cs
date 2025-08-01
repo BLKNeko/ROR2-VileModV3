@@ -13,7 +13,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public static float baseDuration = 1f;
         public static float force = 1500f;
-        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.DestroyRideArmorDamageCoefficient;
         private float duration;
         private VileComponent VC;
         private ExtraSkillLocator extraSkill;

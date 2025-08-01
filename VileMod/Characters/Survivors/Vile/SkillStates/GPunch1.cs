@@ -12,7 +12,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             hitboxGroupName = "GoliathHitbox";
 
             damageType = DamageTypeCombo.GenericPrimary;
-            damageCoefficient = VileStaticValues.swordDamageCoefficient;
+            damageCoefficient = VileStaticValues.GPunch1DamageCoefficient;
             procCoefficient = 1f;
             pushForce = 300f;
             bonusForce = Vector3.zero;

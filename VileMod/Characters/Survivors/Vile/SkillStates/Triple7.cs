@@ -9,7 +9,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 {
     public class Triple7 : BaseSkillState
     {
-        public static float damageCoefficient = VileStaticValues.gunDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.Triple7DamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.4f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing

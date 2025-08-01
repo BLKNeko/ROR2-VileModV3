@@ -14,11 +14,11 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override void OnEnter()
         {
-            hitboxGroupName = "SwordGroup";
+            hitboxGroupName = "VileCenterHitbox";
 
             damageType |= DamageTypeCombo.GenericSpecial;
             damageType |= DamageType.IgniteOnHit;
-            damageCoefficient = VileStaticValues.swordDamageCoefficient;
+            damageCoefficient = VileStaticValues.VBurningDriveDamageCoefficient;
             procCoefficient = 1f;
             pushForce = 500f;
             bonusForce = Vector3.zero;
@@ -39,7 +39,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             swingSoundString = "HenrySwordSwing";
             hitSoundString = "";
-            muzzleString = swingIndex % 2 == 0 ? "SwingLeft" : "SwingRight";
+            muzzleString = "BasePos";
             playbackRateParam = "Slash.playbackRate";
             swingEffectPrefab = VileAssets.swordSwingEffect;
             hitEffectPrefab = VileAssets.swordHitImpactEffect;
@@ -60,6 +60,11 @@ namespace VileMod.Survivors.Vile.SkillStates
             {
                 AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Attack, this.gameObject);
             }
+
+            //Precisa do SFX de fogo
+            //AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Attack, this.gameObject);
+
+            EffectManager.SimpleMuzzleFlash(VileAssets.bdriveEffect, gameObject, muzzleString, true);
 
             base.OnEnter();
         }
