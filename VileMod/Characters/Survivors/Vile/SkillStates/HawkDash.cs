@@ -12,8 +12,8 @@ namespace VileMod.Survivors.Vile.SkillStates
     public class HawkDash : BaseSkillState
     {
 
-        public static float initialSpeedCoefficient = 4f;
-        public static float finalSpeedCoefficient = 4f;
+        public static float initialSpeedCoefficient = 5f;
+        public static float finalSpeedCoefficient = 5f;
         public static float dodgeFOV = global::EntityStates.Commando.DodgeState.dodgeFOV;
 
         private float rollSpeed;
@@ -26,7 +26,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         private string LDashPos = "LDashPos";
         private string RDashPos = "RDashPos";
 
-        public static float duration = 0.7f;
+        public static float duration = 0.75f;
 
         public override void OnEnter()
         {

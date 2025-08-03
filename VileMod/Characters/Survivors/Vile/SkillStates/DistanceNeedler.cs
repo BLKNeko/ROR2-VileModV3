@@ -97,6 +97,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
                 if (characterBody.HasBuff(VileBuffs.OverHeatDebuff))
                 {
+                    AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Overheat_SFX, this.gameObject);
                     outer.SetNextState(new DistanceNeedlerEnd());
                 }
 

@@ -67,6 +67,8 @@ namespace VileMod.Survivors.Vile
 
         public static GameObject unitSpikyPrefab;
 
+        public static GameObject unitTogericsPrefab;
+
         //Icons
         public static Sprite VileSkinIcon;
         public static Sprite VileMK2SkinIcon;
@@ -305,6 +307,7 @@ namespace VileMod.Survivors.Vile
             CreateUnitMetComProjectile();
             CreateUnitMameqProjectile();
             CreateUnitSpikyProjectile();
+            CreateTogericsProjectile();
 
             GShotPhantonProjectile();
 
@@ -329,6 +332,7 @@ namespace VileMod.Survivors.Vile
             Content.AddProjectilePrefab(unitMettaurCommanderPrefab);
             Content.AddProjectilePrefab(unitMameqPrefab);
             Content.AddProjectilePrefab(unitSpikyPrefab);
+            Content.AddProjectilePrefab(unitTogericsPrefab);
 
             Content.AddProjectilePrefab(GShotProjectile);
 
@@ -497,7 +501,7 @@ namespace VileMod.Survivors.Vile
         private static void CreateUnitSpikyProjectile()
         {
             //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
-            unitSpikyPrefab = Asset.CloneProjectilePrefab("Sawmerang", "SpikyProjecile");
+            unitSpikyPrefab = Asset.CloneProjectilePrefab("FMJ", "SpikyProjecile");
 
             //remove their ProjectileImpactExplosion component and start from default values
             UnityEngine.Object.Destroy(unitSpikyPrefab.GetComponent<ProjectileImpactExplosion>());
@@ -523,6 +527,33 @@ namespace VileMod.Survivors.Vile
 
             spikyController.startSound = "";
         }
+
+        private static void CreateTogericsProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            unitTogericsPrefab = Asset.CloneProjectilePrefab("FMJ", "TogericsProjectile");
+
+            unitTogericsPrefab.AddComponent<TogericsController>(); // Adicionar o script
+
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            unitTogericsPrefab.GetComponent<ProjectileDamage>().damage = 1f;
+            unitTogericsPrefab.GetComponent<ProjectileController>().procCoefficient = 1f;
+            unitTogericsPrefab.GetComponent<ProjectileDamage>().damageType = DamageType.BleedOnHit;
+            unitTogericsPrefab.GetComponent<ProjectileDamage>().damageColorIndex = DamageColorIndex.Bleed;
+
+
+            unitTogericsPrefab.GetComponent<ProjectileSimple>().lifetime = 30f;
+
+            ProjectileController TogericsController = unitTogericsPrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("Togerics") != null)
+                TogericsController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("Togerics");
+
+            TogericsController.startSound = "";
+            TogericsController.shouldPlaySounds = false;
+        }
+
 
         #endregion
 

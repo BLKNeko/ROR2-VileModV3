@@ -81,20 +81,7 @@ namespace VileMod.Survivors.Vile
 
         public const float UnitPreonEDamageCoefficient = 2.5f;
 
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
+        public const float UnitTogericsDamageCoefficient = 0.8f;
 
 
 
@@ -105,13 +92,16 @@ namespace VileMod.Survivors.Vile
         public static readonly string Play_Vile_Come_Here = "Play_Vile_Come_Here"; // Corrigido: Come_Here
         public static readonly string Play_Vile_Charge_Shoot = "Play_Vile_Charge_Shoot";
         public static readonly string Play_Vile_Cherry_Blast = "Play_Vile_Cherry_Blast";
+        public static readonly string Play_Vile_CYPunch_SFX = "Play_Vile_CYPunch_SFX";
         public static readonly string Play_Vile_Die = "Play_Vile_Die";
         public static readonly string Play_Vile_Eat_This = "Play_Vile_Eat_This";
         public static readonly string Play_Vile_Error = "Play_Vile_Error";
+        public static readonly string Play_Fire_SFX = "Play_Fire_SFX";
         public static readonly string Play_Vile_Footstep_SFX = "Play_Vile_Footstep_SFX";
         public static readonly string Play_Vile_Footstep_X8_SFX = "Play_Vile_Footstep_X8_SFX";
         public static readonly string Play_Vile_Frag_Drop = "Play_Vile_Frag_Drop";
         public static readonly string Play_Vile_Fury = "Play_Vile_Fury";
+        public static readonly string Play_Vile_GPunch_SFX = "Play_Vile_GPunch_SFX";
         public static readonly string Play_Vile_Ha = "Play_Vile_Ha";
         public static readonly string Play_Vile_Haaa = "Play_Vile_Haaa";
         public static readonly string Play_Vile_Hahahaha = "Play_Vile_Hahahaha";
@@ -119,6 +109,8 @@ namespace VileMod.Survivors.Vile
         public static readonly string Play_Vile_I_Cant_Lose_To_X = "Play_Vile_I_Cant_Lose_To_X";
         public static readonly string Play_Vile_Laser_Shot = "Play_Vile_Laser_Shot";
         public static readonly string Play_Vile_Missile_SFX = "Play_Vile_Missile_SFX";
+        public static readonly string Play_MMQVSFX = "Play_MMQVSFX";
+        public static readonly string Play_Vile_Overheat_SFX = "Play_Vile_Overheat_SFX";
         public static readonly string Play_Vile_Ready = "Play_Vile_Ready";
         public static readonly string Play_Vile_Return = "Play_Vile_Return";
         public static readonly string Play_Vile_Ride_Armor_Boost = "Play_Vile_Ride_Armor_Boost";

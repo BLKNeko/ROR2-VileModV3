@@ -61,8 +61,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                 AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Attack, this.gameObject);
             }
 
-            //Precisa do SFX de fogo
-            //AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Attack, this.gameObject);
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Fire_SFX, this.gameObject);
 
             EffectManager.SimpleMuzzleFlash(VileAssets.bdriveEffect, gameObject, muzzleString, true);
 
@@ -83,7 +82,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         protected override void PlaySwingEffect()
         {
-            base.PlaySwingEffect();
+            //base.PlaySwingEffect();
         }
 
         protected override void OnHitEnemyAuthority()

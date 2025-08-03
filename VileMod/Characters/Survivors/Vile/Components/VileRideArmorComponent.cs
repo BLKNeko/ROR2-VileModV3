@@ -273,8 +273,8 @@ namespace VileMod.Survivors.Vile.Components
                     Vector3 moveInput = Body.inputBank.moveVector;
                     Vector3 horizontalDirection = new Vector3(moveInput.x, 0f, moveInput.z).normalized;
 
-                    float horizontalSpeed = h_FlyingSpeed * 1.1f; // boost leve nos lados
-                    float verticalSpeed = h_FlyingSpeed * 1.2f;     // impulso mais forte pra cima
+                    float horizontalSpeed = h_FlyingSpeed * 0.5f; // boost leve nos lados -- resolvi mudar para diminuir um pouco
+                    float verticalSpeed = h_FlyingSpeed * 0.75f;     // impulso mais forte pra cima -- resolvi mudar para diminuir um pouco
 
                     // Aplica impulso horizontal
                     Vector3 horizontalVelocity = horizontalDirection * horizontalSpeed;

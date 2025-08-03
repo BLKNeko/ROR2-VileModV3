@@ -7,11 +7,15 @@ using UnityEngine;
 using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
+using VileMod.Survivors.Vile;
 
 namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
     public class MameqController : UnitMoveController
     {
+
+        private float vsfxTimerCooldown = 8f; // Tempo de recarga do efeito sonoro de movimento
+        private float vsfxTimer;
 
         public override void Start()
         {
@@ -37,6 +41,21 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             shouldFollowGroundOffset = true; // Deve seguir o offset do chão
             shouldRotateY = true; // Deve rotacionar no eixo Y
 
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (vsfxTimer >= vsfxTimerCooldown)
+            {
+                vsfxTimer = 0f; // Reinicia o temporizador
+                AkSoundEngine.PostEvent(VileStaticValues.Play_MMQVSFX, gameObject); // Toca o efeito sonoro de movimento
+            }
+            else
+            {
+                vsfxTimer += Time.fixedDeltaTime; // Incrementa o temporizador
+            }
         }
 
 

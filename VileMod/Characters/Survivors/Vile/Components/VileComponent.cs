@@ -361,7 +361,7 @@ namespace VileMod.Survivors.Vile.Components
 
             if (baseOverHeatValue >= 0.99f && !Body.HasBuff(VileBuffs.OverHeatDebuff)) 
             {
-                Body.AddTimedBuff(VileBuffs.OverHeatDebuff, 7f);
+                Body.AddTimedBuff(VileBuffs.OverHeatDebuff, 10f);
             }
 
         }
