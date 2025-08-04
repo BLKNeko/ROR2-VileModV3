@@ -5,6 +5,8 @@ using BepInEx;
 using RoR2.Projectile;
 using VileMod.Modules;
 using VileMod.Survivors.Vile;
+using R2API;
+using VileMod.Survivors.Vile.Components;
 
 namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
@@ -16,19 +18,23 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
         private ProjectileController projectileController;
 
+        private CharacterBody ownerBody;
+
         private float timer = 0f;
         private float timeLimit = 0.8f;
-        private float damageCoeficient;
+        private float damageCoefficient;
         private float damagebonus = 1f;
 
         private BlastAttack blastAttack;
 
-        void Awake()
+        void Start()
         {
             impactExplosion = GetComponent<ProjectileImpactExplosion>();
             overlapAttack = GetComponent<ProjectileOverlapAttack>();
             projectileController = GetComponent<ProjectileController>();
-            damageCoeficient = VileStaticValues.UnitTogericsDamageCoefficient;
+            damageCoefficient = VileStaticValues.UnitTogericsDamageCoefficient;
+
+            ownerBody = projectileController.owner.GetComponent<CharacterBody>();
 
             //Debug.Log("Wake");
 
@@ -49,17 +55,27 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             {
                 timer += Time.deltaTime;
 
-                blastAttack = new BlastAttack();
-                blastAttack.attacker = gameObject;
-                blastAttack.inflictor = gameObject;
-                blastAttack.teamIndex = TeamComponent.GetObjectTeam(projectileController.owner);
-                blastAttack.baseDamage = damageCoeficient * projectileController.owner.GetComponent<CharacterBody>().damage;
-                blastAttack.baseForce = 10f;
-                blastAttack.position = gameObject.transform.position;
-                blastAttack.radius = 10f;
-                blastAttack.bonusForce = new Vector3(1f, 1f, 1f);
-                blastAttack.damageType = DamageType.SlowOnHit | DamageType.BleedOnHit;
-                blastAttack.damageColorIndex = DamageColorIndex.Bleed;
+                // Carrega efeito de impacto
+                GameObject effectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/DaggerImpact");
+                EffectIndex effectIndex = EffectCatalog.FindEffectIndexFromPrefab(effectPrefab);
+
+                BlastAttack CSBlastAttack = new BlastAttack();
+                CSBlastAttack.attacker = ownerBody.gameObject;
+                CSBlastAttack.inflictor = gameObject;
+                CSBlastAttack.teamIndex = TeamComponent.GetObjectTeam(ownerBody.gameObject);
+                CSBlastAttack.baseDamage = damageCoefficient * ownerBody.damage;
+                CSBlastAttack.baseForce = 200f;
+                CSBlastAttack.position = transform.position;
+                CSBlastAttack.radius = 10f;
+                CSBlastAttack.bonusForce = new Vector3(1f, 1f, 1f);
+                CSBlastAttack.damageType = DamageType.Stun1s | DamageType.BleedOnHit;
+                CSBlastAttack.damageColorIndex = DamageColorIndex.Default;
+                CSBlastAttack.procCoefficient = 1f;
+                CSBlastAttack.procChainMask = default;
+                CSBlastAttack.crit = ownerBody.RollCrit();
+                CSBlastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
+                CSBlastAttack.impactEffect = effectIndex;
+
 
                 //Debug.Log("damageCoeficient: " + damageCoeficient);
                 //Debug.Log("damageStat: " + damageStat);
@@ -70,7 +86,8 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                 if (timer > timeLimit)
                 {
                     //overlapAttack.ResetOverlapAttack();
-                    blastAttack.Fire();
+                    //blastAttack.Fire();
+                    BlastAttack.Result result = CSBlastAttack.Fire();
                     timer = 0f;
                 }
 

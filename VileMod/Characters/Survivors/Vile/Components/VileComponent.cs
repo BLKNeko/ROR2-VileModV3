@@ -69,8 +69,6 @@ namespace VileMod.Survivors.Vile.Components
 
             modelTransform = Body.transform;
 
-            footstepHandler = Body.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>().GetComponent<FootstepHandler>();
-
             model = Body.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
 
             childLocator = Body.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>().GetComponent<ChildLocator>();
@@ -93,12 +91,7 @@ namespace VileMod.Survivors.Vile.Components
 
             tracker.enabled = false;
 
-            clavicleBone = childLocator.FindChildGameObject("LClavicle").transform;
-
-            if (clavicleBone)
-            {
-                initialLocalRotation = clavicleBone.localRotation;
-            }
+            footstepHandler = Body.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>().GetComponent<FootstepHandler>();
 
             //Debug.Log(AnimVeh);
             //Debug.Log("Camera: " + cameraTargetParams);
@@ -240,6 +233,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private void FootstepChanger(bool ridearmorfootstep)
         {
+
+
             if (ridearmorfootstep && VileConfig.enableFootstep.Value != 0)
             {
 
@@ -269,7 +264,10 @@ namespace VileMod.Survivors.Vile.Components
                 }
             }
 
-            
+            Debug.Log($"Footstep Changer: {ridearmorfootstep}, {VileConfig.enableFootstep.Value}");
+            Debug.Log($"Footstep Changer: {footstepHandler.baseFootstepString}, {footstepHandler.sprintFootstepOverrideString}");
+
+
         }
 
         public bool RidingRideArmor()
@@ -361,7 +359,7 @@ namespace VileMod.Survivors.Vile.Components
 
             if (baseOverHeatValue >= 0.99f && !Body.HasBuff(VileBuffs.OverHeatDebuff)) 
             {
-                Body.AddTimedBuff(VileBuffs.OverHeatDebuff, 10f);
+                Body.AddTimedBuff(VileBuffs.OverHeatDebuff, 11f);
             }
 
         }

@@ -50,6 +50,18 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             damageCoefficient = (damageCoefficient + (VC.GetBaseHeatValue() * 2f)) + (damageCoefficient * (VC.GetBaseOverHeatValue() * 5));
 
+            if (characterBody.HasBuff(VileBuffs.OverHeatDebuff))
+            {
+                damageCoefficient *= 1.5f;
+                characterBody.skillLocator.special.temporaryCooldownPenalty += 5f;
+            }
+                
+
+            if (characterBody.HasBuff(VileBuffs.OverHeatDebuff))
+                characterBody.RemoveOldestTimedBuff(VileBuffs.OverHeatDebuff);
+
+
+
             SetHitReset(true, 5);
 
             float elementBonus = (0.1f + characterBody.level / 100f) + ((VC.GetBaseHeatValue() + VC.GetBaseOverHeatValue() / 2f));

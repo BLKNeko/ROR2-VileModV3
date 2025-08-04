@@ -179,25 +179,25 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             // Movimento baseado na distância
             if (distance < minDistance)
             {
-                Debug.Log($"Distance: {distance} < MinDistance: {minDistance}");
+                //Debug.Log($"Distance: {distance} < MinDistance: {minDistance}");
                 MoveAwayFromTarget();
                 SetState(false, true, false); // Run
             }
             else if (distance > maxDistance)
             {
-                Debug.Log($"Distance: {distance} > MaxDistance: {maxDistance}");
+                //Debug.Log($"Distance: {distance} > MaxDistance: {maxDistance}");
                 MoveTowardsTarget(backToDistance);
                 SetState(false, true, false); // Run
             }
             else if (distance > frontSafeDistance)
             {
-                Debug.Log($"Distance: {distance} > FrontSafeDistance: {frontSafeDistance}");
+                //Debug.Log($"Distance: {distance} > FrontSafeDistance: {frontSafeDistance}");
                 MoveTowardsTarget(frontSafeDistance);
                 SetState(false, true, false); // Run
             }
             else
             {
-                Debug.Log($"Distance: {distance} is within range.");
+                //Debug.Log($"Distance: {distance} is within range.");
                 SetState(true, false, false); // Idle
             }
         }
@@ -209,25 +209,25 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             // Movimento baseado na distância
             if (distance < minDistance)
             {
-                Debug.Log($"Distance: {distance} < MinDistance: {minDistance}");
+                //Debug.Log($"Distance: {distance} < MinDistance: {minDistance}");
                 MoveAwayFromTarget();
                 SetState(false, true, false); // Run
             }
             else if (distance > maxDistance)
             {
-                Debug.Log($"Distance: {distance} > MaxDistance: {maxDistance}");
+                //Debug.Log($"Distance: {distance} > MaxDistance: {maxDistance}");
                 MoveTowardsTarget(backToDistance);
                 SetState(false, true, false); // Run
             }
             else if (distance > frontSafeDistance)
             {
-                Debug.Log($"Distance: {distance} > FrontSafeDistance: {frontSafeDistance}");
+                //Debug.Log($"Distance: {distance} > FrontSafeDistance: {frontSafeDistance}");
                 MoveTowardsTarget(frontSafeDistance);
                 SetState(false, true, false); // Run
             }
             else
             {
-                Debug.Log($"Distance: {distance} is within range.");
+                //Debug.Log($"Distance: {distance} is within range.");
                 SetState(true, false, false); // Idle
             }
         }

@@ -7,6 +7,7 @@ using UnityEngine;
 using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
+using static RoR2.BulletAttack;
 
 namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
@@ -34,7 +35,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
             SetState(false, false, true); // shooting
 
-            new BulletAttack
+            var attack = new BulletAttack
             {
                 bulletCount = 1,
                 aimVector = shootDir,
@@ -62,10 +63,35 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                 spreadYawScale = 1f,
                 queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
                 hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireShotgun.hitEffectPrefab,
-            }.Fire();
+                // callback para impedir self-hit
+                hitCallback = HitCallback,
+            };
+
+            attack.Fire();
+            
 
         }
 
+        private bool HitCallback(BulletAttack bulletAttack,ref BulletHit hit)
+        {
+            Debug.Log("HitCallback--");
+
+            if (hit.hitHurtBox != null && hit.hitHurtBox.healthComponent != null)
+            {
+                Debug.Log($"Hit: {hit.hitHurtBox.healthComponent.body.gameObject.name}"); // Log do acerto
+
+                
+                CharacterBody hitBody = hit.hitHurtBox.healthComponent.body;
+                if (hitBody == ownerBody) // é o próprio dono
+                {
+                    Debug.Log($"Hit: {hitBody.gameObject.name} é o próprio dono, cancelando acerto."); // Log do cancelamento
+                    return false; // cancela esse acerto
+                }
+            }
+            Debug.Log("NormalCall--");
+            var result = BulletAttack.defaultHitCallback(bulletAttack, ref hit); // Chama o callback padrão para manter o comportamento normal
+            return result; // permite normalmente
+        }
 
 
     }

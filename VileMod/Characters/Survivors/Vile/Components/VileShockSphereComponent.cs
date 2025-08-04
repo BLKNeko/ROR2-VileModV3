@@ -15,19 +15,23 @@ namespace VileMod.Survivors.Vile.Components
 
         private ProjectileController projectileController;
 
+        private CharacterBody ownerBody;
+
         private float timer = 0f;
         private float timeLimit = 0.2f;
-        private float damageCoeficient;
+        private float damageCoefficient;
         private float damagebonus = 1f;
 
         private BlastAttack blastAttack;
 
-        void Awake()
+        void Start()
         {
             impactExplosion = GetComponent<ProjectileImpactExplosion>();
             overlapAttack = GetComponent<ProjectileOverlapAttack>();
             projectileController = GetComponent<ProjectileController>();
-            damageCoeficient = 1f;//XStaticValues.XShockSphereDamageCoefficient;
+            damageCoefficient = 1f;//XStaticValues.XShockSphereDamageCoefficient;
+
+            ownerBody = projectileController.owner.GetComponent<CharacterBody>();
 
             //Debug.Log("Wake");
 
@@ -48,17 +52,27 @@ namespace VileMod.Survivors.Vile.Components
             {
                 timer += Time.deltaTime;
 
-                blastAttack = new BlastAttack();
-                blastAttack.attacker = base.gameObject;
-                blastAttack.inflictor = base.gameObject;
-                blastAttack.teamIndex = TeamComponent.GetObjectTeam(projectileController.owner);
-                blastAttack.baseDamage = (damageCoeficient * projectileController.owner.GetComponent<CharacterBody>().damage);
-                blastAttack.baseForce = 10f;
-                blastAttack.position = gameObject.transform.position;
-                blastAttack.radius = 5f;
-                blastAttack.bonusForce = new Vector3(1f, 1f, 1f);
-                blastAttack.damageType = DamageType.Shock5s;
-                blastAttack.damageColorIndex = DamageColorIndex.Luminous;
+                // Carrega efeito de impacto
+                GameObject effectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/ImpactLightning");
+                EffectIndex effectIndex = EffectCatalog.FindEffectIndexFromPrefab(effectPrefab);
+
+                BlastAttack CSBlastAttack = new BlastAttack();
+                CSBlastAttack.attacker = ownerBody.gameObject;
+                CSBlastAttack.inflictor = gameObject;
+                CSBlastAttack.teamIndex = TeamComponent.GetObjectTeam(ownerBody.gameObject);
+                CSBlastAttack.baseDamage = damageCoefficient * ownerBody.damage;
+                CSBlastAttack.baseForce = 50f;
+                CSBlastAttack.position = transform.position;
+                CSBlastAttack.radius = 5f;
+                CSBlastAttack.bonusForce = new Vector3(1f, 1f, 1f);
+                CSBlastAttack.damageType = DamageType.Shock5s;
+                CSBlastAttack.damageColorIndex = DamageColorIndex.Luminous;
+                CSBlastAttack.procCoefficient = 1f;
+                CSBlastAttack.procChainMask = default;
+                CSBlastAttack.crit = ownerBody.RollCrit();
+                CSBlastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
+                CSBlastAttack.impactEffect = effectIndex;
+
 
                 //Debug.Log("damageCoeficient: " + damageCoeficient);
                 //Debug.Log("damageStat: " + damageStat);
@@ -69,7 +83,8 @@ namespace VileMod.Survivors.Vile.Components
                 if (timer > timeLimit)
                 {
                     //overlapAttack.ResetOverlapAttack();
-                    blastAttack.Fire();
+                    //blastAttack.Fire();
+                    BlastAttack.Result result = CSBlastAttack.Fire();
                     timer = 0f;
                 }
 

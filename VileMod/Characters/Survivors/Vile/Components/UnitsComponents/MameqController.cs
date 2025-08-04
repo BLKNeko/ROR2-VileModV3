@@ -14,7 +14,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
     public class MameqController : UnitMoveController
     {
 
-        private float vsfxTimerCooldown = 8f; // Tempo de recarga do efeito sonoro de movimento
+        private float vsfxTimerCooldown = 5f; // Tempo de recarga do efeito sonoro de movimento
         private float vsfxTimer;
 
         public override void Start()
@@ -40,6 +40,8 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
             shouldFollowGroundOffset = true; // Deve seguir o offset do chão
             shouldRotateY = true; // Deve rotacionar no eixo Y
+
+            vsfxTimer = vsfxTimerCooldown - 2f; // Inicia o temporizador para tocar o efeito sonoro de movimento após 2 segundos
 
         }
 

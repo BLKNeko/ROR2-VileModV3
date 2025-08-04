@@ -82,6 +82,8 @@ namespace VileMod.Survivors.Vile
 
         internal static SkillDef unitSpikySkillDef;
 
+        internal static SkillDef unitTogericsSkillDef;
+
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
         internal static SkillDef zipZapperSkillDef;
@@ -1159,6 +1161,39 @@ namespace VileMod.Survivors.Vile
 
             });
 
+            unitTogericsSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "Togerics",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillIcon = VileAssets.UnitNightmareVSkillIcon,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitTogerics)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = false,
+                dontAllowPastMaxStocks = true,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
             #endregion
 
             #region Primary
@@ -1723,6 +1758,7 @@ namespace VileMod.Survivors.Vile
         {
 
             Skills.AddThirdExtraSkill(bodyPrefab, unitNightmareVSkillDef);
+            Skills.AddThirdExtraSkill(bodyPrefab, unitTogericsSkillDef);
             Skills.AddThirdExtraSkill(bodyPrefab, unitMameQSkillDef);
         }
 
