@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using VileMod.Survivors.Vile.Components;
 using RoR2.Projectile;
 using VileMod.Modules;
+using ExtraSkillSlots;
 
 namespace VileMod.Survivors.Vile.SkillStates
 {
@@ -29,6 +30,9 @@ namespace VileMod.Survivors.Vile.SkillStates
         private VileComponent VC;
         private VileBoltComponent VBC;
         private int boltCost;
+
+        private ExtraSkillLocator extraSkillLocator;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -36,18 +40,28 @@ namespace VileMod.Survivors.Vile.SkillStates
             fireTime = firePercentTime * duration;
             characterBody.SetAimTimer(2f);
             muzzleString = "Muzzle";
-            boltCost = 10;
+            boltCost = VileStaticValues.UnitBigBitBoltCost;
             VC = GetComponent<VileComponent>();
             VBC = GetComponent<VileBoltComponent>();
+            extraSkillLocator = GetComponent<ExtraSkillLocator>();
 
             if (VBC.GetBoltValue() < boltCost)
             {
                 //Play sound
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Error, this.gameObject);
 
-                Chat.AddMessage($"You need at least {boltCost} Vile Bolts to call BigBit unit! You currently have {VBC.GetBoltValue()} Vile Bolts.");
+                Chat.AddMessage(
+                    $"<color=#FFA500>You need at least " +
+                    $"<color=#C0C0C0>{boltCost}</color> " +
+                    $"<color=#A020F0>Vile</color> <color=#C0C0C0>Bolts</color> to call " +
+                    $"<color=#00BFFF>BigBit Unit</color>! You currently have " +
+                    $"<color=#C0C0C0>{VBC.GetBoltValue()}</color> " +
+                    $"<color=#A020F0>Vile</color> <color=#C0C0C0>Bolts</color>.</color>"
+                );
 
                 //Reset cooldown
                 outer.SetNextStateToMain();
+                extraSkillLocator.extraFirst.Reset();
                 return;
             }
 

@@ -71,17 +71,41 @@ namespace VileMod.Survivors.Vile
 
         // UNIT
 
-        public const float UnitBigBitDamageCoefficient = 1f;
+        public const float UnitBigBitDamageCoefficient = 0.75f;
 
         public const float UnitMettaurCommanderDamageCoefficient = 1f;
 
         public const float UnitMettaurcureDamageCoefficient = 1f;
 
-        public const float UnitNightmareVDamageCoefficient = 3f;
+        public const float UnitNightmareVDamageCoefficient = 2f;
 
-        public const float UnitPreonEDamageCoefficient = 2.5f;
+        public const float UnitPreonEDamageCoefficient = 1.5f;
 
         public const float UnitTogericsDamageCoefficient = 0.8f;
+
+        public const float UnitGunVoltDamageCoefficient = 1f;
+
+        public const float UnitSpikyDamageCoefficient = 0.8f;
+
+        // VILE BOLT
+
+        public const int UnitMettaurcureBoltCost = 150;
+        public const int UnitBigBitBoltCost = 125;
+        public const int UnitSpikyBoltCost = 130;
+
+        public const int UnitPreonEBoltCost = 250;
+        public const int UnitMettaurCommanderBoltCost = 280;
+        public const int UnitGunVoltBoltCost = 270;
+
+        public const int UnitNightmareBoltCostt = 380;
+        public const int UnitTogericsBoltCost = 350;
+        public const int UnitMameQBoltCost = 420;
+
+        public const int RideArmorGoliathCost = 750;
+        public const int RideArmorHawkCost = 700;
+        public const int RideArmorCyclopsCost = 725;
+
+
 
 
 

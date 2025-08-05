@@ -29,7 +29,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             base.Start();
 
             moveSpeed += ownerBody.moveSpeed * 1.5f;
-            damageCoefficient = 2f;
+            damageCoefficient = VileStaticValues.UnitGunVoltDamageCoefficient;
             FireCooldown = 2f; // Tempo de recarga entre disparos
 
             enemyCheckRadius = 40f;

@@ -8,6 +8,7 @@ using static Rewired.ComponentControls.Effects.RotateAroundAxis;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 using static RoR2.BulletAttack;
+using VileMod.Survivors.Vile;
 
 namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
@@ -19,7 +20,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             base.Start();
 
             moveSpeed += ownerBody.moveSpeed * 1.5f;
-            damageCoefficient = 2f;
+            damageCoefficient = VileStaticValues.UnitPreonEDamageCoefficient;
             FireCooldown = 0.5f; // Tempo de recarga entre disparos
 
             enemyCheckRadius = 35f;

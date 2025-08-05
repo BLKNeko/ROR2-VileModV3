@@ -39,7 +39,7 @@ namespace VileMod.Survivors.Vile.Components
 
             speed += ownerBody.attackSpeed * 10f;
 
-            damageCoefficient = 1f; // VileStaticValues.VSpikyControllerDamageCoefficient;
+            damageCoefficient = VileStaticValues.UnitSpikyDamageCoefficient; // VileStaticValues.VSpikyControllerDamageCoefficient;
 
             //Debug.Log("ownerBody: " + ownerBody);
 
@@ -54,6 +54,14 @@ namespace VileMod.Survivors.Vile.Components
                 Vector3 offset = new Vector3(Mathf.Cos(0), 0, Mathf.Sin(0)) * radius;
                 transform.position = ownerTransform.position + offset;
             }
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, gameObject);
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
+            {
+                origin = transform.position,
+                rotation = transform.rotation
+            }, transmit: true);
 
         }
 
@@ -174,6 +182,18 @@ namespace VileMod.Survivors.Vile.Components
                 pos.y = hit.point.y + groundOffset;
                 transform.position = pos;
             }
+        }
+
+        void OnDestroy()
+        {
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_Out, gameObject);
+
+            EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
+            {
+                origin = transform.position,
+                rotation = transform.rotation
+            }, transmit: true);
         }
 
     }

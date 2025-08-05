@@ -26,7 +26,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             frontSafeDistance = 15f;
 
             moveSpeed += ownerBody.moveSpeed * 1.5f;
-            damageCoefficient = 4f;
+            damageCoefficient = VileStaticValues.UnitNightmareVDamageCoefficient;
             FireCooldown = 1f; // Tempo de recarga entre disparos
             shouldMoveTowardEnemy = true; // Deve se mover em direção ao inimigo
 

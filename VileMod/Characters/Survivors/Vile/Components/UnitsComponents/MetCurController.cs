@@ -21,7 +21,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             base.Start();
 
             moveSpeed += ownerBody.moveSpeed * 2f;
-            healCoefficient = 2f;
+            healCoefficient = VileStaticValues.UnitMettaurcureDamageCoefficient;
             FireCooldown = 3f; // Tempo de recarga entre disparos
 
             allyCheckRadius = 35f;

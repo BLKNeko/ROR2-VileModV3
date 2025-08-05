@@ -4,6 +4,7 @@ using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
 using VileMod.Survivors.Vile.Components;
+using ExtraSkillSlots;
 
 namespace VileMod.Survivors.Vile.SkillStates
 {
@@ -16,6 +17,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         private VileComponent VC;
         private VileBoltComponent VBC;
         private VileRideArmorComponent VRAC;
+        private ExtraSkillLocator extraSkillLocator;
 
 
         public override void OnEnter()
@@ -23,22 +25,31 @@ namespace VileMod.Survivors.Vile.SkillStates
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             characterBody.SetAimTimer(1f);
-            boltCost = 1; //Set the cost of entering Goliath mode
+            boltCost = VileStaticValues.RideArmorHawkCost; //Set the cost of entering Goliath mode
 
             //PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
 
             VC = GetComponent<VileComponent>();
             VBC = GetComponent<VileBoltComponent>();
             VRAC = GetComponent<VileRideArmorComponent>();
+            extraSkillLocator = GetComponent<ExtraSkillLocator>();
 
-            if(VBC.GetBoltValue() < boltCost && !characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff)) 
+            if (VBC.GetBoltValue() < boltCost && !characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff)) 
             {
                 //Play sound
                 AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Error, this.gameObject);
 
-                Chat.AddMessage($"You need at least {boltCost} Vile Bolts to enter Goliath mode! You currently have {VBC.GetBoltValue()} Vile Bolts.");
+                Chat.AddMessage(
+                    $"<color=#FFA500>You need at least " +
+                    $"<color=#C0C0C0>{boltCost}</color> " +
+                    $"<color=#A020F0>Vile</color> <color=#C0C0C0>Bolts</color> to call " +
+                    $"<color=#00BFFF>Hawk Ride Armor</color>! You currently have " +
+                    $"<color=#C0C0C0>{VBC.GetBoltValue()}</color> " +
+                    $"<color=#A020F0>Vile</color> <color=#C0C0C0>Bolts</color>.</color>"
+                );
 
                 outer.SetNextStateToMain();
+                extraSkillLocator.extraFourth.Reset();
                 return;
             }
 
