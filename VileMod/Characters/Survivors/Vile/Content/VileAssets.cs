@@ -45,6 +45,7 @@ namespace VileMod.Survivors.Vile
         public static GameObject ShockSphereProjectile;
         public static GameObject CYPlasmaProjectile;
         public static GameObject GShotProjectile;
+        public static GameObject GVMissileProjectile;
 
         //Tracers
         public static GameObject vileGreenTracerPrefab;
@@ -52,22 +53,20 @@ namespace VileMod.Survivors.Vile
         public static GameObject vileBlueTracerPrefab;
 
         //UnitsProjectiles
-        public static GameObject unitPreonEPrefab;
-        public static GameObject unitPreonEPrefabTest;
+        
 
         public static GameObject unitMettaurcurePrefab;
-
         public static GameObject unitBigBitPrefab;
-
-        public static GameObject unitNightmareVPrefab;
-
-        public static GameObject unitMettaurCommanderPrefab;
-
-        public static GameObject unitMameqPrefab;
-
         public static GameObject unitSpikyPrefab;
 
+        public static GameObject unitPreonEPrefab;
+        public static GameObject unitMettaurCommanderPrefab;
+        public static GameObject unitGunvoltPrefab;
+
+        public static GameObject unitNightmareVPrefab;
         public static GameObject unitTogericsPrefab;
+        public static GameObject unitMameqPrefab;
+
 
         //Icons
         public static Sprite VileSkinIcon;
@@ -163,7 +162,7 @@ namespace VileMod.Survivors.Vile
 
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
 
-            nightmareVMaterial = _assetBundle.LoadMaterial("matNightmareVirus");
+            nightmareVMaterial = _assetBundle.LoadMaterial("matNightmareVirusEffect");
 
             vileGreenTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VGreenTacer", new Color(0.2f, 1f, 0.2f, 1f), 180f, 5f);
             vileCyanTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VCyanTacer", new Color(0.4f, 0.8f, 1f, 1f), 170f, 5f);
@@ -308,11 +307,14 @@ namespace VileMod.Survivors.Vile
             CreateUnitMameqProjectile();
             CreateUnitSpikyProjectile();
             CreateTogericsProjectile();
+            CreateUnitGunVoltProjectile();
 
             GShotPhantonProjectile();
 
             CreateCYPlasmaProjectile();
             CreateShockSphereProjectile();
+
+            CreateGVMissileProjectile();
 
 
             Content.AddProjectilePrefab(bombProjectilePrefab);
@@ -333,11 +335,14 @@ namespace VileMod.Survivors.Vile
             Content.AddProjectilePrefab(unitMameqPrefab);
             Content.AddProjectilePrefab(unitSpikyPrefab);
             Content.AddProjectilePrefab(unitTogericsPrefab);
+            Content.AddProjectilePrefab(unitGunvoltPrefab);
 
             Content.AddProjectilePrefab(GShotProjectile);
 
             Content.AddProjectilePrefab(CYPlasmaProjectile);
             Content.AddProjectilePrefab(ShockSphereProjectile);
+
+            Content.AddProjectilePrefab(GVMissileProjectile);
 
         }
 
@@ -391,6 +396,23 @@ namespace VileMod.Survivors.Vile
                 unitPreonEController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("PreonE");
 
             unitPreonEController.startSound = "";
+        }
+
+        private static void CreateUnitGunVoltProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            unitGunvoltPrefab = Asset.CloneProjectilePrefab("FMJ", "GunVoltProjectile");
+
+            unitGunvoltPrefab.GetComponent<ProjectileSimple>().lifetime = 60f;
+
+            unitGunvoltPrefab.AddComponent<GunVoltController>();
+
+            ProjectileController unitGunvoltController = unitGunvoltPrefab.GetComponent<ProjectileController>();
+
+            if (_assetBundle.LoadAsset<GameObject>("GunVolt") != null)
+                unitGunvoltController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("GunVolt");
+
+            unitGunvoltController.startSound = "";
         }
 
         private static void CreateUnitMettaurcureProjectile()
@@ -516,7 +538,7 @@ namespace VileMod.Survivors.Vile
             }
 
 
-            unitSpikyPrefab.AddComponent<OrbitAroundOwner>();
+            unitSpikyPrefab.AddComponent<SpikyController>();
 
 
 
@@ -797,6 +819,13 @@ namespace VileMod.Survivors.Vile
             ShockSphereController.shouldPlaySounds = false;
         }
 
+        private static void CreateGVMissileProjectile()
+        {
+
+            GVMissileProjectile = Asset.CloneProjectilePrefab("MissileProjectile", "GVMissileProjectile");
+
+
+        }
 
 
         #endregion projectiles

@@ -84,6 +84,8 @@ namespace VileMod.Survivors.Vile
 
         internal static SkillDef unitTogericsSkillDef;
 
+        internal static SkillDef unitGunVoltSkillDef;
+
         //PRIMARY SKILLS DEFS
         internal static SkillDef cherryBlastSkillDef;
         internal static SkillDef zipZapperSkillDef;
@@ -996,6 +998,39 @@ namespace VileMod.Survivors.Vile
 
             });
 
+            unitGunVoltSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "GunVolt",
+                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillIcon = VileAssets.UnitBigBitSkillIcon,
+                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+
+                activationState = new SerializableEntityStateType(typeof(UnitGunVolt)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = InterruptPriority.Skill,
+
+                baseRechargeInterval = 3f,
+                baseMaxStock = 10,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = true,
+                beginSkillCooldownOnSkillEnd = true,
+
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+
+
+            });
+
             unitBigBitSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "BigBit",
@@ -1751,6 +1786,7 @@ namespace VileMod.Survivors.Vile
 
             Skills.AddSecondExtraSkill(bodyPrefab, unitPreonESkillDef);
             Skills.AddSecondExtraSkill(bodyPrefab, unitMettaurCommanderSkillDef);
+            Skills.AddSecondExtraSkill(bodyPrefab, unitGunVoltSkillDef);
             
         }
 
@@ -2084,11 +2120,11 @@ namespace VileMod.Survivors.Vile
             if (sender.HasBuff(VileBuffs.nightmareVirusDebuff))
             {
                 args.armorAdd -= 100;
-                args.damageMultAdd -= 0.5f;
-                args.attackSpeedMultAdd -= 0.25f;
+                args.damageMultAdd -= 0.8f;
+                args.attackSpeedMultAdd -= 0.4f;
                 args.regenMultAdd -= 1f;
                 args.jumpPowerMultAdd -= 0.3f;
-                args.moveSpeedMultAdd -= 0.35f;
+                args.moveSpeedMultAdd -= 0.5f;
                 
 
             }

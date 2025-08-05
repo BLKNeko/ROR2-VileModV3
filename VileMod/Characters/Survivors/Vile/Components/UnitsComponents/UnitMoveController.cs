@@ -48,6 +48,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
         protected float FireCooldown = 0.5f; // Tempo de recarga entre disparos
         protected float FireTimer; // Tempo de recarga entre disparos
         protected float damageCoefficient;
+        protected bool shouldFilterByLOS = true; // Se deve filtrar por linha de visão
 
         public bool IsIdle { get; private set; }
         public bool IsRunning { get; private set; }
@@ -82,6 +83,8 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                 origin = transform.position,
                 rotation = transform.rotation
             }, transmit: true);
+
+            StickToGround();
 
         }
 
@@ -394,7 +397,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             search.maxDistanceFilter = enemyCheckRadius;
             search.searchOrigin = firePoint.position;
             search.sortMode = BullseyeSearch.SortMode.Distance;
-            search.filterByLoS = true; // Agora só alvos com linha de visão
+            search.filterByLoS = shouldFilterByLOS; // Agora só alvos com linha de visão
             search.RefreshCandidates();
 
             return search.GetResults().FirstOrDefault();

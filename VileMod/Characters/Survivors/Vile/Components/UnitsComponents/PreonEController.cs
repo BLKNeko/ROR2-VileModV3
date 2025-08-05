@@ -49,7 +49,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                 hitMask = LayerIndex.CommonMasks.bullet,
                 minSpread = 0f,
                 maxSpread = 0f,
-                isCrit = false,
+                isCrit = ownerBody.RollCrit(),
                 owner = gameObject,
                 smartCollision = true,
                 procChainMask = default,
@@ -74,21 +74,21 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
         private bool HitCallback(BulletAttack bulletAttack,ref BulletHit hit)
         {
-            Debug.Log("HitCallback--");
+            //Debug.Log("HitCallback--");
 
             if (hit.hitHurtBox != null && hit.hitHurtBox.healthComponent != null)
             {
-                Debug.Log($"Hit: {hit.hitHurtBox.healthComponent.body.gameObject.name}"); // Log do acerto
+                //Debug.Log($"Hit: {hit.hitHurtBox.healthComponent.body.gameObject.name}"); // Log do acerto
 
                 
                 CharacterBody hitBody = hit.hitHurtBox.healthComponent.body;
-                if (hitBody == ownerBody) // é o próprio dono
+                if (hitBody.teamComponent.teamIndex == ownerBody.teamComponent.teamIndex) // é o time do próprio dono
                 {
-                    Debug.Log($"Hit: {hitBody.gameObject.name} é o próprio dono, cancelando acerto."); // Log do cancelamento
+                    //Debug.Log($"Hit: {hitBody.gameObject.name} é o próprio dono, cancelando acerto."); // Log do cancelamento
                     return false; // cancela esse acerto
                 }
             }
-            Debug.Log("NormalCall--");
+            //Debug.Log("NormalCall--");
             var result = BulletAttack.defaultHitCallback(bulletAttack, ref hit); // Chama o callback padrão para manter o comportamento normal
             return result; // permite normalmente
         }
