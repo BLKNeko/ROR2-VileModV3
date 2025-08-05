@@ -42,6 +42,7 @@ namespace VileMod.Survivors.Vile
         public static GameObject FrontRunnerFireBallProjectile;
         public static GameObject CerberusPhantonFMJProjectile;
         public static GameObject NapalmBombProjectile;
+        public static GameObject NapalmBombletsProjectile;
         public static GameObject ShockSphereProjectile;
         public static GameObject CYPlasmaProjectile;
         public static GameObject GShotProjectile;
@@ -294,6 +295,7 @@ namespace VileMod.Survivors.Vile
             CreateVileEletricSpark();
 
             CreateBumpityBoomProjectile();
+            CreateNapalmBombletsProjectile();
             CreateNapalmBombProjectile();
 
             CreateFrontRunnerProjectile();
@@ -322,6 +324,7 @@ namespace VileMod.Survivors.Vile
             Content.AddProjectilePrefab(vileEletricSparkPrefab);
 
             Content.AddProjectilePrefab(BumpityBombProjectile);
+            Content.AddProjectilePrefab(NapalmBombletsProjectile);
             Content.AddProjectilePrefab(NapalmBombProjectile);
 
             Content.AddProjectilePrefab(FrontRunnerFireBallProjectile);
@@ -675,24 +678,61 @@ namespace VileMod.Survivors.Vile
             //bombController.startSound = "";
         }
 
+        private static void CreateNapalmBombletsProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            NapalmBombletsProjectile = Asset.CloneProjectilePrefab("CryoCanisterBombletsProjectile", "NapalmBombletsProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            //UnityEngine.Object.Destroy(NapalmBombProjectile.GetComponent<ProjectileImpactExplosion>());
+            ProjectileImpactExplosion napalmbombletsImpactExplosion = NapalmBombletsProjectile.GetComponent<ProjectileImpactExplosion>();
+
+            //napalmImpactExplosion.blastRadius = 16f;
+            //napalmImpactExplosion.blastDamageCoefficient = 1f;
+            //napalmImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
+            napalmbombletsImpactExplosion.destroyOnEnemy = true;
+            napalmbombletsImpactExplosion.destroyOnWorld = true;
+            napalmbombletsImpactExplosion.lifetime = 2f;
+            napalmbombletsImpactExplosion.impactEffect = BumpityBombProjectile.GetComponent<ProjectileImpactExplosion>().impactEffect;
+            //napalmImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
+            napalmbombletsImpactExplosion.timerAfterImpact = true;
+            napalmbombletsImpactExplosion.lifetimeAfterImpact = 0.1f;
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            NapalmBombletsProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            NapalmBombletsProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            NapalmBombletsProjectile.GetComponent<ProjectileDamage>().damageType |= DamageType.Freeze2s;
+            NapalmBombletsProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
+
+            ProjectileController napalmbombletsController = NapalmBombletsProjectile.GetComponent<ProjectileController>();
+
+            //if (_assetBundle.LoadAsset<GameObject>("HenryBombGhost") != null)
+            //    bombController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("HenryBombGhost");
+
+            //bombController.startSound = "";
+        }
+
         private static void CreateNapalmBombProjectile()
         {
             //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
             NapalmBombProjectile = Asset.CloneProjectilePrefab("CryoCanisterProjectile", "NapalmBombProjectile");
 
             //remove their ProjectileImpactExplosion component and start from default values
-            //UnityEngine.Object.Destroy(BumpityBombProjectile.GetComponent<ProjectileImpactExplosion>());
-            //ProjectileImpactExplosion bumpityImpactExplosion = BumpityBombProjectile.AddComponent<ProjectileImpactExplosion>();
+            //UnityEngine.Object.Destroy(NapalmBombProjectile.GetComponent<ProjectileImpactExplosion>());
+            ProjectileImpactExplosion napalmImpactExplosion = NapalmBombProjectile.GetComponent<ProjectileImpactExplosion>();
 
-            //bumpityImpactExplosion.blastRadius = 16f;
-            //bumpityImpactExplosion.blastDamageCoefficient = 1f;
-            //bumpityImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
-            //bumpityImpactExplosion.destroyOnEnemy = true;
-            //bumpityImpactExplosion.lifetime = 12f;
-            //bumpityImpactExplosion.impactEffect = bombExplosionEffect;
-            //bumpityImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
-            //bumpityImpactExplosion.timerAfterImpact = true;
-            //bumpityImpactExplosion.lifetimeAfterImpact = 0.1f;
+            //napalmImpactExplosion.blastRadius = 16f;
+            //napalmImpactExplosion.blastDamageCoefficient = 1f;
+            //napalmImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
+            napalmImpactExplosion.destroyOnEnemy = true;
+            napalmImpactExplosion.lifetime = 10f;
+            napalmImpactExplosion.impactEffect = BumpityBombProjectile.GetComponent<ProjectileImpactExplosion>().impactEffect;
+            //napalmImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
+            napalmImpactExplosion.timerAfterImpact = true;
+            napalmImpactExplosion.lifetimeAfterImpact = 0.1f;
+
+            napalmImpactExplosion.childrenInheritDamageType = true;
+            napalmImpactExplosion.childrenProjectilePrefab = NapalmBombletsProjectile;
 
             // just setting the numbers to 1 as the entitystate will take care of those
             NapalmBombProjectile.GetComponent<ProjectileDamage>().damage = 1f;

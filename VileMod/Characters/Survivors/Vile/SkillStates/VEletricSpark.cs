@@ -76,7 +76,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                 {
 
                     characterBody.AddSpreadBloom(0.8f);
-                    EffectManager.SimpleMuzzleFlash(EntityStates.Mage.Weapon.FireLaserbolt.muzzleEffectPrefab, gameObject, muzzleString, true);
+                    EffectManager.SimpleMuzzleFlash(EntityStates.Mage.Weapon.FireRoller.lightningMuzzleflashEffectPrefab, gameObject, muzzleString, true);
                     AddRecoil(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
 
                     if (VileConfig.enableVoiceBool.Value)

@@ -2001,7 +2001,7 @@ namespace VileMod.Survivors.Vile
             if (DamageAPI.HasModdedDamageType(report.damageInfo, VileCustomDamageType.PlasmaSphereDamage))
             {
                 // Aqui você aplica efeitos especiais, DOT, explosões, buffs, etc
-                Chat.AddMessage($"{report.victimBody.baseNameToken} levou meu dano customizado!");
+                //Chat.AddMessage($"{report.victimBody.baseNameToken} levou meu dano customizado!");
 
                 // Cria o ShockSphere
                 ProjectileManager.instance.FireProjectile(new FireProjectileInfo
@@ -2022,7 +2022,7 @@ namespace VileMod.Survivors.Vile
             if (DamageAPI.HasModdedDamageType(report.damageInfo, VileCustomDamageType.NightmareDamage))
             {
                 // Aqui você aplica efeitos especiais, DOT, explosões, buffs, etc
-                Chat.AddMessage($"{report.victimBody.baseNameToken} levou meu dano customizado!");
+                //Chat.AddMessage($"{report.victimBody.baseNameToken} levou meu dano customizado!");
 
                 report.victimBody.AddBuff(VileBuffs.nightmareVirusDebuff);
 
