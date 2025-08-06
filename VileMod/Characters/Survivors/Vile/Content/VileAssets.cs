@@ -91,11 +91,53 @@ namespace VileMod.Survivors.Vile
         public static Sprite ResumeHawkSkillIcon;
         public static Sprite ExitHawkSkillIcon;
 
+        public static Sprite CallCyclopsSkillIcon;
+        public static Sprite ResumeCyclopsSkillIcon;
+        public static Sprite ExitCyclopsSkillIcon;
+
         public static Sprite UnitBigBitSkillIcon;
         public static Sprite UnitMetComSkillIcon;
         public static Sprite UnitMetCurSkillIcon;
         public static Sprite UnitNightmareVSkillIcon;
         public static Sprite UnitPreonESkillIcon;
+
+
+        public static Sprite BumpityBoomSkillIcon;
+        
+
+        public static Sprite CerberusPhantonSkillIcon;
+        public static Sprite CYShotSkillIcon;
+
+        public static Sprite EletricSparkSkillIcon;
+        
+
+        public static Sprite FrontRunnerSkillIcon;
+        public static Sprite GDashPunchSkillIcon;
+        public static Sprite GPunchSkillIcon;
+        public static Sprite GShotSkillIcon;
+        public static Sprite HBarrageSkillIcon;
+        public static Sprite HGunSkillIcon;
+        public static Sprite NapalmBombSkillIcon;
+
+        public static Sprite OverHeatDebuffIcon;
+        public static Sprite PrimaryHeatBuffIcon;
+        public static Sprite PrimaryIceBuffIcon;
+        public static Sprite PrimaryShockBuffIcon;
+        public static Sprite PrimaryFireBuffIcon;
+
+        public static Sprite RepairRideArmorSkillIcon;
+        public static Sprite RideArmorEnabledBuffcon;
+        
+
+        public static Sprite RideDashSkillIcon;
+
+        public static Sprite UnitGunVoltSkillIcon;
+
+        public static Sprite UnitMMQSkillIcon;
+
+        public static Sprite UnitSpikySkillIcon;
+        public static Sprite UnitTogericsSkillIcon;
+
 
         private static AssetBundle _assetBundle;
 
@@ -123,10 +165,9 @@ namespace VileMod.Survivors.Vile
             ZipZapperSkillIcon = _assetBundle.LoadAsset<Sprite>("ZipZapperSkillIcon");
             Triple7SkillIcon = _assetBundle.LoadAsset<Sprite>("Triple7SkillIcon");
             DistanceNeedlerSkillIcon = _assetBundle.LoadAsset<Sprite>("DistanceNeedlerSkillIcon");
-
             ShotgunIceSkillIcon = _assetBundle.LoadAsset<Sprite>("ShotgunIceSkillIcon");
 
-            BurningDriveSkillIcon = _assetBundle.LoadAsset<Sprite>("BurningDriveSkillIcon");
+            BurningDriveSkillIcon = _assetBundle.LoadAsset<Sprite>("BurningDrive2SkillIcon");
 
             CallGoliathSkillIcon = _assetBundle.LoadAsset<Sprite>("CallGoliathSkillIcon");
             ResumeGoliathSkillIcon = _assetBundle.LoadAsset<Sprite>("ResumeGoliathSkillIcon");
@@ -136,11 +177,50 @@ namespace VileMod.Survivors.Vile
             ResumeHawkSkillIcon = _assetBundle.LoadAsset<Sprite>("ResumeHawkSkillIcon");
             ExitHawkSkillIcon = _assetBundle.LoadAsset<Sprite>("ExitHawkSkillIcon");
 
+            CallCyclopsSkillIcon = _assetBundle.LoadAsset<Sprite>("CallCyclopsSkillIcon");
+            ResumeCyclopsSkillIcon = _assetBundle.LoadAsset<Sprite>("ResumeCyclopsSkillIcon");
+            ExitCyclopsSkillIcon = _assetBundle.LoadAsset<Sprite>("ExitCyclopsSkillIcon");
+
             UnitBigBitSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitBigBitSkillIcon");
             UnitMetComSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitMetComSkillIcon");
             UnitMetCurSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitMetCurSkillIcon");
             UnitNightmareVSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitNightmareVSkillIcon");
             UnitPreonESkillIcon = _assetBundle.LoadAsset<Sprite>("UnitPreonESkillIcon");
+
+            UnitGunVoltSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitGunVoltSkillIcon");
+            UnitMMQSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitMMQSkillIcon");
+            UnitSpikySkillIcon = _assetBundle.LoadAsset<Sprite>("UnitSpikySkillIcon");
+            UnitTogericsSkillIcon = _assetBundle.LoadAsset<Sprite>("UnitTogericsSkillIcon");
+
+            BumpityBoomSkillIcon = _assetBundle.LoadAsset<Sprite>("BumpityBoomSkillIcon");
+            
+            CerberusPhantonSkillIcon = _assetBundle.LoadAsset<Sprite>("CerberusPhantonSkillIcon");
+            CYShotSkillIcon = _assetBundle.LoadAsset<Sprite>("CYShotSkillIcon");
+
+            EletricSparkSkillIcon = _assetBundle.LoadAsset<Sprite>("EletricSparkSkillIcon");
+            
+            FrontRunnerSkillIcon = _assetBundle.LoadAsset<Sprite>("FrontRunnerSkillIcon");
+            GDashPunchSkillIcon = _assetBundle.LoadAsset<Sprite>("GDashPunchSkillIcon");
+            GPunchSkillIcon = _assetBundle.LoadAsset<Sprite>("GPunchSkillIcon");
+            GShotSkillIcon = _assetBundle.LoadAsset<Sprite>("GShotSkillIcon");
+            HBarrageSkillIcon = _assetBundle.LoadAsset<Sprite>("HBarrageSkillIcon");
+            HGunSkillIcon = _assetBundle.LoadAsset<Sprite>("HGunSkillIcon");
+
+            NapalmBombSkillIcon = _assetBundle.LoadAsset<Sprite>("NapalmBombSkillIcon");
+
+            OverHeatDebuffIcon = _assetBundle.LoadAsset<Sprite>("OverHeatDebuffIcon");
+            PrimaryHeatBuffIcon = _assetBundle.LoadAsset<Sprite>("PrimaryHeatBuffIcon");
+            PrimaryIceBuffIcon = _assetBundle.LoadAsset<Sprite>("PrimaryIceBuffIcon");
+            PrimaryShockBuffIcon = _assetBundle.LoadAsset<Sprite>("PrimaryShockBuffIcon");
+            PrimaryFireBuffIcon = _assetBundle.LoadAsset<Sprite>("PrimaryFireBuffIcon");
+
+            RepairRideArmorSkillIcon = _assetBundle.LoadAsset<Sprite>("RepairRideArmorSkillIcon");
+            RideArmorEnabledBuffcon = _assetBundle.LoadAsset<Sprite>("RideArmorEnabledBuffIcon");
+            
+            RideDashSkillIcon = _assetBundle.LoadAsset<Sprite>("RideDashSkillIcon");
+
+            
+
 
         }
 

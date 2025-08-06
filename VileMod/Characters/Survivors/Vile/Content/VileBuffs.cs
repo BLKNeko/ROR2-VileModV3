@@ -38,7 +38,7 @@ namespace VileMod.Survivors.Vile
                 false);
 
             RideArmorEnabledBuff = Modules.Content.CreateAndAddBuff("RideArmorEnabledBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.RideArmorEnabledBuffcon,
                 Color.white,
                 false,
                 false);
@@ -56,37 +56,37 @@ namespace VileMod.Survivors.Vile
                 false);
 
             HawkDashBuff = Modules.Content.CreateAndAddBuff("HawkDashBuff",
-                VileAssets.CallHawkSkillIcon,
+                VileAssets.RideDashSkillIcon,
                 Color.white,
                 false,
                 false);
 
             CyclopsBuff = Modules.Content.CreateAndAddBuff("CyclopsBuff",
-                VileAssets.CallHawkSkillIcon,
+                VileAssets.CallCyclopsSkillIcon,
                 Color.white,
                 false,
                 false);
 
             PrimaryHeatBuff = Modules.Content.CreateAndAddBuff("PrimaryHeatBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.PrimaryHeatBuffIcon,
                 Color.white,
                 false,
                 false);
 
             PrimaryIceBuff = Modules.Content.CreateAndAddBuff("PrimaryIceBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.PrimaryIceBuffIcon,
                 Color.white,
                 false,
                 false);
 
             PrimaryFlameBuff = Modules.Content.CreateAndAddBuff("PrimaryFlameBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.PrimaryFireBuffIcon,
                 Color.white,
                 false,
                 false);
 
             PrimaryShockBuff = Modules.Content.CreateAndAddBuff("PrimaryShockBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.PrimaryShockBuffIcon,
                 Color.white,
                 false,
                 false);
@@ -98,20 +98,20 @@ namespace VileMod.Survivors.Vile
                 true);
 
             MameqBuff = Modules.Content.CreateAndAddBuff("MAME-QBuff",
-                VileAssets.UnitMetComSkillIcon,
+                VileAssets.UnitMMQSkillIcon,
                 Color.white,
                 false,
                 true);
 
 
             OverHeatDebuff = Modules.Content.CreateAndAddBuff("OverHeatDebuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.OverHeatDebuffIcon,
                 Color.white,
                 false,
                 true);
 
             nightmareVirusDebuff = Modules.Content.CreateAndAddBuff("NightmareVirusDebuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.UnitNightmareVSkillIcon,
                 Color.white,
                 false,
                 true);
