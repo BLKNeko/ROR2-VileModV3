@@ -60,7 +60,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                 }
             }
 
-            Debug.Log("Destroying Ride Armor state entered");
+            //Debug.Log("Destroying Ride Armor state entered");
 
             EffectManager.SimpleMuzzleFlash(VileAssets.rideExplosionEffect, gameObject, "BasePos", true);
 

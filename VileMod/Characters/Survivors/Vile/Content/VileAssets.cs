@@ -6,6 +6,7 @@ using RoR2.Projectile;
 using VileMod.Survivors.Vile.Components;
 using R2API;
 using VileMod.Characters.Survivors.Vile.Components.UnitsComponents;
+using VileMod.Characters.Survivors.Vile.Components;
 
 namespace VileMod.Survivors.Vile
 {
@@ -18,6 +19,7 @@ namespace VileMod.Survivors.Vile
         public static GameObject bombExplosionEffect;
 
         public static GameObject rideExplosionEffect;
+        public static GameObject vileExplosionEffect;
 
         public static GameObject bdriveEffect;
 
@@ -47,6 +49,8 @@ namespace VileMod.Survivors.Vile
         public static GameObject CYPlasmaProjectile;
         public static GameObject GShotProjectile;
         public static GameObject GVMissileProjectile;
+        public static GameObject FlameRoundProjectile;
+        public static GameObject FlameRoundBombProjectile;
 
         //Tracers
         public static GameObject vileGreenTracerPrefab;
@@ -230,6 +234,7 @@ namespace VileMod.Survivors.Vile
         {
             CreateBombExplosionEffect();
             CreateRideExplosionEffect();
+            CreateVileExplosionEffect();
 
             swordSwingEffect = _assetBundle.LoadEffect("HenrySwordSwingEffect", true);
             swordHitImpactEffect = _assetBundle.LoadEffect("ImpactHenrySlash");
@@ -268,6 +273,28 @@ namespace VileMod.Survivors.Vile
             {
                 amplitude = 2f,
                 frequency = 80f,
+                cycleOffset = 0f
+            };
+
+        }
+
+        private static void CreateVileExplosionEffect()
+        {
+            vileExplosionEffect = _assetBundle.LoadEffect("VileExplosionVFX", VileStaticValues.Play_Vile_Death_Explosion, false);
+
+            if (!rideExplosionEffect)
+                return;
+
+            ShakeEmitter shakeEmitter = rideExplosionEffect.AddComponent<ShakeEmitter>();
+            shakeEmitter.amplitudeTimeDecay = true;
+            shakeEmitter.duration = 1f;
+            shakeEmitter.radius = 200f;
+            shakeEmitter.scaleShakeRadiusWithLocalScale = false;
+
+            shakeEmitter.wave = new Wave
+            {
+                amplitude = 2f,
+                frequency = 50f,
                 cycleOffset = 0f
             };
 
@@ -373,6 +400,7 @@ namespace VileMod.Survivors.Vile
             CreateBombProjectile();
             CreateVileShotgunIce();
             CreateVileEletricSpark();
+            
 
             CreateBumpityBoomProjectile();
             CreateNapalmBombletsProjectile();
@@ -398,10 +426,14 @@ namespace VileMod.Survivors.Vile
 
             CreateGVMissileProjectile();
 
+            CreateFlameRoundProjectile();
+            CreateFlameRoundBombProjectile();
+
 
             Content.AddProjectilePrefab(bombProjectilePrefab);
             Content.AddProjectilePrefab(vileShotgunIcePrefab);
             Content.AddProjectilePrefab(vileEletricSparkPrefab);
+            
 
             Content.AddProjectilePrefab(BumpityBombProjectile);
             Content.AddProjectilePrefab(NapalmBombletsProjectile);
@@ -426,6 +458,9 @@ namespace VileMod.Survivors.Vile
             Content.AddProjectilePrefab(ShockSphereProjectile);
 
             Content.AddProjectilePrefab(GVMissileProjectile);
+
+            Content.AddProjectilePrefab(FlameRoundProjectile);
+            Content.AddProjectilePrefab(FlameRoundBombProjectile);
 
         }
 
@@ -821,6 +856,80 @@ namespace VileMod.Survivors.Vile
             NapalmBombProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericSecondary;
 
             ProjectileController napalmController = NapalmBombProjectile.GetComponent<ProjectileController>();
+
+            //if (_assetBundle.LoadAsset<GameObject>("HenryBombGhost") != null)
+            //    bombController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("HenryBombGhost");
+
+            //bombController.startSound = "";
+        }
+
+        private static void CreateFlameRoundProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            FlameRoundProjectile = Asset.CloneProjectilePrefab("FMJ", "FlameRoundProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            //UnityEngine.Object.Destroy(NapalmBombProjectile.GetComponent<ProjectileImpactExplosion>());
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            FlameRoundProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            FlameRoundProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            FlameRoundProjectile.GetComponent<ProjectileDamage>().damageType |= DamageType.IgniteOnHit;
+            FlameRoundProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericUtility;
+
+            ProjectileController FRController = FlameRoundProjectile.GetComponent<ProjectileController>();
+
+            FlameRoundProjectile.AddComponent<FlameRoundController>();
+
+            // Adiciona movimentação simples
+            ProjectileSimple simple = FlameRoundProjectile.GetComponent<ProjectileSimple>();
+            if (!simple)
+                simple = FlameRoundProjectile.AddComponent<ProjectileSimple>();
+
+            simple.desiredForwardSpeed = 8f; // velocidade em frente
+            simple.lifetime = 5f;             // tempo até desaparecer
+
+            // Isso é útil para que ele vá para frente na direção em que foi spawnado
+            simple.updateAfterFiring = true;
+
+
+            if (_assetBundle.LoadAsset<GameObject>("FlameRoundSVFX") != null)
+                FRController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("FlameRoundSVFX");
+
+            FRController.startSound = "";
+        }
+
+        private static void CreateFlameRoundBombProjectile()
+        {
+            //highly recommend setting up projectiles in editor, but this is a quick and dirty way to prototype if you want
+            FlameRoundBombProjectile = Asset.CloneProjectilePrefab("MageFireBombProjectile", "FlameRoundBombProjectile");
+
+            //remove their ProjectileImpactExplosion component and start from default values
+            //UnityEngine.Object.Destroy(NapalmBombProjectile.GetComponent<ProjectileImpactExplosion>());
+            ProjectileImpactExplosion FGBImpactExplosion = FlameRoundBombProjectile.GetComponent<ProjectileImpactExplosion>();
+
+            //napalmImpactExplosion.blastRadius = 16f;
+            //napalmImpactExplosion.blastDamageCoefficient = 1f;
+            //napalmImpactExplosion.falloffModel = BlastAttack.FalloffModel.None;
+            FGBImpactExplosion.destroyOnEnemy = true;
+            FGBImpactExplosion.lifetime = 10f;
+            //FGBImpactExplosion.impactEffect = BumpityBombProjectile.GetComponent<ProjectileImpactExplosion>().impactEffect;
+            //napalmImpactExplosion.lifetimeExpiredSound = Content.CreateAndAddNetworkSoundEventDef("HenryBombExplosion");
+            FGBImpactExplosion.timerAfterImpact = true;
+            FGBImpactExplosion.lifetimeAfterImpact = 0.1f;
+
+            FGBImpactExplosion.fireChildren = true;
+            FGBImpactExplosion.childrenInheritDamageType = true;
+            FGBImpactExplosion.childrenCount = 1;
+            FGBImpactExplosion.childrenProjectilePrefab = FlameRoundProjectile;
+
+            // just setting the numbers to 1 as the entitystate will take care of those
+            FlameRoundBombProjectile.GetComponent<ProjectileDamage>().damage = 1f;
+            FlameRoundBombProjectile.GetComponent<ProjectileController>().procCoefficient = 1f;
+            FlameRoundBombProjectile.GetComponent<ProjectileDamage>().damageType |= DamageType.IgniteOnHit;
+            FlameRoundBombProjectile.GetComponent<ProjectileDamage>().damageType |= DamageTypeCombo.GenericUtility;
+
+            ProjectileController FGBController = FlameRoundBombProjectile.GetComponent<ProjectileController>();
 
             //if (_assetBundle.LoadAsset<GameObject>("HenryBombGhost") != null)
             //    bombController.ghostPrefab = _assetBundle.CreateProjectileGhostPrefab("HenryBombGhost");

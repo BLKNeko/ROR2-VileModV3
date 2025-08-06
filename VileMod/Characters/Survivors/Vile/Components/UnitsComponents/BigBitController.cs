@@ -75,6 +75,8 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                 hitCallback = HitCallback, // Callback para impedir self-hit
             }.Fire();
 
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Simple_Bullet, this.gameObject);
+
         }
 
         private bool HitCallback(BulletAttack bulletAttack, ref BulletHit hit)

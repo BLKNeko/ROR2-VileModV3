@@ -118,6 +118,7 @@ namespace VileMod.Survivors.Vile
         public static readonly string Play_Vile_Cherry_Blast = "Play_Vile_Cherry_Blast";
         public static readonly string Play_Vile_CYPunch_SFX = "Play_Vile_CYPunch_SFX";
         public static readonly string Play_Vile_Die = "Play_Vile_Die";
+        public static readonly string Play_Vile_Death_Explosion = "Play_Vile_Death_Explosion";
         public static readonly string Play_Vile_Eat_This = "Play_Vile_Eat_This";
         public static readonly string Play_Vile_Error = "Play_Vile_Error";
         public static readonly string Play_Fire_SFX = "Play_Fire_SFX";
@@ -144,6 +145,7 @@ namespace VileMod.Survivors.Vile
         public static readonly string Play_Vile_RideArmor_In_VSFX = "Play_Vile_RideArmor_In";
         public static readonly string Play_Vile_Ride_Armor_Lose = "Play_Vile_Ride_Armor_Lose";
         public static readonly string Play_Vile_Ride_Armor_Out = "Play_Vile_Ride_Armor_Out";
+        public static readonly string Play_Vile_Simple_Bullet = "Play_Vile_Simple_Bullet";
         public static readonly string Play_Vile_SFX_Recov_HP = "Play_Vile_SFX_Recov_HP";
         public static readonly string Play_Vile_SFX_Shock = "Play_Vile_SFX_Shock";
         public static readonly string Play_Vile_Spawn = "Play_Vile_Spawn";

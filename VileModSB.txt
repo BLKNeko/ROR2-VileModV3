@@ -30,11 +30,13 @@ Event	ID	Name			Wwise Object Path	Notes
 	3201666147	Play_Vile_Die			\Default Work Unit\Play_Vile_Die	
 	3343923811	Play_Vile_Fury			\Default Work Unit\Play_Vile_Fury	
 	3459851417	Play_Vile_Footstep_SFX			\Default Work Unit\Play_Vile_Footstep_SFX	
+	3491906488	Play_Vile_Simple_Bullet			\Default Work Unit\Play_Vile_Simple_Bullet	
 	3525663006	Play_Vile_Ha			\Default Work Unit\Play_Vile_Ha	
 	3579896108	Play_Vile_Armed			\Default Work Unit\Play_Vile_Armed	
 	3862754203	Play_Vile_Charge_Shoot			\Default Work Unit\Play_Vile_Charge_Shoot	
 	3941153195	Play_Vile_Laser_Shot			\Default Work Unit\Play_Vile_Laser_Shot	
 	3942056322	Play_MMQVSFX			\Default Work Unit\Play_MMQVSFX	
+	4006716747	Play_Vile_Death_Explosion			\Default Work Unit\Play_Vile_Death_Explosion	
 	4014034595	Play_Vile_Error			\Default Work Unit\Play_Vile_Error	
 	4103301416	Play_Vile_I_Cant_Lose_To_X			\Default Work Unit\Play_Vile_I_Cant_Lose_To_X	
 	4120866432	Play_Vile_Spawn			\Default Work Unit\Play_Vile_Spawn	
@@ -65,7 +67,9 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	426398404	Vile_CYPunch_SFX	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_CYPunch_SFX_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_CYPunch_SFX		2021
 	436735630	Vile_Frag_Drop	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Frag_Drop_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Frag_Drop		7721
 	444367833	Vile_Ride_Armor_FootStep	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ride_Armor_FootStep_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_FootStep		8072
+	454133697	Vile_Die_2	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Die_2_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Die\Vile_Die_2		30706
 	477689425	Vile_GPunch_SFX	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_GPunch_SFX_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_GPunch_SFX		2405
+	488498390	Vile_Death_Explosion	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Death_Explosion_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Death_Explosion		46857
 	506504623	Vile_Ahaha	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ahaha_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_RideArmor_In\Vile_Ahaha		15619
 	524594366	Vile_Error	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Error_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Error		3351
 	556752349	Vile_This_Is_Fun	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_This_Is_Fun_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_RideArmor_In\Vile_This_Is_Fun		17186
@@ -80,6 +84,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	799034785	Vile_I_Show_You_How_Strong_I_Am	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Show_You_How_Strong_I_Am_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Fury\Vile_I_Show_You_How_Strong_I_Am		11748
 	816862079	Vile_Lets_Have_Some_Fun	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Lets_Have_Some_Fun_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_RideArmor_In\Vile_Lets_Have_Some_Fun		21891
 	818253211	Vile_Charge_Shoot	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Charge_Shoot_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Charge_Shoot		3933
+	825991927	Vile_Die_1	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Die_1_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Die\Vile_Die_1		22188
 	826137063	Vile_Heree	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Heree_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Attack\Vile_Heree		3549
 	827226009	Vile_TP_Out	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_TP_Out_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_TP_Out		6961
 	827592597	Vile_I_Am_Ready_To_Give_It_A_Shot	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Am_Ready_To_Give_It_A_Shot_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Spawn\Vile_I_Am_Ready_To_Give_It_A_Shot		10301
@@ -91,4 +96,5 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	875827053	Vile_Eat_This	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Eat_This_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Attack\Vile_Eat_This		5375
 	933048967	Vile_Ride_Armor_FootStep_2	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Ride_Armor_FootStep_2_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Ride_Armor_FootStep_2		5514
 	1029458072	Vile_Hahahaha	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Hahahaha_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Hahahaha		9022
+	1038713388	Vile_Simple_Bullet	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_Simple_Bullet_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Simple_Bullet		4873
 

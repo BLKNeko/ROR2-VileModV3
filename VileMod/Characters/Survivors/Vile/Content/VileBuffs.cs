@@ -8,6 +8,8 @@ namespace VileMod.Survivors.Vile
         // armor buff gained during roll
         public static BuffDef armorBuff;
 
+        public static BuffDef VileFuryBuff;
+
         public static BuffDef RideArmorEnabledBuff;
 
         public static BuffDef GoliathBuff;
@@ -32,6 +34,12 @@ namespace VileMod.Survivors.Vile
         public static void Init(AssetBundle assetBundle)
         {
             armorBuff = Modules.Content.CreateAndAddBuff("HenryArmorBuff",
+                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                Color.white,
+                false,
+                false);
+
+            VileFuryBuff = Modules.Content.CreateAndAddBuff("VileFuryBuff",
                 LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
                 Color.white,
                 false,

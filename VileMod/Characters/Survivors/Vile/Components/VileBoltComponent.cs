@@ -70,7 +70,14 @@ namespace VileMod.Survivors.Vile.Components
         {
             boltValue += value;
             boltValue = Mathf.Clamp(boltValue, 0, 1000); // Limita o valor entre 0 e 9999
-            Debug.Log("Bolt Value Changed: " + boltValue);
+            //Debug.Log("Bolt Value Changed: " + boltValue);
+        }
+
+        public void SetBoltValue(int value)
+        {
+            boltValue = value;
+            boltValue = Mathf.Clamp(boltValue, 0, 1000); // Limita o valor entre 0 e 9999
+            //Debug.Log("Bolt Value Changed: " + boltValue);
         }
 
         private void CharacterMaster_GiveMoney(On.RoR2.CharacterMaster.orig_GiveMoney orig, CharacterMaster self, uint amount)
@@ -78,17 +85,17 @@ namespace VileMod.Survivors.Vile.Components
             // Chama o original para não quebrar o jogo
             orig(self, amount);
 
-            Debug.Log("Self: " + self);
-            Debug.Log("Self Body: " + self.GetBody());
-            Debug.Log("Body: " + Body);
-            Debug.Log("Body.hasAuthority: " + Body.hasAuthority);
+            //Debug.Log("Self: " + self);
+            //Debug.Log("Self Body: " + self.GetBody());
+            //Debug.Log("Body: " + Body);
+            //Debug.Log("Body.hasAuthority: " + Body.hasAuthority);
             // Verifica se esse master tem um corpo e é o nosso personagem
             if (self.GetBody() && self.GetBody() == Body && Body.hasAuthority) 
             {
                 boltValue += (int)amount;
 
-                Debug.Log("amount: " + amount);
-                Debug.Log("boltValue: " + boltValue);
+                //Debug.Log("amount: " + amount);
+                //Debug.Log("boltValue: " + boltValue);
 
                 boltValue = Mathf.Clamp(boltValue, 0, 1000); // Limita o valor entre 0 e 9999
 

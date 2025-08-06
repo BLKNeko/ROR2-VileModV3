@@ -13,6 +13,7 @@ using MegamanXMod.Survivors.X.SkillStates;
 using EntityStates;
 using R2API;
 using RoR2.Projectile;
+using VileMod.Modules.BaseStates;
 
 namespace VileMod.Survivors.Vile
 {
@@ -100,6 +101,7 @@ namespace VileMod.Survivors.Vile
         //UTILITY SKILL DEFS
         internal static SkillDef vileShotgunIceSkillDef;
         internal static SkillDef vileEletricSparkSkillDef;
+        internal static SkillDef vileFlameRoundSkillDef;
 
         //SPECIAL SKILL DEFS
         internal static SkillDef vileBurningDriveSkillDef;
@@ -238,7 +240,7 @@ namespace VileMod.Survivors.Vile
 
             VileConfig.Init();
             VileStates.Init();
-            HenryTokens.Init();
+            VileTokens.Init();
 
             VileAssets.Init(assetBundle);
             VileBuffs.Init(assetBundle);
@@ -259,6 +261,7 @@ namespace VileMod.Survivors.Vile
         {
             AddHitboxes();
             bodyPrefab.AddComponent<VileComponent>();
+            bodyPrefab.AddComponent<VileFury>();
             bodyPrefab.AddComponent<VileHeatUIController>();
             bodyPrefab.AddComponent<VileBoltComponent>();
             bodyPrefab.AddComponent<VileRideArmorComponent>();
@@ -302,8 +305,10 @@ namespace VileMod.Survivors.Vile
 
             //the main "Body" state machine has some special properties
             Prefabs.AddMainEntityStateMachine(bodyPrefab, "Body", typeof(EntityStates.GenericCharacterMain), typeof(EntityStates.SpawnTeleporterState));
+            bodyPrefab.GetComponent<CharacterDeathBehavior>().deathState = new EntityStates.SerializableEntityStateType(typeof(VileDeathState));
+            bodyPrefab.GetComponent<EntityStateMachine>().initialStateType = new EntityStates.SerializableEntityStateType(typeof(VileSpawnState));
             //if you set up a custom main characterstate, set it up here
-                //don't forget to register custom entitystates in your HenryStates.cs
+            //don't forget to register custom entitystates in your HenryStates.cs
 
             Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon");
             Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon2");
@@ -435,7 +440,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "GoliathPunchCombo",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.GPunchSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(GPunch0)),
                 activationStateMachineName = "Weapon",
@@ -465,7 +470,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "GoliathDashPunch",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.GShotSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(GShot)),
                 activationStateMachineName = "Body",
@@ -495,7 +500,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "GoliathDashPunch",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.GDashPunchSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(GDashPunch)),
                 activationStateMachineName = "Weapon",
@@ -527,7 +532,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "Repair Ride Armor",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.RepairRideArmorSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(RepairRideArmor)),
                 activationStateMachineName = "Body",
@@ -681,7 +686,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "HawkGun",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                // skillIcon = XAssets.IconHomingTorpedo,
+                skillIcon = VileAssets.HGunSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(HGun1)),
@@ -714,7 +719,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "HawkGunBarrage",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                // skillIcon = XAssets.IconHomingTorpedo,
+                skillIcon = VileAssets.HBarrageSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(HGunBarrage)),
@@ -747,7 +752,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "HawkDash",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.ResumeHawkSkillIcon,
+                skillIcon = VileAssets.RideDashSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(HawkDash)),
                 activationStateMachineName = "Weapon",
@@ -783,7 +788,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "EnterCyclops",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.CallHawkSkillIcon,
+                skillIcon = VileAssets.CallCyclopsSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EnterCyclops)),
                 activationStateMachineName = "Body",
@@ -813,7 +818,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "ExitCyclops",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.ExitHawkSkillIcon,
+                skillIcon = VileAssets.ExitCyclopsSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitCyclops)),
                 activationStateMachineName = "Weapon",
@@ -843,7 +848,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "ResumeCyclops",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.ResumeHawkSkillIcon,
+                skillIcon = VileAssets.ResumeCyclopsSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeCyclops)),
                 activationStateMachineName = "Body",
@@ -873,7 +878,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "CyclopsShot",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.ResumeHawkSkillIcon,
+                skillIcon = VileAssets.CYShotSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CYShot)),
                 activationStateMachineName = "Weapon",
@@ -903,7 +908,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "CyclopsDash",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.ResumeHawkSkillIcon,
+                skillIcon = VileAssets.RideDashSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CYDash)),
                 activationStateMachineName = "Weapon",
@@ -1003,7 +1008,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "GunVolt",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                skillIcon = VileAssets.UnitBigBitSkillIcon,
+                skillIcon = VileAssets.UnitGunVoltSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitGunVolt)),
@@ -1135,7 +1140,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "MAME-Q",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                skillIcon = VileAssets.UnitNightmareVSkillIcon,
+                skillIcon = VileAssets.UnitMMQSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitMameQ)),
@@ -1168,7 +1173,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "Spiky",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                skillIcon = VileAssets.UnitNightmareVSkillIcon,
+                skillIcon = VileAssets.UnitSpikySkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitSpiky)),
@@ -1201,7 +1206,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "Togerics",
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
-                skillIcon = VileAssets.UnitNightmareVSkillIcon,
+                skillIcon = VileAssets.UnitTogericsSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitTogerics)),
@@ -1362,7 +1367,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "BumpityBoom",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.ShotgunIceSkillIcon,
+                skillIcon = VileAssets.BumpityBoomSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VBumpityBoom)),
                 activationStateMachineName = "Weapon",
@@ -1392,7 +1397,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "NapalmBomb",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.ShotgunIceSkillIcon,
+                skillIcon = VileAssets.NapalmBombSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VNapalmBomb)),
                 activationStateMachineName = "Weapon",
@@ -1422,7 +1427,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "FrontRunner",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.ShotgunIceSkillIcon,
+                skillIcon = VileAssets.FrontRunnerSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VFrontRunner)),
                 activationStateMachineName = "Weapon",
@@ -1486,13 +1491,43 @@ namespace VileMod.Survivors.Vile
                 skillName = "VEletricSpark",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillIcon = VileAssets.EletricSparkSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VEletricSpark)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 9f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            vileFlameRoundSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "VFlameRound",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = VileAssets.EletricSparkSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VFlameRound)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1551,7 +1586,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "CerberusPhanton",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                skillIcon = VileAssets.BurningDriveSkillIcon,
+                skillIcon = VileAssets.CerberusPhantonSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VCerberusPhanton)),
                 activationStateMachineName = "Weapon",
@@ -1742,7 +1777,7 @@ namespace VileMod.Survivors.Vile
 
             Skills.AddUtilitySkills(bodyPrefab, vileEletricSparkSkillDef);
             Skills.AddUtilitySkills(bodyPrefab, vileShotgunIceSkillDef);
-            Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef1);
+            Skills.AddUtilitySkills(bodyPrefab, vileFlameRoundSkillDef);
         }
 
         private void AddSpecialSkills()
@@ -2053,6 +2088,16 @@ namespace VileMod.Survivors.Vile
             if (sender.HasBuff(VileBuffs.armorBuff))
             {
                 args.armorAdd += 300;
+            }
+
+            if (sender.HasBuff(VileBuffs.VileFuryBuff))
+            {
+                args.attackSpeedMultAdd += 0.25f;
+                args.jumpPowerMultAdd += 0.2f;
+                args.moveSpeedMultAdd += 0.25f;
+                args.damageMultAdd += 0.4f;
+                args.regenMultAdd += 0.25f;
+
             }
 
             if (sender.HasBuff(VileBuffs.GoliathBuff))

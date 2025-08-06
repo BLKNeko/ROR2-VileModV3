@@ -69,7 +69,9 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             };
 
             attack.Fire();
-            
+
+            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Simple_Bullet, this.gameObject);
+
 
         }
 
