@@ -38,7 +38,7 @@ namespace VileMod.Characters.Survivors.Vile.Components
 
             speed += ownerBody.attackSpeed * 10f;
 
-            damageCoefficient = VileStaticValues.UnitSpikyDamageCoefficient; // VileStaticValues.VSpikyControllerDamageCoefficient;
+            damageCoefficient = VileStaticValues.VFlameRoundPillarDamageCoefficient; // VileStaticValues.VSpikyControllerDamageCoefficient;
 
             //Debug.Log("ownerBody: " + ownerBody);
 

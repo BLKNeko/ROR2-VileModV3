@@ -47,12 +47,17 @@ namespace VileMod.Survivors.Vile
                 "Crush your foes to harvest <color=#A9A9A9>Bolts</color> and crack open <color=#FFD700>gold capsules</color> for more.");
 
             #region Skins
-            Language.Add(prefix + "MASTERY_SKIN_NAME", "Alternate");
+
+            Language.Add(prefix + "DEFAULT_SKIN_NAME", "Default");
+            Language.Add(prefix + "MK2_SKIN_NAME", "MK-II");
+
             #endregion
 
             #region Passive
-            Language.Add(prefix + "PASSIVE_NAME", "Vile passive");
-            Language.Add(prefix + "PASSIVE_DESCRIPTION", "Sample text.");
+
+            Language.Add(prefix + "VILE_PASSIVE_NAME", "Vile's Fury");
+            Language.Add(prefix + "VILE_PASSIVE_DESCRIPTION", "<style=cIsUtility>Vile refuses to surrender easily; fueled by his fury, he grows stronger when in critical condition.</style> <style=cIsHealing>When at low health, Vile gains powerful buffs lasting 7 seconds.</style>");
+            
             #endregion
 
             #region Ride Armors
@@ -157,28 +162,66 @@ namespace VileMod.Survivors.Vile
             #endregion
 
             #region Primary
-            Language.Add(prefix + "PRIMARY_SLASH_NAME", "Sword");
-            Language.Add(prefix + "PRIMARY_SLASH_DESCRIPTION", Tokens.agilePrefix + $"Swing forward for <style=cIsDamage>{100f * VileStaticValues.swordDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "PRIMARY_CHERRY_BLAST_NAME", "Cherry Blast");
+            Language.Add(prefix + "PRIMARY_CHERRY_BLAST_DESCRIPTION", $"This vulcan have a decent firing rate and a nice precision, dealing <style=cIsDamage>{100f * VileStaticValues.CherryBlastDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "PRIMARY_ZIPZAPPER_NAME", "ZipZapper");
+            Language.Add(prefix + "PRIMARY_ZIPZAPPER_DESCRIPTION", $"This vulcan have a fast firing rate and a nice precision, but lacks in range, dealing <style=cIsDamage>{100f * VileStaticValues.ZipZapperDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "PRIMARY_TRIPLE7_NAME", "Triple-7");
+            Language.Add(prefix + "PRIMARY_TRIPLE7_DESCRIPTION", $"This vulcan have extremely fast firing rate but lacks in precision and range, dealing <style=cIsDamage>{100f * VileStaticValues.Triple7DamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "PRIMARY_DISTANCE_NEEDLER_NAME", "Distance Needler");
+            Language.Add(prefix + "PRIMARY_DISTANCE_NEEDLER_DESCRIPTION", $"This vulcan have the slowest firing rate in comparison to others, but have the hights range, dealing <style=cIsDamage>{100f * VileStaticValues.DistanceNeedlerDamageCoefficient}% damage</style>.");
+
+
             #endregion
 
             #region Secondary
-            Language.Add(prefix + "SECONDARY_GUN_NAME", "Handgun");
-            Language.Add(prefix + "SECONDARY_GUN_DESCRIPTION", Tokens.agilePrefix + $"Fire a handgun for <style=cIsDamage>{100f * VileStaticValues.gunDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "SECONDARY_BUMBPITY_BOOM_NAME", "Bumpity Boom");
+            Language.Add(prefix + "SECONDARY_BUMBPITY_BOOM_DESCRIPTION", $"Vile throws one grenade, dealing <style=cIsDamage>{100f * VileStaticValues.VBumpityBoomDamageCoefficient}% damage</style> and stunning nearby enemies.");
+
+            Language.Add(prefix + "SECONDARY_NAPALM_BOMB_NAME", "Napalm Bomb");
+            Language.Add(prefix + "SECONDARY_NAPALM_BOMB_DESCRIPTION", $"Vile throws one frag grenade, dealing <style=cIsDamage>{100f * VileStaticValues.VNapalmBombDamageCoefficient}% damage</style> and freezing nearby enemies.");
+
+            Language.Add(prefix + "SECONDARY_FRONT_RUNNER_NAME", "Front Runner");
+            Language.Add(prefix + "SECONDARY_FRONT_RUNNER_DESCRIPTION", $"A cannon shot that explodes on impact, dealing <style=cIsDamage>{100f * VileStaticValues.VFrontRunnerDamageCoefficient}% damage</style> and igniting nearby enemies.");
+
             #endregion
 
             #region Utility
-            Language.Add(prefix + "UTILITY_ROLL_NAME", "Roll");
-            Language.Add(prefix + "UTILITY_ROLL_DESCRIPTION", "Roll a short distance, gaining <style=cIsUtility>300 armor</style>. <style=cIsUtility>You cannot be hit during the roll.</style>");
+
+            Language.Add(prefix + "UTILITY_SHOTGUN_ICE_NAME", "Shotgun Ice");
+            Language.Add(prefix + "UTILITY_SHOTGUN_ICE_DESCRIPTION", $"A powerful ice shot, dealing <style=cIsDamage>{100f * VileStaticValues.VShotgunIceDamageCoefficient}% damage</style> and freezing enemies.");
+
+            Language.Add(prefix + "UTILITY_ELECTRIC_SPARK_NAME", "Electric Spark");
+            Language.Add(prefix + "UTILITY_ELECTRIC_SPARK_DESCRIPTION", $"Launches an electric bomb, dealing <style=cIsDamage>{100f * VileStaticValues.VEletricSparkDamageCoefficient}% damage</style> and paralyzing enemies for 5 seconds.");
+
+            Language.Add(prefix + "UTILITY_FLAME_ROUND_NAME", "Flame Round");
+            Language.Add(prefix + "UTILITY_FLAME_ROUND_DESCRIPTION", $"Fires a flaming round, dealing <style=cIsDamage>{100f * VileStaticValues.VFlameRoundDamageCoefficient}% damage</style>. On impact, it creates a pillar of flame that damages all enemies in its path.");
+
+
             #endregion
 
             #region Special
-            Language.Add(prefix + "SPECIAL_BOMB_NAME", "Bomb");
-            Language.Add(prefix + "SPECIAL_BOMB_DESCRIPTION", $"Throw a bomb for <style=cIsDamage>{100f * VileStaticValues.bombDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "SPECIAL_BURNING_DRIVE_NAME", "Burning Drive");
+            Language.Add(prefix + "SPECIAL_BURNING_DRIVE_DESCRIPTION", $"Unleash a blazing ball of flame fueled by your own HEAT level and surrounding oxygen, dealing at least <style=cIsDamage>{100f * VileStaticValues.VBurningDriveDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "SPECIAL_CERBERUS_PHANTON_NAME", "Cerberus Phantom");
+            Language.Add(prefix + "SPECIAL_CERBERUS_PHANTON_DESCRIPTION", $"Fire a spread of three precision lasers, each dealing <style=cIsDamage>{100f * VileStaticValues.VCerberusPhantonDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "SPECIAL_SEA_DRAGON_RAGE_NAME", "Sea Dragon Rage");
+            Language.Add(prefix + "SPECIAL_SEA_DRAGON_RAGE_DESCRIPTION", $"Release a powerful freezing gas, dealing <style=cIsDamage>{100f * VileStaticValues.VSeaDragonRageDamageCoefficient}% damage</style> over time and also freezing enemies.");
+
+
             #endregion
 
             #region Achievements
-            Language.Add(Tokens.GetAchievementNameToken(HenryMasteryAchievement.identifier), "Vile: Mastery");
-            Language.Add(Tokens.GetAchievementDescriptionToken(HenryMasteryAchievement.identifier), "As Vile, beat the game or obliterate on Monsoon.");
+            //Language.Add(Tokens.GetAchievementNameToken(HenryMasteryAchievement.identifier), "Vile: Mastery");
+            //Language.Add(Tokens.GetAchievementDescriptionToken(HenryMasteryAchievement.identifier), "As Vile, beat the game or obliterate on Monsoon.");
             #endregion
         }
 

@@ -16,13 +16,13 @@ namespace VileMod.Survivors.Vile
 
         // PRIMARY
 
-        public const float CherryBlastDamageCoefficient = 0.3f;
+        public const float CherryBlastDamageCoefficient = 0.35f;
 
         public const float DistanceNeedlerDamageCoefficient = 0.7f;
 
-        public const float Triple7DamageCoefficient = 0.2f;
+        public const float Triple7DamageCoefficient = 0.3f;
 
-        public const float ZipZapperDamageCoefficient = 0.2f;
+        public const float ZipZapperDamageCoefficient = 0.25f;
 
         // SECONDARY
 
@@ -41,12 +41,18 @@ namespace VileMod.Survivors.Vile
 
         public const float VEletricSparkDamageCoefficient = 7f;
 
+        public const float VFlameRoundDamageCoefficient = 6.5f;
+
+        public const float VFlameRoundPillarDamageCoefficient = 0.7f;
+
 
         // SPECIAL
 
         public const float VBurningDriveDamageCoefficient = 8f;
 
         public const float VCerberusPhantonDamageCoefficient = 3f;
+
+        public const float VSeaDragonRageDamageCoefficient = 0.2f;
 
 
         // RIDE ARMOR

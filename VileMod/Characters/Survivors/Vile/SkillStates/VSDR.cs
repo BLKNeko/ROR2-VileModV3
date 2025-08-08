@@ -13,7 +13,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
 {
     public class VSDR : BaseSkillState
     {
-        public static float damageCoefficient = VileStaticValues.HGunBarrageDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.VSeaDragonRageDamageCoefficient;
         public static float procCoefficient = 0.4f;
         public static float baseDuration = 1f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing

@@ -11,7 +11,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 {
     public class VFlameRound : BaseSkillState
     {
-        public static float damageCoefficient = VileStaticValues.VShotgunIceDamageCoefficient;
+        public static float damageCoefficient = VileStaticValues.VFlameRoundDamageCoefficient;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.8f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
