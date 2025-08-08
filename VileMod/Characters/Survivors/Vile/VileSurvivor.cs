@@ -106,6 +106,7 @@ namespace VileMod.Survivors.Vile
         //SPECIAL SKILL DEFS
         internal static SkillDef vileBurningDriveSkillDef;
         internal static SkillDef vileCerberusPhantonSkillDef;
+        internal static SkillDef vileSDRSkillDef;
 
 
         public override BodyInfo bodyInfo => new BodyInfo
@@ -1611,6 +1612,36 @@ namespace VileMod.Survivors.Vile
                 forceSprintDuringState = false,
             });
 
+            vileSDRSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "SeaDragonRage",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                //skillIcon = VileAssets.CerberusPhantonSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(VSDR)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 15f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
             #endregion
 
         }
@@ -1806,6 +1837,7 @@ namespace VileMod.Survivors.Vile
             //Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
             Skills.AddSpecialSkills(bodyPrefab, vileBurningDriveSkillDef);
             Skills.AddSpecialSkills(bodyPrefab, vileCerberusPhantonSkillDef);
+            Skills.AddSpecialSkills(bodyPrefab, vileSDRSkillDef);
         }
 
         private void AddExtraFirstSkills()

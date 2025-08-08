@@ -27,6 +27,8 @@ namespace VileMod.Survivors.Vile
         public static GameObject hFallEffect;
         public static GameObject cFallEffect;
 
+        public static GameObject SDREffect;
+
         // networked hit sounds
         public static NetworkSoundEventDef swordHitSoundEvent;
 
@@ -56,6 +58,9 @@ namespace VileMod.Survivors.Vile
         public static GameObject vileGreenTracerPrefab;
         public static GameObject vileCyanTracerPrefab;
         public static GameObject vileBlueTracerPrefab;
+
+        public static GameObject vileSDRTracerPrefab;
+        public static GameObject vileSDRHitPrefab;
 
         //UnitsProjectiles
         
@@ -246,6 +251,8 @@ namespace VileMod.Survivors.Vile
 
             bdriveEffect = _assetBundle.LoadEffect("BurningDriveVFX");
 
+            SDREffect = _assetBundle.LoadEffect("VSDRFlamesVFX", true);
+
             BarPanel = _assetBundle.LoadAsset<GameObject>("BarPanel");
 
             nightmareVMaterial = _assetBundle.LoadMaterial("matNightmareVirusEffect");
@@ -253,6 +260,9 @@ namespace VileMod.Survivors.Vile
             vileGreenTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VGreenTacer", new Color(0.2f, 1f, 0.2f, 1f), 180f, 5f);
             vileCyanTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VCyanTacer", new Color(0.4f, 0.8f, 1f, 1f), 170f, 5f);
             vileBlueTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VBlueTacer", new Color(0.1f, 0.2f, 0.8f, 1f), 150f, 5f);
+
+            vileSDRTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VSDRTacer", new Color(0.4f, 0.8f, 1f, 1f), 100f, 0f);
+            //vileSDRHitPrefab = CreateColoredTracerPrefab("FireMeatBallExplosion", "VSDRHit", new Color(0.4f, 0.8f, 1f, 1f), 170f, 5f);
 
         }
 

@@ -627,16 +627,20 @@ namespace VileMod.Survivors.Vile.Components
 
             VileSurvivor.hawkGunSkillDef,
             VileSurvivor.hawkGunBarrageSkillDef,
+            VileSurvivor.hawkDashSkillDef,
 
             VileSurvivor.enterHawkSkillDef,
             VileSurvivor.exitHawkSkillDef,
             VileSurvivor.resumeHawkSkillDef,
 
+            VileSurvivor.CyclopsShotSkillDef,
+            VileSurvivor.CyclopsDashSkillDef,
+
             VileSurvivor.enterCyclopsSkillDef,
             VileSurvivor.exitCyclopsSkillDef,
             VileSurvivor.resumeCyclopsSkillDef,
 
-            VileSurvivor.CyclopsShotSkillDef,
+            
 
             VileSurvivor.rideRapairSkillDef,
 
