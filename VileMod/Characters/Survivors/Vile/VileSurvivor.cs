@@ -61,6 +61,7 @@ namespace VileMod.Survivors.Vile
         internal static SkillDef exitCyclopsSkillDef;
         internal static SkillDef resumeCyclopsSkillDef;
 
+        internal static SkillDef CyclopsPunchSkillDef;
         internal static SkillDef CyclopsShotSkillDef;
         internal static SkillDef CyclopsDashSkillDef;
 
@@ -205,7 +206,7 @@ namespace VileMod.Survivors.Vile
                 }
         };
 
-        public override UnlockableDef characterUnlockableDef => HenryUnlockables.characterUnlockableDef;
+        public override UnlockableDef characterUnlockableDef => VileUnlockables.characterUnlockableDef;
         
         public override ItemDisplaysBase itemDisplays => new VileItemDisplays();
 
@@ -232,7 +233,7 @@ namespace VileMod.Survivors.Vile
         public override void InitializeCharacter()
         {
             //need the character unlockable before you initialize the survivordef
-            HenryUnlockables.Init();
+            VileUnlockables.Init();
 
             //Custom DamageTypes
             VileCustomDamageType.RegisterDamageTypes();
@@ -330,7 +331,7 @@ namespace VileMod.Survivors.Vile
             
 
             //add our own
-            //AddPassiveSkill();
+            AddPassiveSkill();
             AddPrimarySkills();
             AddSecondarySkills();
             AddUtiitySkills();
@@ -352,12 +353,13 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
                 skillIcon = VileAssets.CallGoliathSkillIcon,
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EnterGoliath)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 60f,
+                baseRechargeInterval = 100f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -367,7 +369,7 @@ namespace VileMod.Survivors.Vile
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = false,
                 dontAllowPastMaxStocks = true,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = false,
@@ -478,7 +480,7 @@ namespace VileMod.Survivors.Vile
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 15f,
-                baseMaxStock = 3,
+                baseMaxStock = 2,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -508,7 +510,7 @@ namespace VileMod.Survivors.Vile
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 baseRechargeInterval = 10f,
-                baseMaxStock = 2,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -534,6 +536,7 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
                 skillIcon = VileAssets.RepairRideArmorSkillIcon,
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(RepairRideArmor)),
                 activationStateMachineName = "Body",
@@ -548,11 +551,11 @@ namespace VileMod.Survivors.Vile
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
-                dontAllowPastMaxStocks = false,
+                dontAllowPastMaxStocks = true,
                 mustKeyPress = false,
                 beginSkillCooldownOnSkillEnd = false,
 
-                isCombatSkill = true,
+                isCombatSkill = false,
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
@@ -598,12 +601,13 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
                 skillIcon = VileAssets.CallHawkSkillIcon,
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EnterHawk)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 60f,
+                baseRechargeInterval = 100f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -613,7 +617,7 @@ namespace VileMod.Survivors.Vile
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = false,
                 dontAllowPastMaxStocks = true,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = false,
@@ -790,12 +794,13 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
                 skillIcon = VileAssets.CallCyclopsSkillIcon,
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EnterCyclops)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 60f,
+                baseRechargeInterval = 100f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -805,7 +810,7 @@ namespace VileMod.Survivors.Vile
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = false,
                 dontAllowPastMaxStocks = true,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = false,
@@ -869,6 +874,36 @@ namespace VileMod.Survivors.Vile
                 beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = true,
+                forceSprintDuringState = false,
+            });
+
+            CyclopsPunchSkillDef = Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = "CyclopsPunch",
+                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillIcon = VileAssets.CYPunchSkillIcon,
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(CYPunch0)),
+                activationStateMachineName = "Weapon",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                baseRechargeInterval = 0f,
+                baseMaxStock = 1,
+
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1,
+
+                resetCooldownTimerOnUse = false,
+                fullRestockOnAssign = true,
+                dontAllowPastMaxStocks = false,
+                mustKeyPress = false,
+                beginSkillCooldownOnSkillEnd = false,
+
+                isCombatSkill = true,
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = true,
                 forceSprintDuringState = false,
@@ -944,14 +979,14 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitMetCurSkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitMettaurcure)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 100f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -959,7 +994,7 @@ namespace VileMod.Survivors.Vile
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
-                dontAllowPastMaxStocks = false,
+                dontAllowPastMaxStocks = true,
                 mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
@@ -977,14 +1012,14 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitMetComSkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitMettaurCommander)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 150f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -992,7 +1027,7 @@ namespace VileMod.Survivors.Vile
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
-                dontAllowPastMaxStocks = false,
+                dontAllowPastMaxStocks = true,
                 mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
@@ -1010,14 +1045,14 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitGunVoltSkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitGunVolt)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 150f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -1025,7 +1060,7 @@ namespace VileMod.Survivors.Vile
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
-                dontAllowPastMaxStocks = false,
+                dontAllowPastMaxStocks = true,
                 mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
@@ -1043,14 +1078,14 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitBigBitSkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitBigBit)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 100f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -1058,7 +1093,7 @@ namespace VileMod.Survivors.Vile
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
-                dontAllowPastMaxStocks = false,
+                dontAllowPastMaxStocks = true,
                 mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
@@ -1076,14 +1111,14 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitPreonESkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitPreonE)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 150f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -1091,7 +1126,7 @@ namespace VileMod.Survivors.Vile
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
-                dontAllowPastMaxStocks = false,
+                dontAllowPastMaxStocks = true,
                 mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
@@ -1109,14 +1144,14 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitNightmareVSkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitNightmareV)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 200f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -1124,7 +1159,7 @@ namespace VileMod.Survivors.Vile
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
-                dontAllowPastMaxStocks = false,
+                dontAllowPastMaxStocks = true,
                 mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
@@ -1142,23 +1177,23 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitMMQSkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitMameQ)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 200f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
                 stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
-                fullRestockOnAssign = false,
+                fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = true,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
                 isCombatSkill = false,
@@ -1175,23 +1210,23 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitSpikySkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitSpiky)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 100f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
                 stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
-                fullRestockOnAssign = false,
+                fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = true,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
                 isCombatSkill = false,
@@ -1208,23 +1243,23 @@ namespace VileMod.Survivors.Vile
                 skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
                 skillIcon = VileAssets.UnitTogericsSkillIcon,
-                // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
+                keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
                 activationState = new SerializableEntityStateType(typeof(UnitTogerics)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 100f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
                 stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
-                fullRestockOnAssign = false,
+                fullRestockOnAssign = true,
                 dontAllowPastMaxStocks = true,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 beginSkillCooldownOnSkillEnd = true,
 
                 isCombatSkill = false,
@@ -1522,7 +1557,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "VFlameRound",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = VileAssets.EletricSparkSkillIcon,
+                skillIcon = VileAssets.FlameRoundSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VFlameRound)),
                 activationStateMachineName = "Weapon",
@@ -1617,7 +1652,7 @@ namespace VileMod.Survivors.Vile
                 skillName = "SeaDragonRage",
                 skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = VileAssets.CerberusPhantonSkillIcon,
+                skillIcon = VileAssets.SDRSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(VSDR)),
                 activationStateMachineName = "Weapon",
@@ -1654,49 +1689,49 @@ namespace VileMod.Survivors.Vile
             bodyPrefab.GetComponent<SkillLocator>().passiveSkill = new SkillLocator.PassiveSkill
             {
                 enabled = true,
-                skillNameToken = VILE_PREFIX + "PASSIVE_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PASSIVE_DESCRIPTION",
-                keywordToken = "KEYWORD_STUNNING",
-                icon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+                skillNameToken = VILE_PREFIX + "VILE_PASSIVE_NAME",
+                skillDescriptionToken = VILE_PREFIX + "VILE_PASSIVE_DESCRIPTION",
+                //keywordToken = "KEYWORD_STUNNING",
+                icon = VileAssets.VilePassiveIcon,
             };
 
             //option 2. a new SkillFamily for a passive, used if you want multiple selectable passives
-            GenericSkill passiveGenericSkill = Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, "PassiveSkill");
-            SkillDef passiveSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
-            {
-                skillName = "HenryPassive",
-                skillNameToken = VILE_PREFIX + "PASSIVE_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PASSIVE_DESCRIPTION",
-                keywordTokens = new string[] { "KEYWORD_AGILE" },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+            //GenericSkill passiveGenericSkill = Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, "PassiveSkill");
+            //SkillDef passiveSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
+            //{
+            //    skillName = "HenryPassive",
+            //    skillNameToken = VILE_PREFIX + "PASSIVE_NAME",
+            //    skillDescriptionToken = VILE_PREFIX + "PASSIVE_DESCRIPTION",
+            //    keywordTokens = new string[] { "KEYWORD_AGILE" },
+            //    skillIcon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
 
-                //unless you're somehow activating your passive like a skill, none of the following is needed.
-                //but that's just me saying things. the tools are here at your disposal to do whatever you like with
+            //    //unless you're somehow activating your passive like a skill, none of the following is needed.
+            //    //but that's just me saying things. the tools are here at your disposal to do whatever you like with
 
-                //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
-                //activationStateMachineName = "Weapon1",
-                //interruptPriority = EntityStates.InterruptPriority.Skill,
+            //    //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
+            //    //activationStateMachineName = "Weapon1",
+            //    //interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                //baseRechargeInterval = 1f,
-                //baseMaxStock = 1,
+            //    //baseRechargeInterval = 1f,
+            //    //baseMaxStock = 1,
 
-                //rechargeStock = 1,
-                //requiredStock = 1,
-                //stockToConsume = 1,
+            //    //rechargeStock = 1,
+            //    //requiredStock = 1,
+            //    //stockToConsume = 1,
 
-                //resetCooldownTimerOnUse = false,
-                //fullRestockOnAssign = true,
-                //dontAllowPastMaxStocks = false,
-                //mustKeyPress = false,
-                //beginSkillCooldownOnSkillEnd = false,
+            //    //resetCooldownTimerOnUse = false,
+            //    //fullRestockOnAssign = true,
+            //    //dontAllowPastMaxStocks = false,
+            //    //mustKeyPress = false,
+            //    //beginSkillCooldownOnSkillEnd = false,
 
-                //isCombatSkill = true,
-                //canceledFromSprinting = false,
-                //cancelSprintingOnActivation = false,
-                //forceSprintDuringState = false,
+            //    //isCombatSkill = true,
+            //    //canceledFromSprinting = false,
+            //    //cancelSprintingOnActivation = false,
+            //    //forceSprintDuringState = false,
 
-            });
-            Skills.AddSkillsToFamily(passiveGenericSkill.skillFamily, passiveSkillDef1);
+            //});
+            //Skills.AddSkillsToFamily(passiveGenericSkill.skillFamily, passiveSkillDef1);
         }
 
         //if this is your first look at skilldef creation, take a look at Secondary first
@@ -2048,7 +2083,7 @@ namespace VileMod.Survivors.Vile
             //Modules.Prefabs.CloneDopplegangerMaster(bodyPrefab, masterName, "Merc");
 
             //how to set up AI in code
-            HenryAI.Init(bodyPrefab, masterName);
+            VileAI.Init(bodyPrefab, masterName);
 
             //how to load a master set up in unity, can be an empty gameobject with just AISkillDriver components
             //assetBundle.LoadMaster(bodyPrefab, masterName);

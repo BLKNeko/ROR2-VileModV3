@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace VileMod.Survivors.Vile
 {
-    public static class HenryAI
+    public static class VileAI
     {
         public static void Init(GameObject bodyPrefab, string masterName)
         {

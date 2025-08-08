@@ -38,7 +38,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             childLocator = GetModelTransform().GetComponent<ChildLocator>();
 
-            customAnimator = childLocator.FindChildGameObject("VEH").GetComponents<Animator>()[0];
+            
 
             VC = GetComponent<VileComponent>();
             VBC = GetComponent<VileBoltComponent>();
@@ -81,13 +81,27 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             Chat.AddMessage($"Ride Armor repaired for {healAmount:F0} HP using {boltsToConsume} Vile Bolts.");
 
-            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "VEH_Win", playbackRateParam, duration * 0.3f, 0.1f * duration);
+            if (characterBody.HasBuff(VileBuffs.CyclopsBuff))
+            {
+                customAnimator = childLocator.FindChildGameObject("CY").GetComponents<Animator>()[0];
+            }
+            if (characterBody.HasBuff(VileBuffs.GoliathBuff))
+            {
+                customAnimator = childLocator.FindChildGameObject("VEH").GetComponents<Animator>()[0];
+            }
+            if (characterBody.HasBuff(VileBuffs.HawkBuff))
+            {
+                customAnimator = childLocator.FindChildGameObject("HAWK").GetComponents<Animator>()[0];
+            }
+
+            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Win", playbackRateParam, duration * 1f, 0.2f * duration);
+
 
             if (NetworkServer.active)
             {
-                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 1.5f * duration);
-                characterBody.AddTimedBuff(RoR2Content.Buffs.Intangible, 1.5f * duration);
-                characterBody.AddTimedBuff(RoR2Content.Buffs.Immune, 1.5f * duration);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 2f * duration);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.Intangible, 2f * duration);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.Immune, 2f * duration);
 
             }
 

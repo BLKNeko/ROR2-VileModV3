@@ -520,7 +520,7 @@ namespace VileMod.Survivors.Vile.Components
             RemoveSkills();
             FootstepChanger(true);
 
-            Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.goliathPunchComboSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            Body.skillLocator.primary.SetSkillOverride(Body.skillLocator.primary, VileSurvivor.CyclopsPunchSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             Body.skillLocator.secondary.SetSkillOverride(Body.skillLocator.secondary, VileSurvivor.CyclopsShotSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             Body.skillLocator.utility.SetSkillOverride(Body.skillLocator.utility, VileSurvivor.CyclopsDashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             Body.skillLocator.special.SetSkillOverride(Body.skillLocator.special, VileSurvivor.rideRapairSkillDef, GenericSkill.SkillOverridePriority.Contextual);
@@ -633,6 +633,7 @@ namespace VileMod.Survivors.Vile.Components
             VileSurvivor.exitHawkSkillDef,
             VileSurvivor.resumeHawkSkillDef,
 
+            VileSurvivor.CyclopsPunchSkillDef,
             VileSurvivor.CyclopsShotSkillDef,
             VileSurvivor.CyclopsDashSkillDef,
 

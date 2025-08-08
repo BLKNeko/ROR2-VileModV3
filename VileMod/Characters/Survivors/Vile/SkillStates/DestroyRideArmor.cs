@@ -18,6 +18,12 @@ namespace VileMod.Survivors.Vile.SkillStates
         private VileComponent VC;
         private ExtraSkillLocator extraSkill;
 
+        private ChildLocator childLocator;
+
+        private Animator customAnimator;
+
+        private string playbackRateParam;
+
 
         public override void OnEnter()
         {
@@ -29,8 +35,25 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             VC = GetComponent<VileComponent>();
             extraSkill = GetComponent<ExtraSkillLocator>();
+            childLocator = GetModelTransform().GetComponent<ChildLocator>();
+            playbackRateParam = "Slash.playbackRate";
 
             PlayAnimation("Body", "Idle", "ShootGun.playbackRate", 0f);
+
+            if (characterBody.HasBuff(VileBuffs.CyclopsBuff))
+            {
+                customAnimator = childLocator.FindChildGameObject("CY").GetComponents<Animator>()[0];
+            }
+            if (characterBody.HasBuff(VileBuffs.GoliathBuff))
+            {
+                customAnimator = childLocator.FindChildGameObject("VEH").GetComponents<Animator>()[0];
+            }
+            if (characterBody.HasBuff(VileBuffs.HawkBuff))
+            {
+                customAnimator = childLocator.FindChildGameObject("HAWK").GetComponents<Animator>()[0];
+            }
+
+            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Die", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
 
             if (NetworkServer.active)
@@ -104,7 +127,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void OnExit()
         {
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_Lose, this.gameObject);
-
+            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "BufferEmpty", playbackRateParam, duration * 0.5f, 0.1f * duration);
             extraSkill.extraFourth.temporaryCooldownPenalty = 120f;
 
             base.OnExit();

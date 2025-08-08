@@ -82,6 +82,8 @@ namespace VileMod.Survivors.Vile
         public static Sprite VileSkinIcon;
         public static Sprite VileMK2SkinIcon;
 
+        public static Sprite VilePassiveIcon;
+
 
         public static Sprite CherryBlastSkillIcon;
         public static Sprite ZipZapperSkillIcon;
@@ -116,8 +118,11 @@ namespace VileMod.Survivors.Vile
 
         public static Sprite CerberusPhantonSkillIcon;
         public static Sprite CYShotSkillIcon;
+        public static Sprite CYPunchSkillIcon;
 
         public static Sprite EletricSparkSkillIcon;
+        public static Sprite FlameRoundSkillIcon;
+        public static Sprite SDRSkillIcon;
         
 
         public static Sprite FrontRunnerSkillIcon;
@@ -170,6 +175,8 @@ namespace VileMod.Survivors.Vile
             VileSkinIcon = _assetBundle.LoadAsset<Sprite>("VileSkinIcon");
             VileMK2SkinIcon = _assetBundle.LoadAsset<Sprite>("VileMK2SkinIcon");
 
+            VilePassiveIcon = _assetBundle.LoadAsset<Sprite>("VileFuryIcon");
+
             CherryBlastSkillIcon = _assetBundle.LoadAsset<Sprite>("CherryBlastSkillIcon");
             ZipZapperSkillIcon = _assetBundle.LoadAsset<Sprite>("ZipZapperSkillIcon");
             Triple7SkillIcon = _assetBundle.LoadAsset<Sprite>("Triple7SkillIcon");
@@ -204,9 +211,12 @@ namespace VileMod.Survivors.Vile
             BumpityBoomSkillIcon = _assetBundle.LoadAsset<Sprite>("BumpityBoomSkillIcon");
             
             CerberusPhantonSkillIcon = _assetBundle.LoadAsset<Sprite>("CerberusPhantonSkillIcon");
+            CYPunchSkillIcon = _assetBundle.LoadAsset<Sprite>("CYPunchSkillIcon");
             CYShotSkillIcon = _assetBundle.LoadAsset<Sprite>("CYShotSkillIcon");
 
             EletricSparkSkillIcon = _assetBundle.LoadAsset<Sprite>("EletricSparkSkillIcon");
+            FlameRoundSkillIcon = _assetBundle.LoadAsset<Sprite>("FlameRoundSkillIcon");
+            SDRSkillIcon = _assetBundle.LoadAsset<Sprite>("SDRSkillIcon");
             
             FrontRunnerSkillIcon = _assetBundle.LoadAsset<Sprite>("FrontRunnerSkillIcon");
             GDashPunchSkillIcon = _assetBundle.LoadAsset<Sprite>("GDashPunchSkillIcon");

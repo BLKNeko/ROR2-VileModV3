@@ -48,7 +48,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             VC.EnterHawk();
 
-            //PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
+            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
         }
 

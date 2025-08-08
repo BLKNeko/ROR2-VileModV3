@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: maskCYGesture
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 0
+  - m_Path: Armature/EM041_G
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/body_bone2
+    m_Weight: 1
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/body_bone2/body_bone4
+    m_Weight: 1
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/body_bone2/L_hand_bone1
+    m_Weight: 1
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/body_bone2/L_hand_bone1/L_hand_bone2
+    m_Weight: 1
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/body_bone2/L_hand_bone1/L_hand_bone2/L_hand_bone3
+    m_Weight: 1
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/body_bone2/R_hand_bone1
+    m_Weight: 1
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/body_bone2/R_hand_bone1/R_hand_bone2
+    m_Weight: 1
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/body_bone2/R_hand_bone1/R_hand_bone2/R_hand_bone3
+    m_Weight: 1
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/L_foot_bone1
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/L_foot_bone1/L_foot_bone2
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/L_foot_bone1/L_foot_bone2/L_foot_bone3
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/L_foot_bone1/L_foot_bone2/L_foot_bone3/L_foot_bone4
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/R_foot_bone1
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/R_foot_bone1/R_foot_bone2
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/R_foot_bone1/R_foot_bone2/R_foot_bone3
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_bone/body_bone1/R_foot_bone1/R_foot_bone2/R_foot_bone3/R_foot_bone4
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_ctrl
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_ctrl/L_foot_ctrl3
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_ctrl/L_foot_ctrl3/IK Chain001
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_ctrl/R_foot_ctrl3
+    m_Weight: 0
+  - m_Path: Armature/EM041_G/root_ctrl/R_foot_ctrl3/IK Chain002
+    m_Weight: 0
+  - m_Path: EM041_Mesh
+    m_Weight: 0

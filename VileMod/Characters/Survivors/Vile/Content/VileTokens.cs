@@ -1,4 +1,5 @@
-﻿using System;
+﻿using R2API;
+using System;
 using VileMod.Modules;
 using VileMod.Survivors.Vile.Achievements;
 
@@ -25,7 +26,7 @@ namespace VileMod.Survivors.Vile
             desc += "< ! > By channeling energy from his <color=#2302f7>skills</color>, <color=#A020F0>Vile</color> can overload his Vulcans with elemental devastation.\n\n";
             desc += "< ! > Built like a war machine, <color=#A020F0>Vile</color> shrugs off fall damage—but his sheer power comes at the cost of speed.\n\n";
             desc += "< ! > <color=#f79902>Vile’s Fury</color> floods him with unstable power, turning him into a one-man army. Use it wisely... its cooldown is brutal.\n\n";
-            desc += "< ! > Spend <color=#b300b3>Vile Bolts</color> to summon lethal support units. Earn Bolts by crushing enemies and unlocking golden capsules.\n\n";
+            desc += "< ! > Spend <color=#b300b3>Vile Bolts</color> to summon lethal support units. Earn Bolts by crushing enemies and unlocking gold capsules.\n\n";
             desc += "< ! > When the battlefield demands absolute dominance, <color=#7f8c8d>Vile</color> calls in his <color=#d35400>Ride Armor</color> — a walking death machine.\n\n";
 
 
@@ -39,6 +40,11 @@ namespace VileMod.Survivors.Vile
             Language.Add(prefix + "LORE", "EX-Maverick Hunter");
             Language.Add(prefix + "OUTRO_FLAVOR", outro);
             Language.Add(prefix + "OUTRO_FAILURE", outroFailure);
+
+            LanguageAPI.Add(prefix + "VILE_KEYWORD_VBOLT",
+                "<color=#A020F0>[VILE BOLTS]</color>\n" +
+                "This skill <color=#FF8C00>demands</color> a certain amount of <color=#A9A9A9>Vile Bolts</color> to be unleashed!\n" +
+                "Crush your foes to harvest <color=#A9A9A9>Bolts</color> and crack open <color=#FFD700>gold capsules</color> for more.");
 
             #region Skins
             Language.Add(prefix + "MASTERY_SKIN_NAME", "Alternate");

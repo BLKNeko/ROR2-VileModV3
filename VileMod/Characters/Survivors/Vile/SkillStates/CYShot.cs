@@ -48,13 +48,12 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             customAnimator = childLocator.FindChildGameObject("CY").GetComponents<Animator>()[0];
 
-            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "VEHShootS", playbackRateParam, duration * 0.3f, 0.1f * duration);
+            PlayAnimationOnAnimator(customAnimator, "Gesture, Override", "CY_Shoot", playbackRateParam, duration * 0.6f, 0.1f * duration);
 
         }
 
         public override void OnExit()
         {
-            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "VEHShootE", playbackRateParam, duration * 0.3f, 0.1f * duration);
             base.OnExit();
         }
 
