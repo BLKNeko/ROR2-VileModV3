@@ -350,8 +350,8 @@ namespace VileMod.Survivors.Vile
             enterGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "EnterGoliath",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_ENTER_GOLIATH_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_ENTER_GOLIATH_DESCRIPTION",
                 skillIcon = VileAssets.CallGoliathSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -380,9 +380,9 @@ namespace VileMod.Survivors.Vile
 
             exitGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "EnterGoliath",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillName = "ExitGoliath",
+                skillNameToken = VILE_PREFIX + "RIDE_EXIT_GOLIATH_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_EXIT_GOLIATH_DESCRIPTION",
                 skillIcon = VileAssets.ExitGoliathSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitGoliath)),
@@ -410,9 +410,9 @@ namespace VileMod.Survivors.Vile
 
             resumeGoliathSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "EnterGoliath",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillName = "ResumeGoliath",
+                skillNameToken = VILE_PREFIX + "RIDE_RESUME_GOLIATH_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_RESUME_GOLIATH_DESCRIPTION",
                 skillIcon = VileAssets.ResumeGoliathSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeGoliath)),
@@ -441,8 +441,8 @@ namespace VileMod.Survivors.Vile
             goliathPunchComboSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "GoliathPunchCombo",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_GOLIATH_PUNCH_COMBO_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_GOLIATH_PUNCH_COMBO_DESCRIPTION",
                 skillIcon = VileAssets.GPunchSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(GPunch0)),
@@ -470,16 +470,16 @@ namespace VileMod.Survivors.Vile
 
             goliathShootSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "GoliathDashPunch",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillName = "GoliathShoot",
+                skillNameToken = VILE_PREFIX + "RIDE_GOLIATH_SHOOT_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_GOLIATH_SHOOT_DESCRIPTION",
                 skillIcon = VileAssets.GShotSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(GShot)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 15f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 2,
 
                 rechargeStock = 1,
@@ -501,15 +501,15 @@ namespace VileMod.Survivors.Vile
             goliathDashPunchSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "GoliathDashPunch",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_GOLIATH_DASH_PUNCH_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_GOLIATH_DASH_PUNCH_DESCRIPTION",
                 skillIcon = VileAssets.GDashPunchSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(GDashPunch)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 10f,
+                baseRechargeInterval = 15f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -532,9 +532,9 @@ namespace VileMod.Survivors.Vile
 
             rideRapairSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "Repair Ride Armor",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillName = "RepairRideArmor",
+                skillNameToken = VILE_PREFIX + "RIDE_REPAIR_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_REPAIR_DESCRIPTION",
                 skillIcon = VileAssets.RepairRideArmorSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -564,9 +564,8 @@ namespace VileMod.Survivors.Vile
             destroyRideArmorSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "DestroyRideArmor",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
-                //skillIcon = ZeroAssets.ZSaberSkillIcon,
+                skillNameToken = VILE_PREFIX + "RIDE_DESTROY_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_DESTROY_DESCRIPTION",
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(DestroyRideArmor)),
                 activationStateMachineName = "Body",
@@ -597,9 +596,11 @@ namespace VileMod.Survivors.Vile
 
             enterHawkSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "EnterGoliath",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillName = "EnterHawk",
+                skillNameToken = VILE_PREFIX + "RIDE_ENTER_HAWK_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_ENTER_HAWK_DESCRIPTION",
+
+
                 skillIcon = VileAssets.CallHawkSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -628,16 +629,17 @@ namespace VileMod.Survivors.Vile
 
             exitHawkSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "EnterGoliath",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillName = "ExitHawk",
+                skillNameToken = VILE_PREFIX + "RIDE_EXIT_HAWK_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_EXIT_HAWK_DESCRIPTION",
+
                 skillIcon = VileAssets.ExitHawkSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitHawk)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 20f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -658,16 +660,17 @@ namespace VileMod.Survivors.Vile
 
             resumeHawkSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = "EnterGoliath",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillName = "ResumeHawk",
+                skillNameToken = VILE_PREFIX + "RIDE_RESUME_HAWK_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_RESUME_HAWK_DESCRIPTION",
+
                 skillIcon = VileAssets.ResumeHawkSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeHawk)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 20f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -689,8 +692,9 @@ namespace VileMod.Survivors.Vile
             hawkGunSkillDef = Skills.CreateSkillDef<HuntressTrackerSkillDef>(new SkillDefInfo
             {
                 skillName = "HawkGun",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_HAWK_GUN_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_HAWK_GUN_DESCRIPTION",
+
                 skillIcon = VileAssets.HGunSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
@@ -698,8 +702,8 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 3f,
-                baseMaxStock = 10,
+                baseRechargeInterval = 0f,
+                baseMaxStock = 1,
 
                 rechargeStock = 1,
                 requiredStock = 1,
@@ -722,8 +726,9 @@ namespace VileMod.Survivors.Vile
             hawkGunBarrageSkillDef = Skills.CreateSkillDef<HuntressTrackerSkillDef>(new SkillDefInfo
             {
                 skillName = "HawkGunBarrage",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_HAWK_GUN_BARRAGE_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_HAWK_GUN_BARRAGE_DESCRIPTION",
+
                 skillIcon = VileAssets.HBarrageSkillIcon,
                 // keywordTokens = new[] { MEGAMAN_x_PREFIX + "X_KEYWORD_CHARGE" },
 
@@ -731,7 +736,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 15f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -755,8 +760,9 @@ namespace VileMod.Survivors.Vile
             hawkDashSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "HawkDash",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_HAWK_DASH_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_HAWK_DASH_DESCRIPTION",
+
                 skillIcon = VileAssets.RideDashSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(HawkDash)),
@@ -791,8 +797,9 @@ namespace VileMod.Survivors.Vile
             enterCyclopsSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "EnterCyclops",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_ENTER_CYCLOPS_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_ENTER_CYCLOPS_DESCRIPTION",
+
                 skillIcon = VileAssets.CallCyclopsSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -822,15 +829,16 @@ namespace VileMod.Survivors.Vile
             exitCyclopsSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "ExitCyclops",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_EXIT_CYCLOPS_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_EXIT_CYCLOPS_DESCRIPTION",
+
                 skillIcon = VileAssets.ExitCyclopsSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ExitCyclops)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 20f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -852,15 +860,16 @@ namespace VileMod.Survivors.Vile
             resumeCyclopsSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "ResumeCyclops",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_RESUME_CYCLOPS_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_RESUME_CYCLOPS_DESCRIPTION",
+
                 skillIcon = VileAssets.ResumeCyclopsSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(ResumeCyclops)),
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 20f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -882,8 +891,9 @@ namespace VileMod.Survivors.Vile
             CyclopsPunchSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "CyclopsPunch",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_CYCLOPS_PUNCH_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_CYCLOPS_PUNCH_DESCRIPTION",
+
                 skillIcon = VileAssets.CYPunchSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CYPunch0)),
@@ -912,15 +922,16 @@ namespace VileMod.Survivors.Vile
             CyclopsShotSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "CyclopsShot",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_CYCLOPS_SHOT_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_CYCLOPS_SHOT_DESCRIPTION",
+
                 skillIcon = VileAssets.CYShotSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CYShot)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 20f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 3,
 
                 rechargeStock = 1,
@@ -942,15 +953,16 @@ namespace VileMod.Survivors.Vile
             CyclopsDashSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "CyclopsDash",
-                skillNameToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZSABER_COMBO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "RIDE_CYCLOPS_DASH_NAME",
+                skillDescriptionToken = VILE_PREFIX + "RIDE_CYCLOPS_DASH_DESCRIPTION",
+
                 skillIcon = VileAssets.RideDashSkillIcon,
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(CYDash)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 15f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -976,8 +988,8 @@ namespace VileMod.Survivors.Vile
             unitMettaurcureSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "Mettaurcure",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_METTAURCURE_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_METTAURCURE_DESCRIPTION",
                 skillIcon = VileAssets.UnitMetCurSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -1009,8 +1021,8 @@ namespace VileMod.Survivors.Vile
             unitMettaurCommanderSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "MettaurCommander",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_METTAURCOMMANDER_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_METTAURCOMMANDER_DESCRIPTION",
                 skillIcon = VileAssets.UnitMetComSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -1042,8 +1054,8 @@ namespace VileMod.Survivors.Vile
             unitGunVoltSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "GunVolt",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_GUNVOLT_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_GUNVOLT_DESCRIPTION",
                 skillIcon = VileAssets.UnitGunVoltSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -1075,8 +1087,8 @@ namespace VileMod.Survivors.Vile
             unitBigBitSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "BigBit",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_BIGBIT_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_BIGBIT_DESCRIPTION",
                 skillIcon = VileAssets.UnitBigBitSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -1108,8 +1120,8 @@ namespace VileMod.Survivors.Vile
             unitPreonESkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "PreonE",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_PREONE_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_PREONE_DESCRIPTION",
                 skillIcon = VileAssets.UnitPreonESkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -1141,8 +1153,8 @@ namespace VileMod.Survivors.Vile
             unitNightmareVSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "NightmareVirus",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_NIGHTMAREVIRUS_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_NIGHTMAREVIRUS_DESCRIPTION",
                 skillIcon = VileAssets.UnitNightmareVSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -1174,8 +1186,8 @@ namespace VileMod.Survivors.Vile
             unitMameQSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "MAME-Q",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_MAMEQ_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_MAMEQ_DESCRIPTION",
                 skillIcon = VileAssets.UnitMMQSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -1207,8 +1219,8 @@ namespace VileMod.Survivors.Vile
             unitSpikySkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "Spiky",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_SPIKY_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_SPIKY_DESCRIPTION",
                 skillIcon = VileAssets.UnitSpikySkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 
@@ -1240,8 +1252,8 @@ namespace VileMod.Survivors.Vile
             unitTogericsSkillDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "Togerics",
-                skillNameToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_NAME",
-                skillDescriptionToken = VILE_PREFIX + "SPECIAL_HOMMING_TORPEDO_DESCRIPTION",
+                skillNameToken = VILE_PREFIX + "UNIT_TOGERICS_NAME",
+                skillDescriptionToken = VILE_PREFIX + "UNIT_TOGERICS_DESCRIPTION",
                 skillIcon = VileAssets.UnitTogericsSkillIcon,
                 keywordTokens = new[] { VILE_PREFIX + "VILE_KEYWORD_VBOLT" },
 

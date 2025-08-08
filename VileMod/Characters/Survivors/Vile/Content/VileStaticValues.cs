@@ -65,6 +65,12 @@ namespace VileMod.Survivors.Vile
 
         public const float HGunBarrageDamageCoefficient = 2f;
 
+        public const float CyPunchDamageCoefficient = 3.5f;
+
+        public const float CyShotDamageCoefficient = 6f;
+
+        public const float CyPlasmaShockDamageCoefficient = 0.2f;
+
         public const float RepairRideArmorDamageCoefficient = 1f;
 
         public const float DestroyRideArmorDamageCoefficient = 15f;
@@ -81,7 +87,7 @@ namespace VileMod.Survivors.Vile
 
         public const float UnitPreonEDamageCoefficient = 1.5f;
 
-        public const float UnitTogericsDamageCoefficient = 0.8f;
+        public const float UnitTogericsDamageCoefficient = 0.5f;
 
         public const float UnitGunVoltDamageCoefficient = 1f;
 

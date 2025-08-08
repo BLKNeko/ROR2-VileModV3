@@ -29,7 +29,7 @@ namespace VileMod.Survivors.Vile.Components
             impactExplosion = GetComponent<ProjectileImpactExplosion>();
             overlapAttack = GetComponent<ProjectileOverlapAttack>();
             projectileController = GetComponent<ProjectileController>();
-            damageCoefficient = 1f;//XStaticValues.XShockSphereDamageCoefficient;
+            damageCoefficient = VileStaticValues.CyPlasmaShockDamageCoefficient;
 
             ownerBody = projectileController.owner.GetComponent<CharacterBody>();
 

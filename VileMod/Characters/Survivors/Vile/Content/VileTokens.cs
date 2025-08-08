@@ -55,6 +55,107 @@ namespace VileMod.Survivors.Vile
             Language.Add(prefix + "PASSIVE_DESCRIPTION", "Sample text.");
             #endregion
 
+            #region Ride Armors
+
+            Language.Add(prefix + "RIDE_ENTER_GOLIATH_NAME", "Ride Armor: GOLIATH");
+            Language.Add(prefix + "RIDE_ENTER_GOLIATH_DESCRIPTION", $"An extremely tough Ride Armor. Its brute force is unmatched. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.RideArmorGoliathCost}</color>.");
+
+            Language.Add(prefix + "RIDE_EXIT_GOLIATH_NAME", "Exit GOLIATH");
+            Language.Add(prefix + "RIDE_EXIT_GOLIATH_DESCRIPTION", "Leave the Ride Armor in a standby state, ready to be called again.");
+
+            Language.Add(prefix + "RIDE_RESUME_GOLIATH_NAME", "Resume GOLIATH");
+            Language.Add(prefix + "RIDE_RESUME_GOLIATH_DESCRIPTION", "Reactivate the standby Ride Armor, calling it back into action without cost.");
+
+            Language.Add(prefix + "RIDE_GOLIATH_PUNCH_COMBO_NAME", "GOLIATH Punch");
+            Language.Add(prefix + "RIDE_GOLIATH_PUNCH_COMBO_DESCRIPTION", $"Deliver a flurry of devastating punches, dealing <style=cIsDamage>{100f * VileStaticValues.GPunch0DamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "RIDE_GOLIATH_SHOOT_NAME", "Light Shot");
+            Language.Add(prefix + "RIDE_GOLIATH_SHOOT_DESCRIPTION", $"A powerful shot that pierces enemies, dealing <style=cIsDamage>{100f * VileStaticValues.GShotDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "RIDE_GOLIATH_DASH_PUNCH_NAME", "Lunging Punch");
+            Language.Add(prefix + "RIDE_GOLIATH_DASH_PUNCH_DESCRIPTION", $"Dash forward with a powerful punch, dealing <style=cIsDamage>{100f * VileStaticValues.GDashPunchDamageCoefficient}% damage</style>.");
+
+
+
+            Language.Add(prefix + "RIDE_ENTER_HAWK_NAME", "Ride Armor: HAWK");
+            Language.Add(prefix + "RIDE_ENTER_HAWK_DESCRIPTION", $"This Ride Armor can fly across the map, but lacks the durability of the others.\n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.RideArmorHawkCost}</color>.");
+
+            Language.Add(prefix + "RIDE_EXIT_HAWK_NAME", "Exit HAWK");
+            Language.Add(prefix + "RIDE_EXIT_HAWK_DESCRIPTION", "Leave the Ride Armor in a standby state, ready to be called again.");
+
+            Language.Add(prefix + "RIDE_RESUME_HAWK_NAME", "Resume HAWK");
+            Language.Add(prefix + "RIDE_RESUME_HAWK_DESCRIPTION", "Reactivate the standby Ride Armor, calling it back into action without cost.");
+
+            Language.Add(prefix + "RIDE_HAWK_GUN_NAME", "HAWK Missiles");
+            Language.Add(prefix + "RIDE_HAWK_GUN_DESCRIPTION", $"Fire three tracking missiles, each dealing <style=cIsDamage>{100f * VileStaticValues.HGun1DamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "RIDE_HAWK_GUN_BARRAGE_NAME", "Hawk Missile Barrage");
+            Language.Add(prefix + "RIDE_HAWK_GUN_BARRAGE_DESCRIPTION", $"While tracking an enemy, unleash a barrage of homing missiles, each dealing <style=cIsDamage>{100f * VileStaticValues.HGunBarrageDamageCoefficient}% damage</style>. The number of missiles depends on Vile's power level.");
+
+            Language.Add(prefix + "RIDE_HAWK_DASH_NAME", "HAWK Dash");
+            Language.Add(prefix + "RIDE_HAWK_DASH_DESCRIPTION", "Dash through the air for improved aerial mobility.");
+
+
+
+
+            Language.Add(prefix + "RIDE_ENTER_CYCLOPS_NAME", "Ride Armor: CYCLOPS");
+            Language.Add(prefix + "RIDE_ENTER_CYCLOPS_DESCRIPTION", $"This Ride Armor offers solid resistance and comes equipped with a powerful shoulder-mounted plasma gun, capable of devastating plasma shots.\n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.RideArmorCyclopsCost}</color>.");
+
+            Language.Add(prefix + "RIDE_EXIT_CYCLOPS_NAME", "Exit CYCLOPS");
+            Language.Add(prefix + "RIDE_EXIT_CYCLOPS_DESCRIPTION", "Leave the Ride Armor in a standby state, ready to be called again.");
+
+            Language.Add(prefix + "RIDE_RESUME_CYCLOPS_NAME", "Resume CYCLOPS");
+            Language.Add(prefix + "RIDE_RESUME_CYCLOPS_DESCRIPTION", "Reactivate the standby Ride Armor, calling it back into action without cost.");
+
+            Language.Add(prefix + "RIDE_CYCLOPS_PUNCH_NAME", "CYCLOPS Punch");
+            Language.Add(prefix + "RIDE_CYCLOPS_PUNCH_DESCRIPTION", $"Deliver a flurry of strong punches, each dealing <style=cIsDamage>{100f * VileStaticValues.CyPunchDamageCoefficient}% damage</style>.");
+
+            Language.Add(prefix + "RIDE_CYCLOPS_SHOT_NAME", "CYCLOPS Plasma Shot");
+            Language.Add(prefix + "RIDE_CYCLOPS_SHOT_DESCRIPTION", $"Fire a powerful plasma blast that pierces enemies, dealing <style=cIsDamage>{100f * VileStaticValues.CyShotDamageCoefficient}% damage</style> and leaving behind a shock sphere that stuns nearby foes.");
+
+            Language.Add(prefix + "RIDE_CYCLOPS_DASH_NAME", "CYCLOPS Dash");
+            Language.Add(prefix + "RIDE_CYCLOPS_DASH_DESCRIPTION", "Dash forward with slightly increased speed.");
+
+
+
+            Language.Add(prefix + "RIDE_REPAIR_NAME", "Repair Ride Armor");
+            Language.Add(prefix + "RIDE_REPAIR_DESCRIPTION", "Use your Vile Bolts to repair your active Ride Armor.");
+
+
+            #endregion
+
+            #region Units
+
+            Language.Add(prefix + "UNIT_METTAURCURE_NAME", "Unit: Mettaur Cure");
+            Language.Add(prefix + "UNIT_METTAURCURE_DESCRIPTION", $"A healing Mettaur that periodically restores health to Vile and his Ride Armor. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitMettaurcureBoltCost}</color>.");
+
+            Language.Add(prefix + "UNIT_METTAURCOMMANDER_NAME", "Unit: Mettaur Commander");
+            Language.Add(prefix + "UNIT_METTAURCOMMANDER_DESCRIPTION", $"A support Mettaur that increases Vile's shield and also regenerates it, granting a bonus to the Ride Armor as well. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitMettaurCommanderBoltCost}</color>.");
+
+            Language.Add(prefix + "UNIT_GUNVOLT_NAME", "Unit: GunVolt");
+            Language.Add(prefix + "UNIT_GUNVOLT_DESCRIPTION", $"This unit is slow but fires two homing missiles, each dealing <style=cIsDamage>{100f * VileStaticValues.UnitGunVoltDamageCoefficient}% damage</style>. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitGunVoltBoltCost}</color>.");
+
+            Language.Add(prefix + "UNIT_BIGBIT_NAME", "Unit: BigBit");
+            Language.Add(prefix + "UNIT_BIGBIT_DESCRIPTION", $"This small floating unit shoots at nearby enemies, dealing <style=cIsDamage>{100f * VileStaticValues.UnitBigBitDamageCoefficient}% damage</style>. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitBigBitBoltCost}</color>.");
+
+            Language.Add(prefix + "UNIT_PREONE_NAME", "Unit: Preon Elite");
+            Language.Add(prefix + "UNIT_PREONE_DESCRIPTION", $"This unit shoots at nearby enemies, dealing <style=cIsDamage>{100f * VileStaticValues.UnitPreonEDamageCoefficient}% damage</style>. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitPreonEBoltCost}</color>.");
+
+            Language.Add(prefix + "UNIT_NIGHTMAREVIRUS_NAME", "Unit: Nightmare Virus");
+            Language.Add(prefix + "UNIT_NIGHTMAREVIRUS_DESCRIPTION", $"This dangerous unit dashes towards enemies, infecting them with its virus and dealing <style=cIsDamage>{100f * VileStaticValues.UnitNightmareVDamageCoefficient}% damage</style>. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitNightmareBoltCostt}</color>.");
+
+            Language.Add(prefix + "UNIT_MAMEQ_NAME", "Unit: MAME-Q");
+            Language.Add(prefix + "UNIT_MAMEQ_DESCRIPTION", $"This supportive unit boosts Vile's stats while active. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitMameQBoltCost}</color>.");
+
+            Language.Add(prefix + "UNIT_SPIKY_NAME", "Unit: Spiky");
+            Language.Add(prefix + "UNIT_SPIKY_DESCRIPTION", $"This unit circles around Vile, damaging enemies on contact for <style=cIsDamage>{100f * VileStaticValues.UnitSpikyDamageCoefficient}% damage</style>. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitSpikyBoltCost}</color>.");
+
+            Language.Add(prefix + "UNIT_TOGERICS_NAME", "Unit: Togerics");
+            Language.Add(prefix + "UNIT_TOGERICS_DESCRIPTION", $"This flower-type unit cannot move, but any enemy within its area will suffer constant damage and be afflicted with bleed. This unit deals <style=cIsDamage>{100f * VileStaticValues.UnitTogericsDamageCoefficient}% damage</style>. \n<color=#A020F0>Vile Bolt</color> Cost: <color=#A9A9A9>{VileStaticValues.UnitTogericsBoltCost}</color>.");
+
+
+            #endregion
+
             #region Primary
             Language.Add(prefix + "PRIMARY_SLASH_NAME", "Sword");
             Language.Add(prefix + "PRIMARY_SLASH_DESCRIPTION", Tokens.agilePrefix + $"Swing forward for <style=cIsDamage>{100f * VileStaticValues.swordDamageCoefficient}% damage</style>.");
