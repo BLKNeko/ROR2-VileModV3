@@ -14,6 +14,7 @@ using EntityStates;
 using R2API;
 using RoR2.Projectile;
 using VileMod.Modules.BaseStates;
+using EmotesAPI;
 
 namespace VileMod.Survivors.Vile
 {
@@ -36,6 +37,11 @@ namespace VileMod.Survivors.Vile
 
         //used when registering your survivor's language tokens
         public override string survivorTokenPrefix => VILE_PREFIX;
+
+        //Emote
+        internal bool setupEmoteSkeleton = false;
+        private float vileTakeDamageValue = 0f;
+        private CharacterMaster vileMaster;
 
 
         //GOLIATH SKILL DEFS
@@ -896,7 +902,7 @@ namespace VileMod.Survivors.Vile
 
                 skillIcon = VileAssets.CYPunchSkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(CYPunch0)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(CYPunchN)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -2106,7 +2112,7 @@ namespace VileMod.Survivors.Vile
             R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             On.RoR2.CharacterModel.Awake += CharacterModel_Awake;
-
+            On.RoR2.SurvivorCatalog.Init += SurvivorCatalog_Init;
         }
 
         private void CharacterModel_Awake(On.RoR2.CharacterModel.orig_Awake orig, CharacterModel self)
@@ -2124,6 +2130,30 @@ namespace VileMod.Survivors.Vile
             }
 
 
+        }
+
+        private void SurvivorCatalog_Init(On.RoR2.SurvivorCatalog.orig_Init orig)
+        {
+            orig();
+            if (!setupEmoteSkeleton)
+            {
+                setupEmoteSkeleton = true;
+                foreach (var item in SurvivorCatalog.allSurvivorDefs)
+                {
+                    if (item.bodyPrefab.name == bodyName)
+                    {
+                        var skele = VileAssets.VileEmotePrefab;
+                        //Debug.Log("Before Emote: " + item.bodyPrefab.transform.position);
+                        CustomEmotesAPI.ImportArmature(item.bodyPrefab, skele, true);
+                        CustomEmotesAPI.CreateNameTokenSpritePair(VILE_PREFIX + "NAME", VileAssets.VileEmoteIcon);
+                        //skele.GetComponentInChildren<BoneMapper>().scale = 1.05f;
+                        //item.bodyPrefab.GetComponentInChildren<BoneMapper>().scale = 0.5f;
+                        //skele.GetComponentInChildren<BoneMapper>().scale = 0.5f;
+                        //Debug.Log("after Emote: " + item.bodyPrefab.transform.position);
+                        //Debug.Log("skele pos: " + skele.transform.position);
+                    }
+                }
+            }
         }
 
         private void OnServerDamageDealt(DamageReport report)

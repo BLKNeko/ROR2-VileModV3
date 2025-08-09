@@ -153,6 +153,10 @@ namespace VileMod.Survivors.Vile
         public static Sprite UnitTogericsSkillIcon;
 
 
+        //Emote
+        public static GameObject VileEmotePrefab;
+        public static Sprite VileEmoteIcon;
+
         private static AssetBundle _assetBundle;
 
         public static void Init(AssetBundle assetBundle)
@@ -238,6 +242,9 @@ namespace VileMod.Survivors.Vile
             
             RideDashSkillIcon = _assetBundle.LoadAsset<Sprite>("RideDashSkillIcon");
 
+
+            VileEmoteIcon = _assetBundle.LoadAsset<Sprite>("VileEmoteIcon");
+
             
 
 
@@ -253,6 +260,8 @@ namespace VileMod.Survivors.Vile
 
             swordSwingEffect = _assetBundle.LoadEffect("HenrySwordSwingEffect", true);
             swordHitImpactEffect = _assetBundle.LoadEffect("ImpactHenrySlash");
+
+            VileEmotePrefab = _assetBundle.LoadAsset<GameObject>("Vile_Humanoid");
 
 
             gFallEffect = _assetBundle.LoadEffect("GFallVFX");
