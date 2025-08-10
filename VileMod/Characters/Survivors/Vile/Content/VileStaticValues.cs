@@ -57,23 +57,23 @@ namespace VileMod.Survivors.Vile
 
         // RIDE ARMOR
 
-        public const float GPunch0DamageCoefficient = 5f;
+        public const float GPunch0DamageCoefficient = 3f;
 
-        public const float GPunch1DamageCoefficient = 5f;
+        public const float GPunch1DamageCoefficient = 3f;
 
-        public const float GPunch2DamageCoefficient = 5f;
+        public const float GPunch2DamageCoefficient = 3f;
 
-        public const float GDashPunchDamageCoefficient = 8f;
+        public const float GDashPunchDamageCoefficient = 5f;
 
-        public const float GShotDamageCoefficient = 4f;
+        public const float GShotDamageCoefficient = 2f;
 
-        public const float HGun1DamageCoefficient = 1f;
+        public const float HGun1DamageCoefficient = 0.85f;
 
-        public const float HGunBarrageDamageCoefficient = 2f;
+        public const float HGunBarrageDamageCoefficient = 1f;
 
-        public const float CyPunchDamageCoefficient = 3.5f;
+        public const float CyPunchDamageCoefficient = 1.7f;
 
-        public const float CyShotDamageCoefficient = 6f;
+        public const float CyShotDamageCoefficient = 5f;
 
         public const float CyPlasmaShockDamageCoefficient = 0.2f;
 

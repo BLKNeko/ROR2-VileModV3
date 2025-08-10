@@ -183,7 +183,7 @@ namespace VileMod.Survivors.Vile
             Language.Add(prefix + "SECONDARY_BUMBPITY_BOOM_NAME", "Bumpity Boom");
             Language.Add(prefix + "SECONDARY_BUMBPITY_BOOM_DESCRIPTION", $"Vile throws one grenade, dealing <style=cIsDamage>{100f * VileStaticValues.VBumpityBoomDamageCoefficient}% damage</style> and stunning nearby enemies.");
 
-            Language.Add(prefix + "SECONDARY_NAPALM_BOMB_NAME", "Napalm Bomb");
+            Language.Add(prefix + "SECONDARY_NAPALM_BOMB_NAME", "Cryo Bomb");
             Language.Add(prefix + "SECONDARY_NAPALM_BOMB_DESCRIPTION", $"Vile throws one frag grenade, dealing <style=cIsDamage>{100f * VileStaticValues.VNapalmBombDamageCoefficient}% damage</style> and freezing nearby enemies.");
 
             Language.Add(prefix + "SECONDARY_FRONT_RUNNER_NAME", "Front Runner");

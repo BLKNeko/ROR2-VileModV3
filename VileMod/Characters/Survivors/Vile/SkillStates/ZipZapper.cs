@@ -14,7 +14,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         public static float baseDuration = 0.4f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
         public static float firePercentTime = 0.0f;
-        public static float force = 400f;
+        public static float force = 200f;
         public static float recoil = 3f;
         public static float range = 50f;
         //public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerBanditPistol");

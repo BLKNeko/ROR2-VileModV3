@@ -10,10 +10,11 @@ using static UnityEngine.ParticleSystem.PlaybackState;
 using TMPro;
 using UnityEngine.EventSystems;
 using VileMod.Survivors.Vile;
+using UnityEngine.Networking;
 
 namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
-    public class UnitMoveController : MonoBehaviour
+    public class UnitMoveController : NetworkBehaviour
     {
         [Header("Movimentação")]
         protected float moveSpeed = 5f;

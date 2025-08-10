@@ -1003,7 +1003,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 100f,
+                baseRechargeInterval = 75f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1036,7 +1036,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 150f,
+                baseRechargeInterval = 80f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1069,7 +1069,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 150f,
+                baseRechargeInterval = 80f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1102,7 +1102,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 100f,
+                baseRechargeInterval = 75f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1135,7 +1135,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 150f,
+                baseRechargeInterval = 80f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1168,7 +1168,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 200f,
+                baseRechargeInterval = 90f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1201,7 +1201,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 200f,
+                baseRechargeInterval = 90f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1234,7 +1234,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 100f,
+                baseRechargeInterval = 75f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1267,7 +1267,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = InterruptPriority.Skill,
 
-                baseRechargeInterval = 100f,
+                baseRechargeInterval = 90f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -1299,7 +1299,7 @@ namespace VileMod.Survivors.Vile
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_CHERRY_BLAST_DESCRIPTION",
                 skillIcon = VileAssets.CherryBlastSkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(CherryBlast)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(CherryBlastStart)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -1329,7 +1329,7 @@ namespace VileMod.Survivors.Vile
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZIPZAPPER_DESCRIPTION",
                 skillIcon = VileAssets.ZipZapperSkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(ZipZapper)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ZipZapperStart)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -1359,7 +1359,7 @@ namespace VileMod.Survivors.Vile
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_TRIPLE7_DESCRIPTION",
                 skillIcon = VileAssets.Triple7SkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(Triple7)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(Triple7Start)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -1389,7 +1389,7 @@ namespace VileMod.Survivors.Vile
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_DISTANCE_NEEDLER_DESCRIPTION",
                 skillIcon = VileAssets.DistanceNeedlerSkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(DistanceNeedler)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(DistanceNeedlerStart)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -2231,7 +2231,7 @@ namespace VileMod.Survivors.Vile
                 args.armorAdd += 150;
                 args.armorAdd += sender.baseArmor * 4f;
                 args.healthMultAdd += 3f;
-                args.damageMultAdd += 3f;
+                args.damageMultAdd += 1f;
                 args.attackSpeedMultAdd -= 0.1f;
                 args.regenMultAdd += 1f;
                 args.jumpPowerMultAdd -= 0.2f;
@@ -2245,7 +2245,7 @@ namespace VileMod.Survivors.Vile
                 args.armorAdd += 80;
                 args.armorAdd += sender.baseArmor * 2f;
                 args.healthMultAdd += 1.5f;
-                args.damageMultAdd += 1.8f;
+                args.damageMultAdd += 0.4f;
                 args.attackSpeedMultAdd += 0.25f;
                 args.regenMultAdd += 1f;
                 args.jumpPowerMultAdd += 0.2f;
@@ -2267,7 +2267,7 @@ namespace VileMod.Survivors.Vile
                 args.armorAdd += 100;
                 args.armorAdd += sender.baseArmor * 3f;
                 args.healthMultAdd += 2f;
-                args.damageMultAdd += 2f;
+                args.damageMultAdd += 0.6f;
                 args.regenMultAdd += 1f;
                 args.jumpPowerMultAdd -= 0.1f;
                 args.moveSpeedMultAdd -= 0.05f;

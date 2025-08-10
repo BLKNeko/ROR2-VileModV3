@@ -53,15 +53,6 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             tracerEffectPrefab = VileAssets.vileBlueTracerPrefab;
 
-            if (NetworkServer.active)
-            {
-                if (!characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
-                {
-                    characterBody.AddBuff(VileBuffs.PrimaryHeatBuff);
-                }
-            }
-
-            PlayCrossfade("LeftArm, Override", "VulcanLoop", playbackRateParam, shootDelay * 0.7f, 0.1f * shootDelay);
 
         }
 

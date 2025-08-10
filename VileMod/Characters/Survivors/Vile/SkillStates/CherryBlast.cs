@@ -51,15 +51,6 @@ namespace VileMod.Survivors.Vile.SkillStates
             spinLevel = VC.GetBaseHeatValue();
             stopwatch = 999f; // for immediate fire
 
-            if (NetworkServer.active)
-            {
-                if (!characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
-                {
-                    characterBody.AddBuff(VileBuffs.PrimaryHeatBuff);
-                }
-            }
-
-            PlayCrossfade("LeftArm, Override", "VulcanLoop", playbackRateParam, shootDelay * 0.7f, 0.1f * shootDelay);
 
         }
 

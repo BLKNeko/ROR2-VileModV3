@@ -6,7 +6,7 @@ using VileMod.Modules;
 
 namespace VileMod.Survivors.Vile.Components
 {
-    internal class VileFury : MonoBehaviour
+    internal class VileFury : NetworkBehaviour
     {
         private Transform modelTransform;
 

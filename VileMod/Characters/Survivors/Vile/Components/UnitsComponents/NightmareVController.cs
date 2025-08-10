@@ -31,6 +31,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             shouldMoveTowardEnemy = true; // Deve se mover em direção ao inimigo
 
             enemyCheckRadius = 50f;
+            enemyReachDistance = 4f; // Distância máxima para atacar o inimigo
             firePoint = projectileController.ghost.gameObject.transform;
 
             groundOffset = 1f; // Quanto acima do chão o projetil deve ficar
@@ -62,7 +63,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                     CSBlastAttack.baseDamage = damageCoefficient * ownerBody.damage;
                     CSBlastAttack.baseForce = 500f;
                     CSBlastAttack.position = transform.position;
-                    CSBlastAttack.radius = 3f;
+                    CSBlastAttack.radius = 5f;
                     CSBlastAttack.bonusForce = new Vector3(1f, 1f, 1f);
                     CSBlastAttack.damageType |= DamageType.Stun1s;
                     CSBlastAttack.damageType |= DamageType.BypassArmor;

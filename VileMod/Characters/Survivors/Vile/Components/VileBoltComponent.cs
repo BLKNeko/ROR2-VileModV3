@@ -24,6 +24,7 @@ namespace VileMod.Survivors.Vile.Components
 
 
         private int boltValue;
+        private uint lastMoney = 0;
 
 
         private void Start()
@@ -43,17 +44,37 @@ namespace VileMod.Survivors.Vile.Components
 
             childLocator = Body.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>().GetComponent<ChildLocator>();
 
-            Hook();
+            //Hook();
 
         }
 
-        private void Hook()
+        private void FixedUpdate()
         {
-            //On.RoR2.CameraRigController.Update += CameraRigController_Update;
-            //On.RoR2.UI.HUD.Update += HUD_Update;
-            On.RoR2.CharacterMaster.GiveMoney += CharacterMaster_GiveMoney;
+            if (Body && Body.hasAuthority && Body.master)
+            {
+                uint currentMoney = Body.master.money;
+                if (currentMoney != lastMoney)
+                {
+                    if (currentMoney > lastMoney)
+                    {
+                        uint gained = currentMoney - lastMoney;
+                        boltValue += (int)gained;
+                        boltValue = Mathf.Clamp(boltValue, 0, 1000);
+                        Debug.Log($"[BOLT] Ganhou {gained} - Total: {boltValue}");
+                    }
 
+                    lastMoney = currentMoney;
+                }
+            }
         }
+
+        //private void Hook()
+        //{
+        //    //On.RoR2.CameraRigController.Update += CameraRigController_Update;
+        //    //On.RoR2.UI.HUD.Update += HUD_Update;
+        //    On.RoR2.CharacterMaster.GiveMoney += CharacterMaster_GiveMoney;
+
+        //}
 
         public int GetBoltValue()
         {
@@ -80,41 +101,41 @@ namespace VileMod.Survivors.Vile.Components
             //Debug.Log("Bolt Value Changed: " + boltValue);
         }
 
-        private void CharacterMaster_GiveMoney(On.RoR2.CharacterMaster.orig_GiveMoney orig, CharacterMaster self, uint amount)
-        {
-            // Chama o original para não quebrar o jogo
-            orig(self, amount);
+        //private void CharacterMaster_GiveMoney(On.RoR2.CharacterMaster.orig_GiveMoney orig, CharacterMaster self, uint amount)
+        //{
+        //    // Chama o original para não quebrar o jogo
+        //    orig(self, amount);
 
-            //Debug.Log("Self: " + self);
-            //Debug.Log("Self Body: " + self.GetBody());
-            //Debug.Log("Body: " + Body);
-            //Debug.Log("Body.hasAuthority: " + Body.hasAuthority);
-            // Verifica se esse master tem um corpo e é o nosso personagem
-            if (self.GetBody() && self.GetBody() == Body && Body.hasAuthority) 
-            {
-                boltValue += (int)amount;
+        //    //Debug.Log("Self: " + self);
+        //    //Debug.Log("Self Body: " + self.GetBody());
+        //    //Debug.Log("Body: " + Body);
+        //    //Debug.Log("Body.hasAuthority: " + Body.hasAuthority);
+        //    // Verifica se esse master tem um corpo e é o nosso personagem
+        //    if (self.GetBody() && self.GetBody() == Body && Body.hasAuthority) 
+        //    {
+        //        boltValue += (int)amount;
 
-                //Debug.Log("amount: " + amount);
-                //Debug.Log("boltValue: " + boltValue);
+        //        //Debug.Log("amount: " + amount);
+        //        //Debug.Log("boltValue: " + boltValue);
 
-                boltValue = Mathf.Clamp(boltValue, 0, 1000); // Limita o valor entre 0 e 9999
+        //        boltValue = Mathf.Clamp(boltValue, 0, 1000); // Limita o valor entre 0 e 9999
 
-            }
-        }
+        //    }
+        //}
 
-        public void Unhook()
-        {
-            //On.RoR2.CameraRigController.Update -= CameraRigController_Update;
-            //On.RoR2.UI.HUD.Update -= HUD_Update;
-            On.RoR2.CharacterMaster.GiveMoney -= CharacterMaster_GiveMoney;
+        //public void Unhook()
+        //{
+        //    //On.RoR2.CameraRigController.Update -= CameraRigController_Update;
+        //    //On.RoR2.UI.HUD.Update -= HUD_Update;
+        //    On.RoR2.CharacterMaster.GiveMoney -= CharacterMaster_GiveMoney;
 
-        }
+        //}
 
-        public void OnDestroy()
-        {
+        //public void OnDestroy()
+        //{
 
-            Unhook();
-        }
+        //    Unhook();
+        //}
 
     }
 }

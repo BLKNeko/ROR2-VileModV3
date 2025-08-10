@@ -14,7 +14,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         public static float baseDuration = 0.4f;
         //delay on firing is usually ass-feeling. only set this if you know what you're doing
         public static float firePercentTime = 0.0f;
-        public static float force = 800f;
+        public static float force = 100f;
         public static float recoil = 5f;
         public static float range = 80f;
         //public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerBanditPistol");
@@ -53,16 +53,6 @@ namespace VileMod.Survivors.Vile.SkillStates
             stopwatch = 999f; // for immediate fire
 
             tracerEffectPrefab = VileAssets.vileCyanTracerPrefab;
-
-            if (NetworkServer.active)
-            {
-                if (!characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
-                {
-                    characterBody.AddBuff(VileBuffs.PrimaryHeatBuff);
-                }
-            }
-
-            PlayCrossfade("LeftArm, Override", "VulcanLoop", playbackRateParam, shootDelay * 0.7f, 0.1f * shootDelay);
 
         }
 

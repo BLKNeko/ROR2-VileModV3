@@ -11,10 +11,11 @@ using TMPro;
 using UnityEngine.EventSystems;
 using VileMod.Survivors.Vile;
 using VileMod.Survivors.Vile.Components;
+using UnityEngine.Networking;
 
 namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
-    public class UnitMoveControllerMC : MonoBehaviour
+    public class UnitMoveControllerMC : NetworkBehaviour
     {
         [Header("Movimentação")]
         public float moveSpeed = 5f;

@@ -45,6 +45,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
 
         private float missleAmount;
         private VileComponent VC;
+        private float elementBonus;
 
         private Animator customAnimator;
         private string playbackRateParam = "ShootGun.playbackRate";
@@ -63,6 +64,8 @@ namespace MegamanXMod.Survivors.X.SkillStates
             this.modelTransform = base.GetModelTransform();
             this.animator = base.GetModelAnimator();
             VC = GetComponent<VileComponent>();
+
+            elementBonus = 0.005f + characterBody.level / 1000f;
 
             if (this.modelTransform)
             {
@@ -183,6 +186,9 @@ namespace MegamanXMod.Survivors.X.SkillStates
                 FireWave2BulletAttack.hitEffectPrefab = hitEffectPrefab;
 
                 FireWave2BulletAttack.Fire();
+
+                VC.SetElementValues(elementBonus, 0f, 0f, false, true, true);
+                VC.SetExtraHeatValues(-0.005f);
 
                 if (index % 2 == 0 || index == 0)
                 {

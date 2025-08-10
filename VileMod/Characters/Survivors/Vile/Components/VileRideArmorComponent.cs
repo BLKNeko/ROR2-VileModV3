@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace VileMod.Survivors.Vile.Components
 {
-    internal class VileRideArmorComponent : MonoBehaviour
+    internal class VileRideArmorComponent : NetworkBehaviour
     {
         private Transform modelTransform;
 
