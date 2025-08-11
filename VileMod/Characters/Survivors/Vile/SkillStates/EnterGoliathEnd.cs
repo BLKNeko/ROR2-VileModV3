@@ -42,6 +42,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             playbackRateParam = "Slash.playbackRate";
 
+            VC.EnterGoliath();
+
             //EffectManager.SimpleMuzzleFlash(VileAssets.gFallEffect, gameObject, "BasePos", true);
 
             //Vector3 spawnPosition = characterBody.corePosition + Vector3.up * 20f;
@@ -109,7 +111,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             //    rideArmorInstance = null;
             //}
 
-            VC.EnterGoliath();
+            //VC.EnterGoliath();
             //childLocator.FindChildGameObject("VEH").SetActive(true);
 
             rideFinished = true;

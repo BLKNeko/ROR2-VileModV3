@@ -1975,7 +1975,7 @@ namespace VileMod.Survivors.Vile
                 new SkinDef.GameObjectActivation
                 {
                     gameObject = childLocator.FindChildGameObject("VEH"),
-                    shouldActivate = true,
+                    shouldActivate = false,
                 },
                 new SkinDef.GameObjectActivation
                 {

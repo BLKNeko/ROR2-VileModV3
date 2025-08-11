@@ -42,6 +42,8 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             playbackRateParam = "Slash.playbackRate";
 
+            VC.EnterHawk();
+
             //EffectManager.SimpleMuzzleFlash(VileAssets.gFallEffect, gameObject, "BasePos", true);
 
             //Vector3 spawnPosition = characterBody.corePosition + Vector3.up * 20f;
@@ -112,7 +114,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             //    rideArmorInstance = null;
             //}
 
-            VC.EnterHawk();
+            //VC.EnterHawk();
 
             rideFinished = true;
 

@@ -38,6 +38,9 @@ namespace VileMod.Survivors.Vile
         //Material
         public static Material nightmareVMaterial;
 
+        //MESH
+        public static Mesh VH_Mesh_M;
+
         //projectiles
         public static GameObject bombProjectilePrefab;
         public static GameObject vileShotgunIcePrefab;
@@ -171,6 +174,8 @@ namespace VileMod.Survivors.Vile
             CreateProjectiles();
 
             CreateIcons();
+
+            VH_Mesh_M = _assetBundle.LoadAsset<Mesh>("VH_Mesh_M");
 
         }
 
