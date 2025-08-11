@@ -28,6 +28,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private CharacterModel model;
         private ChildLocator childLocator;
+
+        private ModelSkinController modelSkinController;
         private CameraTargetParams cameraTargetParams;
 
         private ExtraSkillLocator extraskillLocator;
@@ -72,6 +74,8 @@ namespace VileMod.Survivors.Vile.Components
             model = Body.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
 
             childLocator = Body.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>().GetComponent<ChildLocator>();
+
+            modelSkinController = model.GetComponent<ModelSkinController>();
 
             Anim = Body.characterDirection.modelAnimator;
 
@@ -191,8 +195,8 @@ namespace VileMod.Survivors.Vile.Components
                 }
             }
 
-            Debug.Log($"Footstep Changer: {ridearmorfootstep}, {VileConfig.enableFootstep.Value}");
-            Debug.Log($"Footstep Changer: {footstepHandler.baseFootstepString}, {footstepHandler.sprintFootstepOverrideString}");
+            //Debug.Log($"Footstep Changer: {ridearmorfootstep}, {VileConfig.enableFootstep.Value}");
+            //Debug.Log($"Footstep Changer: {footstepHandler.baseFootstepString}, {footstepHandler.sprintFootstepOverrideString}");
 
 
         }
@@ -282,7 +286,7 @@ namespace VileMod.Survivors.Vile.Components
 
         private void SetOverHeat()
         {
-            if (!Body.hasAuthority) return;
+            if (!Body.hasAuthority && !NetworkServer.active) return;
 
             if (baseOverHeatValue >= 0.99f && !Body.HasBuff(VileBuffs.OverHeatDebuff)) 
             {
@@ -315,11 +319,14 @@ namespace VileMod.Survivors.Vile.Components
             flameElementValue = Mathf.Clamp01(flameElementValue);
             shockElementValue = Mathf.Clamp01(shockElementValue);
 
-            Debug.Log("Set Element Values: " + iceElementValue + ", " + shockElementValue + ", " + flameElementValue);
+            //Debug.Log("Set Element Values: " + iceElementValue + ", " + shockElementValue + ", " + flameElementValue);
         }
 
         private void UpdateBuff(BuffDef buff, float value)
         {
+
+            if (!Body.hasAuthority && !NetworkServer.active) return;
+
             bool hasBuff = Body.HasBuff(buff);
 
             if (value > 0f && !hasBuff)
@@ -356,9 +363,41 @@ namespace VileMod.Survivors.Vile.Components
         public void EnterGoliath()
         {
 
-            DeactivateChilds();
+            //DeactivateChilds();
 
-            childLocator.FindChildGameObject("VEH").SetActive(true);
+            //childLocator.FindChildGameObject("VEH").SetActive(true);
+
+            //if (Body.skinIndex == 0)
+            //{
+            //    childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(true);
+            //}
+            //else
+            //{
+            //    childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(true);
+            //}
+
+            
+
+            var currentSkin = modelSkinController.skins[modelSkinController.currentSkinIndex];
+
+            Debug.Log($"ModelSkinController: {modelSkinController}");
+            Debug.Log($"currentSkin: {currentSkin}");
+            Debug.Log($"currentSkin.gameObjectActivations[0]: {currentSkin.gameObjectActivations[0]}");
+            Debug.Log($"currentSkin.gameObjectActivations[0].gameObject.name: {currentSkin.gameObjectActivations[0].gameObject.name}");
+
+
+            //currentSkin.gameObjectActivations[0].shouldActivate = true; // Activate VEH
+
+            //if (Body.skinIndex == 0)
+            //{
+            //    childLocator.FindChildGameObject("VH_VLC_Mesh").SetActive(true);
+            //}
+            //else
+            //{
+            //    childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(true);
+            //}
+
+            modelSkinController.ApplySkin(2);
 
             if (Body.skinIndex == 0)
             {
@@ -368,6 +407,7 @@ namespace VileMod.Survivors.Vile.Components
             {
                 childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(true);
             }
+
 
 
             //cameraTargetParams.fovOverride = 60f;

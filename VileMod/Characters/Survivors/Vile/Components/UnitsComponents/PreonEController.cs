@@ -68,6 +68,12 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                 hitCallback = HitCallback,
             };
 
+            //Debug.Log($"bulletAttack: {attack}");
+            //Debug.Log($"bulletAttack.owner: {attack.owner}");
+            //Debug.Log($"bulletAttack.owner.GetComponent<TeamComponent>(): {attack.owner.GetComponent<TeamComponent>()}");
+            //Debug.Log($"bulletAttack.owner.GetComponent<TeamComponent>().teamIndex: {attack.owner.GetComponent<TeamComponent>().teamIndex}");
+            //Debug.Log($"bulletAttack.filterCallback: {attack.filterCallback}");
+
             attack.Fire();
 
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Simple_Bullet, this.gameObject);

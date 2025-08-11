@@ -77,6 +77,19 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             moveSpeed += ownerBody.moveSpeed * 1.5f;
             FireTimer = FireCooldown;
 
+            // Garante que o projétil tenha TeamComponent
+            TeamComponent teamComp = gameObject.GetComponent<TeamComponent>();
+            if (teamComp == null)
+                teamComp = gameObject.AddComponent<TeamComponent>();
+
+            // Copia o time do dono do disparo
+            if (ownerBody && ownerBody.teamComponent)
+                teamComp = ownerBody.teamComponent;
+
+            // Copia o time do dono do disparo
+            if (ownerBody && ownerBody.teamComponent)
+                teamComp.teamIndex = ownerBody.teamComponent.teamIndex;
+
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, gameObject);
 
             EffectManager.SpawnEffect(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/TeleportOutBoom"), new EffectData
@@ -110,7 +123,10 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
             // Verifica se há inimigos próximos
             //bool hasNearbyEnemies = CheckForEnemiesNearby();
+            //Debug.Log($"UnitMoveC");
             enemyHurtbox = FindTarget();
+
+            //Debug.Log($"enemyHurtbox: {enemyHurtbox}");
 
             // Atira se houver inimigos
             if (enemyHurtbox)
@@ -130,7 +146,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
                     if (FireTimer <= 0f)
                     {
-
+                        //Debug.Log($"Unit Fire: {direction}");
                         LookTowardsEnemy();
                         animator.Play("Shoot", 0, 0f);
                         FireAttack();
@@ -152,7 +168,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
                         if (FireTimer <= 0f)
                         {
-
+                            //Debug.Log($"Unit Fire: {direction}");
                             LookTowardsEnemy();
                             animator.Play("Shoot", 0, 0f);
                             FireAttack();

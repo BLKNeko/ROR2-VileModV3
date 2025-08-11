@@ -19,6 +19,8 @@ namespace VileMod.Survivors.Vile.SkillStates
         private VileRideArmorComponent VRAC;
         private ExtraSkillLocator extraSkillLocator;
 
+        private ChildLocator childLocator;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -32,6 +34,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             VBC = GetComponent<VileBoltComponent>();
             VRAC = GetComponent<VileRideArmorComponent>();
             extraSkillLocator = GetComponent<ExtraSkillLocator>();
+            childLocator = GetModelTransform().GetComponent<ChildLocator>();
 
             if (VBC.GetBoltValue() < boltCost && !characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff)) 
             {
@@ -62,6 +65,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             VBC.ChangeBoltValue(-boltCost); //Remove 1000 bolts
             //VC.EnterGoliath();
+            
 
         }
 

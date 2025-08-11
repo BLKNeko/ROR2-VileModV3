@@ -132,7 +132,7 @@ namespace VileMod.Survivors.Vile.Components
 
                 r_RegenTimer = 0f;
 
-                Debug.Log($"VileRideArmorComponent - Ride Armor Regenerated: {r_RegemValue}, New Health: {r_Health}");
+                //Debug.Log($"VileRideArmorComponent - Ride Armor Regenerated: {r_RegemValue}, New Health: {r_Health}");
             }
         }
 
@@ -143,7 +143,7 @@ namespace VileMod.Survivors.Vile.Components
                 r_Shield -= Time.fixedDeltaTime; // Deplete shield over time
                 r_Shield = Mathf.Clamp(r_Shield, 0f, r_MaxShield);
 
-                Debug.Log($"VileRideArmorComponent - Ride Armor Shield Depleted: New Shield: {r_Shield}");
+                //Debug.Log($"VileRideArmorComponent - Ride Armor Shield Depleted: New Shield: {r_Shield}");
             }
         }
 
@@ -165,7 +165,7 @@ namespace VileMod.Survivors.Vile.Components
 
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_SFX_Recov_HP, this.gameObject);
 
-            Debug.Log($"VileRideArmorComponent - Initialized Ride Armor with Max Health: {r_MaxHealth}");
+            //Debug.Log($"VileRideArmorComponent - Initialized Ride Armor with Max Health: {r_MaxHealth}");
 
         }
 
@@ -260,7 +260,7 @@ namespace VileMod.Survivors.Vile.Components
             if (!h_FlyingActivated && Body.inputBank.jump.justPressed)
             {
                 h_FlyingActivated = true;
-                Debug.Log("Hawk Flight Activated!");
+                //Debug.Log("Hawk Flight Activated!");
             }
 
             if (h_FlyingActivated && Body.inputBank.jump.down)
@@ -373,14 +373,14 @@ namespace VileMod.Survivors.Vile.Components
                     {
                         r_Shield -= finalDamage;
 
-                        Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {finalDamage}, New Shield: {r_Shield}");
+                        //Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {finalDamage}, New Shield: {r_Shield}");
                     }
                     else
                     {
                         r_Health -= finalDamage;
 
 
-                        Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {finalDamage}, New Health: {r_Health}");
+                        //Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {finalDamage}, New Health: {r_Health}");
                     }
 
                     

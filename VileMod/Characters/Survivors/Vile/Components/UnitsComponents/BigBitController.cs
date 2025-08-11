@@ -43,7 +43,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
         public override void FireAttack()
         {
-
+            //Debug.Log($"Unit BigBitFire");
             new BulletAttack
             {
                 bulletCount = 1,
@@ -82,6 +82,13 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
         private bool HitCallback(BulletAttack bulletAttack, ref BulletHit hit)
         {
             //Debug.Log("HitCallback--");
+
+            //Debug.Log($"bulletAttack: {bulletAttack}");
+            //Debug.Log($"bulletAttack.owner: {bulletAttack.owner}");
+            //Debug.Log($"bulletAttack.owner.GetComponent<TeamComponent>(): {bulletAttack.owner.GetComponent<TeamComponent>()}");
+            //Debug.Log($"bulletAttack.owner.GetComponent<TeamComponent>().teamIndex: {bulletAttack.owner.GetComponent<TeamComponent>().teamIndex}");
+            //Debug.Log($"hit.hitHurtBox: {hit.hitHurtBox}");
+            //Debug.Log($"bulletAttack.filterCallback: {bulletAttack.filterCallback}");
 
             if (hit.hitHurtBox != null && hit.hitHurtBox.healthComponent != null)
             {
