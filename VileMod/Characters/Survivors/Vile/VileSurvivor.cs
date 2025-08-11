@@ -2049,67 +2049,6 @@ namespace VileMod.Survivors.Vile
 
             #endregion
 
-            #region VEHSkin
-
-            //creating a new skindef as we did before
-            SkinDef VEHSkin = Modules.Skins.CreateSkinDef(VILE_PREFIX + "VEH_SKIN_NAME",
-                VileAssets.VileMK2SkinIcon,
-                defaultRendererinfos,
-                prefabCharacterModel.gameObject);
-
-            //adding the mesh replacements as above. 
-            //if you don't want to replace the mesh (for example, you only want to replace the material), pass in null so the order is preserved
-            VEHSkin.meshReplacements = Modules.Skins.getMeshReplacements(assetBundle, defaultRendererinfos,
-                "VileBodyMesh",
-                null,//no gun mesh replacement. use same gun mesh
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null);
-
-            //masterySkin has a new set of RendererInfos (based on default rendererinfos)
-            //you can simply access the RendererInfos' materials and set them to the new materials for your skin.
-            VEHSkin.rendererInfos[0].defaultMaterial = assetBundle.LoadMaterial("matVile");
-
-            //here's a barebones example of using gameobjectactivations that could probably be streamlined or rewritten entirely, truthfully, but it works
-            VEHSkin.gameObjectActivations = new SkinDef.GameObjectActivation[]
-            {
-                new SkinDef.GameObjectActivation
-                {
-                    gameObject = childLocator.FindChildGameObject("VBodyMesh"),
-                    shouldActivate = false,
-                },
-                new SkinDef.GameObjectActivation
-                {
-                    gameObject = childLocator.FindChildGameObject("VEH"),
-                    shouldActivate = true,
-                },
-                new SkinDef.GameObjectActivation
-                {
-                    gameObject = childLocator.FindChildGameObject("HAWK"),
-                    shouldActivate = false,
-                },
-                new SkinDef.GameObjectActivation
-                {
-                    gameObject = childLocator.FindChildGameObject("CY"),
-                    shouldActivate = false,
-                }
-            };
-            //simply find an object on your child locator you want to activate/deactivate and set if you want to activate/deacitvate it with this skin
-
-            skins.Add(VEHSkin);
-
-            #endregion
-
             //uncomment this when you have a mastery skin
             #region MasterySkin
 

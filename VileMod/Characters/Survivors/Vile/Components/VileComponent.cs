@@ -113,6 +113,9 @@ namespace VileMod.Survivors.Vile.Components
 
         private void FixedUpdate()
         {
+
+
+
             if(!Body.hasAuthority) return;
 
             IsWeak();
@@ -287,7 +290,7 @@ namespace VileMod.Survivors.Vile.Components
 
         private void SetOverHeat()
         {
-            if (!Body.hasAuthority && !NetworkServer.active) return;
+            if (!NetworkServer.active) return;
 
             if (baseOverHeatValue >= 0.99f && !Body.HasBuff(VileBuffs.OverHeatDebuff)) 
             {
@@ -326,13 +329,13 @@ namespace VileMod.Survivors.Vile.Components
         private void UpdateBuff(BuffDef buff, float value)
         {
 
-            if (!Body.hasAuthority && !NetworkServer.active) return;
+            if (!NetworkServer.active) return;
 
             bool hasBuff = Body.HasBuff(buff);
 
             if (value > 0f && !hasBuff)
                 Body.AddBuff(buff);
-            else if (value <= 0f && hasBuff)
+            else if (value <= 0f && hasBuff && Body.hasAuthority)
                 Body.RemoveBuff(buff);
         }
 

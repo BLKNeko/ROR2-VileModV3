@@ -155,7 +155,7 @@ namespace VileMod.Survivors.Vile.Components
 
             r_Health = r_MaxHealth;
 
-            if (NetworkServer.active)
+            if (Body.hasAuthority && NetworkServer.active)
             {
                 Body.AddBuff(VileBuffs.RideArmorEnabledBuff);
             }

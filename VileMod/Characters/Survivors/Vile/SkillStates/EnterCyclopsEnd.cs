@@ -44,9 +44,9 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             //EffectManager.SimpleMuzzleFlash(VileAssets.gFallEffect, gameObject, "BasePos", true);
 
-            //Vector3 spawnPosition = characterBody.corePosition + Vector3.up * 20f;
-            //Quaternion rotation = Quaternion.identity;
-            //rideArmorInstance = UnityEngine.Object.Instantiate(VileAssets.cFallEffect, spawnPosition, rotation);
+            Vector3 spawnPosition = characterBody.corePosition + Vector3.up * 20f;
+            Quaternion rotation = Quaternion.identity;
+            rideArmorInstance = UnityEngine.Object.Instantiate(VileAssets.cFallEffect, spawnPosition, rotation);
 
 
             //PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
@@ -59,7 +59,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_In_SFX, this.gameObject);
             PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
-            if (NetworkServer.active)
+            if (isAuthority && NetworkServer.active)
             {
                 characterBody.AddBuff(VileBuffs.CyclopsBuff);
             }
@@ -75,12 +75,12 @@ namespace VileMod.Survivors.Vile.SkillStates
         {
             base.FixedUpdate();
 
-            //rideArmorInstance.transform.position = Vector3.MoveTowards(rideArmorInstance.transform.position, characterBody.transform.position, 60f * Time.fixedDeltaTime);
+            rideArmorInstance.transform.position = Vector3.MoveTowards(rideArmorInstance.transform.position, characterBody.transform.position, 60f * Time.fixedDeltaTime);
 
-            //if (!rideFinished && Vector3.Distance(rideArmorInstance.transform.position, characterBody.corePosition) < 0.1f)
-            //{
-            //    RideFinished();
-            //}
+            if (!rideFinished && Vector3.Distance(rideArmorInstance.transform.position, characterBody.corePosition) < 0.1f)
+            {
+                RideFinished();
+            }
 
             if (!rideFinished)
             {
@@ -91,7 +91,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         private void RideFinished()
         {
-            if (!isAuthority || rideFinished) return;
+            if (rideFinished) return;
 
             // Impacto
             //Util.PlaySound("Play_missile_impact", gameObject);
@@ -103,11 +103,11 @@ namespace VileMod.Survivors.Vile.SkillStates
                 scale = 4f
             }, true);
 
-            //if (rideArmorInstance)
-            //{
-            //    GameObject.Destroy(rideArmorInstance);
-            //    rideArmorInstance = null;
-            //}
+            if (rideArmorInstance)
+            {
+                GameObject.Destroy(rideArmorInstance);
+                rideArmorInstance = null;
+            }
 
             VC.EnterCyclops();
 
