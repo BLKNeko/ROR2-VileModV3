@@ -109,8 +109,8 @@ namespace VileMod.Survivors.Vile.SkillStates
             //    rideArmorInstance = null;
             //}
 
-            //VC.EnterGoliath();
-            childLocator.FindChildGameObject("VEH").SetActive(true);
+            VC.EnterGoliath();
+            //childLocator.FindChildGameObject("VEH").SetActive(true);
 
             rideFinished = true;
 

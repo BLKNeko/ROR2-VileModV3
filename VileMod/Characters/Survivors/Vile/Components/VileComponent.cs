@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using static Wamp;
 using ExtraSkillSlots;
 using System;
+using System.Security.Cryptography;
 
 namespace VileMod.Survivors.Vile.Components
 {
@@ -57,6 +58,10 @@ namespace VileMod.Survivors.Vile.Components
         private Ray aimRay;
 
         private Quaternion initialLocalRotation;
+
+        // Estado sincronizado apenas para este player
+        [SyncVar(hook = nameof(OnRideArmorGoliathStateChanged))]
+        private bool isRideArmorGoliathActive = false;
 
         private void Start()
         {
@@ -360,9 +365,33 @@ namespace VileMod.Survivors.Vile.Components
             return flameElementValue;
         }
 
+        // Comando executado no SERVIDOR (chamado pelo dono)
+        [Command]
+        private void CmdSetRideArmorGoliath(bool active)
+        {
+            bool old = isRideArmorGoliathActive;
+            isRideArmorGoliathActive = active; // Isso dispara o hook para todos
+            Debug.Log($"isRideArmorGoliathActive: {isRideArmorGoliathActive}");
+
+            // garantir atualização imediata no server/host:
+            if (isServer)
+            {
+                OnRideArmorGoliathStateChanged(old, active); // safe: só afeta local server visuals
+            }
+        }
+
+        // Hook chamado quando o SyncVar muda (em todos os clients)
+        private void OnRideArmorGoliathStateChanged(bool oldValue, bool newValue)
+        {
+            Debug.Log($"OnRideArmorGoliathStateChanged: {oldValue} -> {newValue}");
+            if (childLocator.FindChildGameObject("VEH") != null)
+            {
+                childLocator.FindChildGameObject("VEH").SetActive(newValue);
+            }
+        }
+
         public void EnterGoliath()
         {
-
             //DeactivateChilds();
 
             //childLocator.FindChildGameObject("VEH").SetActive(true);
@@ -376,14 +405,14 @@ namespace VileMod.Survivors.Vile.Components
             //    childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(true);
             //}
 
-            
 
-            var currentSkin = modelSkinController.skins[modelSkinController.currentSkinIndex];
 
-            Debug.Log($"ModelSkinController: {modelSkinController}");
-            Debug.Log($"currentSkin: {currentSkin}");
-            Debug.Log($"currentSkin.gameObjectActivations[0]: {currentSkin.gameObjectActivations[0]}");
-            Debug.Log($"currentSkin.gameObjectActivations[0].gameObject.name: {currentSkin.gameObjectActivations[0].gameObject.name}");
+            //var currentSkin = modelSkinController.skins[modelSkinController.currentSkinIndex];
+
+            //Debug.Log($"ModelSkinController: {modelSkinController}");
+            //Debug.Log($"currentSkin: {currentSkin}");
+            //Debug.Log($"currentSkin.gameObjectActivations[0]: {currentSkin.gameObjectActivations[0]}");
+            //Debug.Log($"currentSkin.gameObjectActivations[0].gameObject.name: {currentSkin.gameObjectActivations[0].gameObject.name}");
 
 
             //currentSkin.gameObjectActivations[0].shouldActivate = true; // Activate VEH
@@ -397,7 +426,17 @@ namespace VileMod.Survivors.Vile.Components
             //    childLocator.FindChildGameObject("VH_VLMKC_Mesh").SetActive(true);
             //}
 
-            modelSkinController.ApplySkin(2);
+            //modelSkinController.ApplySkin(2);
+
+
+            model.baseRendererInfos[1].renderer.enabled = true; // Enable VEH mesh
+            model.baseRendererInfos[2].renderer.enabled = true; // Enable VEH mesh
+            model.baseRendererInfos[3].renderer.enabled = true; // Enable VEH mesh
+
+            //Debug.Log("CMDSet---");
+
+            //CmdSetRideArmorGoliath(true);
+
 
             if (Body.skinIndex == 0)
             {
@@ -439,6 +478,10 @@ namespace VileMod.Survivors.Vile.Components
             DeactivateChilds();
 
             childLocator.FindChildGameObject("VBodyMesh").SetActive(true);
+
+            model.baseRendererInfos[1].renderer.enabled = false; // Enable VEH mesh
+            model.baseRendererInfos[2].renderer.enabled = false; // Enable VEH mesh
+            model.baseRendererInfos[3].renderer.enabled = false; // Enable VEH mesh
 
             cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Standard);
 
