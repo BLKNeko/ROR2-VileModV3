@@ -63,6 +63,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             if (NetworkServer.active)
             {
                 characterBody.AddBuff(VileBuffs.HawkBuff);
+                characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
             }
 
             rideFinished = false;
@@ -112,7 +113,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                 rideArmorInstance = null;
             }
 
-            VC.EnterHawk();
+            VC.EnterHawk(true);
 
             rideFinished = true;
 

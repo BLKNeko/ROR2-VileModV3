@@ -108,11 +108,6 @@ namespace MegamanXMod.Survivors.X.SkillStates
             base.OnExit();
         }
 
-        protected virtual GenericDamageOrb CreateArrowOrb()
-        {
-            return new HomingTorpedoOrb();
-        }
-
 
 
         public override void FixedUpdate()

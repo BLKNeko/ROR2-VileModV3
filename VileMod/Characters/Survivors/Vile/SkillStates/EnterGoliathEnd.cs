@@ -62,6 +62,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             if (NetworkServer.active)
             {
                 characterBody.AddBuff(VileBuffs.GoliathBuff);
+                characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
             }
 
             rideFinished = false;
@@ -109,7 +110,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                 rideArmorInstance = null;
             }
 
-            VC.EnterGoliath();
+            VC.EnterGoliath(true);
             childLocator.FindChildGameObject("VEH").SetActive(true);
 
             rideFinished = true;

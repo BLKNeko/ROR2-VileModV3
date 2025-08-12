@@ -46,7 +46,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_TP_In, this.gameObject);
 
-            VC.EnterHawk();
+            VC.EnterHawk(false);
 
             PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 

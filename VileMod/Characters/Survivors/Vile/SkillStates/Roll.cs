@@ -62,7 +62,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                 characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
             }
 
-            VC.EnterGoliath();
+            //VC.EnterGoliath();
 
         }
 

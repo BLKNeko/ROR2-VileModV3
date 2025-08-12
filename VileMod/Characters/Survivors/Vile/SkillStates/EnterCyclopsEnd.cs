@@ -62,6 +62,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             if (NetworkServer.active)
             {
                 characterBody.AddBuff(VileBuffs.CyclopsBuff);
+                characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
             }
 
             rideFinished = false;
@@ -109,7 +110,7 @@ namespace VileMod.Survivors.Vile.SkillStates
                 rideArmorInstance = null;
             }
 
-            VC.EnterCyclops();
+            VC.EnterCyclops(true);
 
             rideFinished = true;
 

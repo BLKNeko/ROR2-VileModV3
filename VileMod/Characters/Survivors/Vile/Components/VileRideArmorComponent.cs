@@ -114,8 +114,8 @@ namespace VileMod.Survivors.Vile.Components
         {
             if(r_Health <= 0f && r_InitializeSuperRegemTimer >= 1.9f)
             {
-                
-                entityState.SetNextState(new SkillStates.DestroyRideArmor());
+                if(Body.hasEffectiveAuthority)
+                    entityState.SetNextState(new SkillStates.DestroyRideArmor());
 
             }
         }
@@ -149,7 +149,7 @@ namespace VileMod.Survivors.Vile.Components
 
         public void InitializeRideArmor()
         {
-            if (!Body.hasAuthority) return;
+            //if (!Body.hasAuthority) return;
 
             UpdateMaxHealth();
 

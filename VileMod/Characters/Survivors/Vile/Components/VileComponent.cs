@@ -334,9 +334,10 @@ namespace VileMod.Survivors.Vile.Components
             bool hasBuff = Body.HasBuff(buff);
 
             if (value > 0f && !hasBuff)
-                Body.AddBuff(buff);
-            else if (value <= 0f && hasBuff && Body.hasEffectiveAuthority)
-                Body.RemoveBuff(buff);
+                Body.AddTimedBuff(buff, 10f);
+            else if (value <= 0f && hasBuff)
+                Body.RemoveOldestTimedBuff(buff);
+
         }
 
         public float GetBaseHeatValue()
@@ -366,7 +367,7 @@ namespace VileMod.Survivors.Vile.Components
 
 
 
-        public void EnterGoliath()
+        public void EnterGoliath(bool initilize)
         {
             DeactivateChilds();
 
@@ -403,7 +404,7 @@ namespace VileMod.Survivors.Vile.Components
             Body.skillLocator.special.Reset();
             extraskillLocator.extraFourth.Reset();
 
-            if(!Body.HasBuff(VileBuffs.RideArmorEnabledBuff))
+            if(initilize)
                 rideArmorComponent.InitializeRideArmor();
 
         }
@@ -436,7 +437,7 @@ namespace VileMod.Survivors.Vile.Components
 
         // HAWK
 
-        public void EnterHawk()
+        public void EnterHawk(bool initilize)
         {
 
             DeactivateChilds();
@@ -474,7 +475,7 @@ namespace VileMod.Survivors.Vile.Components
             Body.skillLocator.special.Reset();
             extraskillLocator.extraFourth.Reset();
 
-            if (!Body.HasBuff(VileBuffs.RideArmorEnabledBuff))
+            if (initilize)
                 rideArmorComponent.InitializeRideArmor();
 
         }
@@ -509,7 +510,7 @@ namespace VileMod.Survivors.Vile.Components
 
         //CYCLOPS
 
-        public void EnterCyclops()
+        public void EnterCyclops(bool initilize)
         {
 
             DeactivateChilds();
@@ -547,10 +548,10 @@ namespace VileMod.Survivors.Vile.Components
             Body.skillLocator.special.Reset();
             extraskillLocator.extraFourth.Reset();
 
-            if (!Body.HasBuff(VileBuffs.RideArmorEnabledBuff))
+            if (initilize)
                 rideArmorComponent.InitializeRideArmor();
 
-            Debug.LogError("Cyclops Exit WITHOUT SKILL");
+            //Debug.LogError("Cyclops Exit WITHOUT SKILL");
 
         }
 
