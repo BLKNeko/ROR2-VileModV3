@@ -90,31 +90,36 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
         private void FireMissile(int index)
         {
 
-            Transform effectT = (index % 2 == 0) ? this.firePoint : this.firePoint2;
-
-            EffectManager.SpawnEffect(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, new EffectData
+            if (NetworkServer.active)
             {
-                origin = effectT.position,
-                rotation = Quaternion.LookRotation(shootDir),
-                scale = 1f
-            }, true);
+                Transform effectT = (index % 2 == 0) ? this.firePoint : this.firePoint2;
 
-            FireProjectileInfo VShotgunIceProjectille = new FireProjectileInfo();
-            VShotgunIceProjectille.projectilePrefab = VileAssets.GVMissileProjectile;
-            VShotgunIceProjectille.position = effectT.position;
-            VShotgunIceProjectille.rotation = Util.QuaternionSafeLookRotation(Vector3.up);
-            VShotgunIceProjectille.owner = ownerBody.gameObject;
-            VShotgunIceProjectille.damage = damageCoefficient * ownerBody.damage;
-            VShotgunIceProjectille.force = 800f;
-            VShotgunIceProjectille.crit = ownerBody.RollCrit();
-            //XBusterMediumProjectille.speedOverride = XBusterMediumProjectille.speedOverride * 0.8f;
-            VShotgunIceProjectille.damageColorIndex = DamageColorIndex.Default;
+                EffectManager.SpawnEffect(EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab, new EffectData
+                {
+                    origin = effectT.position,
+                    rotation = Quaternion.LookRotation(shootDir),
+                    scale = 1f
+                }, true);
 
-            ProjectileManager.instance.FireProjectile(VShotgunIceProjectille);
+                FireProjectileInfo VShotgunIceProjectille = new FireProjectileInfo();
+                VShotgunIceProjectille.projectilePrefab = VileAssets.GVMissileProjectile;
+                VShotgunIceProjectille.position = effectT.position;
+                VShotgunIceProjectille.rotation = Util.QuaternionSafeLookRotation(Vector3.up);
+                VShotgunIceProjectille.owner = ownerBody.gameObject;
+                VShotgunIceProjectille.damage = damageCoefficient * ownerBody.damage;
+                VShotgunIceProjectille.force = 500f;
+                VShotgunIceProjectille.crit = ownerBody.RollCrit();
+                //XBusterMediumProjectille.speedOverride = XBusterMediumProjectille.speedOverride * 0.8f;
+                VShotgunIceProjectille.damageColorIndex = DamageColorIndex.Default;
+
+                ProjectileManager.instance.FireProjectile(VShotgunIceProjectille);
 
 
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Missile_SFX, this.gameObject);
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Missile_SFX, this.gameObject);
+            }
+
+            
 
         }
 

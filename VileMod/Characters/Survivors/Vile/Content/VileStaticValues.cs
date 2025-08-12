@@ -75,7 +75,7 @@ namespace VileMod.Survivors.Vile
 
         public const float CyShotDamageCoefficient = 5f;
 
-        public const float CyPlasmaShockDamageCoefficient = 0.2f;
+        public const float CyPlasmaShockDamageCoefficient = 0.25f;
 
         public const float RepairRideArmorDamageCoefficient = 1f;
 
@@ -113,9 +113,9 @@ namespace VileMod.Survivors.Vile
         public const int UnitTogericsBoltCost = 350;
         public const int UnitMameQBoltCost = 420;
 
-        public const int RideArmorGoliathCost = 0; // 750
-        public const int RideArmorHawkCost = 0; // 700
-        public const int RideArmorCyclopsCost = 0; // 725
+        public const int RideArmorGoliathCost = 750; // 750
+        public const int RideArmorHawkCost = 700; // 700
+        public const int RideArmorCyclopsCost = 725; // 725
 
 
 

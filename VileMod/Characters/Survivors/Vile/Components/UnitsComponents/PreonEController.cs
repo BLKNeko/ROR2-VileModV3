@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 using static RoR2.BulletAttack;
 using VileMod.Survivors.Vile;
+using UnityEngine.Networking;
 
 namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
@@ -36,47 +37,46 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
             SetState(false, false, true); // shooting
 
-            var attack = new BulletAttack
+            if (NetworkServer.active)
             {
-                bulletCount = 1,
-                aimVector = shootDir,
-                origin = firePoint.position,
-                damage = damageCoefficient * ownerBody.damage,
-                damageColorIndex = DamageColorIndex.Default,
-                damageType = DamageType.Generic,
-                falloffModel = BulletAttack.FalloffModel.None,
-                maxDistance = 1000f,
-                force = 800f,
-                hitMask = LayerIndex.CommonMasks.bullet,
-                minSpread = 0f,
-                maxSpread = 0f,
-                isCrit = ownerBody.RollCrit(),
-                owner = gameObject,
-                smartCollision = true,
-                procChainMask = default,
-                procCoefficient = 1f,
-                radius = 0.75f,
-                sniper = false,
-                stopperMask = LayerIndex.CommonMasks.bullet,
-                weapon = null,
-                tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/tracers/TracerBanditShotgun"),
-                spreadPitchScale = 1f,
-                spreadYawScale = 1f,
-                queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
-                hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireShotgun.hitEffectPrefab,
-                // callback para impedir self-hit
-                hitCallback = HitCallback,
-            };
+                var attack = new BulletAttack
+                {
+                    bulletCount = 1,
+                    aimVector = shootDir,
+                    origin = firePoint.position,
+                    damage = damageCoefficient * ownerBody.damage,
+                    damageColorIndex = DamageColorIndex.Default,
+                    damageType = DamageType.Generic,
+                    falloffModel = BulletAttack.FalloffModel.None,
+                    maxDistance = 500f,
+                    force = 200f,
+                    hitMask = LayerIndex.CommonMasks.bullet,
+                    minSpread = 0f,
+                    maxSpread = 0f,
+                    isCrit = ownerBody.RollCrit(),
+                    owner = gameObject,
+                    smartCollision = true,
+                    procChainMask = default,
+                    procCoefficient = 1f,
+                    radius = 0.75f,
+                    sniper = false,
+                    stopperMask = LayerIndex.CommonMasks.bullet,
+                    weapon = null,
+                    tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/tracers/TracerBanditShotgun"),
+                    spreadPitchScale = 1f,
+                    spreadYawScale = 1f,
+                    queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
+                    hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireShotgun.hitEffectPrefab,
+                    // callback para impedir self-hit
+                    hitCallback = HitCallback,
+                };
 
-            //Debug.Log($"bulletAttack: {attack}");
-            //Debug.Log($"bulletAttack.owner: {attack.owner}");
-            //Debug.Log($"bulletAttack.owner.GetComponent<TeamComponent>(): {attack.owner.GetComponent<TeamComponent>()}");
-            //Debug.Log($"bulletAttack.owner.GetComponent<TeamComponent>().teamIndex: {attack.owner.GetComponent<TeamComponent>().teamIndex}");
-            //Debug.Log($"bulletAttack.filterCallback: {attack.filterCallback}");
+                attack.Fire();
 
-            attack.Fire();
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Simple_Bullet, this.gameObject);
+            }
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Simple_Bullet, this.gameObject);
+            
 
 
         }

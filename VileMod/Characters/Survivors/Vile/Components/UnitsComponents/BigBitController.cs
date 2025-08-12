@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem.PlaybackState;
 using static RoR2.BulletAttack;
 using VileMod.Survivors.Vile;
+using UnityEngine.Networking;
 
 namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 {
@@ -45,7 +46,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
         {
             //Debug.Log($"Unit BigBitFire");
 
-            if (ownerBody.hasEffectiveAuthority)
+            if (NetworkServer.active)
             {
 
                 new BulletAttack
@@ -57,8 +58,8 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                     damageColorIndex = DamageColorIndex.Default,
                     damageType = DamageType.Generic,
                     falloffModel = BulletAttack.FalloffModel.None,
-                    maxDistance = 1000f,
-                    force = 800f,
+                    maxDistance = 300f,
+                    force = 100f,
                     hitMask = LayerIndex.CommonMasks.bullet,
                     minSpread = 0f,
                     maxSpread = 0f,

@@ -366,7 +366,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 1f, // 100
+                baseRechargeInterval = 100f, // 100
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -396,7 +396,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 1f, // 10
+                baseRechargeInterval = 10f, // 10
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
@@ -426,7 +426,7 @@ namespace VileMod.Survivors.Vile
                 activationStateMachineName = "Body",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
-                baseRechargeInterval = 1f, //10
+                baseRechargeInterval = 10f, //10
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
