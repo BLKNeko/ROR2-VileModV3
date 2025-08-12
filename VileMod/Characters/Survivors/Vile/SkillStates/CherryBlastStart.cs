@@ -26,7 +26,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             {
                 if (!characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
                 {
-                    characterBody.AddTimedBuff(VileBuffs.PrimaryHeatBuff, 60f);
+                    characterBody.AddBuff(VileBuffs.PrimaryHeatBuff);
                 }
             }
 

@@ -1299,7 +1299,7 @@ namespace VileMod.Survivors.Vile
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_CHERRY_BLAST_DESCRIPTION",
                 skillIcon = VileAssets.CherryBlastSkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(CherryBlast)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(CherryBlastStart)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -1329,7 +1329,7 @@ namespace VileMod.Survivors.Vile
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_ZIPZAPPER_DESCRIPTION",
                 skillIcon = VileAssets.ZipZapperSkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(ZipZapper)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ZipZapperStart)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -1359,7 +1359,7 @@ namespace VileMod.Survivors.Vile
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_TRIPLE7_DESCRIPTION",
                 skillIcon = VileAssets.Triple7SkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(Triple7)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(Triple7Start)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 
@@ -1389,7 +1389,7 @@ namespace VileMod.Survivors.Vile
                 skillDescriptionToken = VILE_PREFIX + "PRIMARY_DISTANCE_NEEDLER_DESCRIPTION",
                 skillIcon = VileAssets.DistanceNeedlerSkillIcon,
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(DistanceNeedler)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(DistanceNeedlerStart)),
                 activationStateMachineName = "Weapon",
                 interruptPriority = EntityStates.InterruptPriority.Skill,
 

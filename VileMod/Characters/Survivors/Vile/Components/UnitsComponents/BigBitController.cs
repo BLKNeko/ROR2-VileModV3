@@ -44,38 +44,46 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
         public override void FireAttack()
         {
             //Debug.Log($"Unit BigBitFire");
-            new BulletAttack
-            {
-                bulletCount = 1,
-                aimVector = shootDir,
-                origin = firePoint.position,
-                damage = damageCoefficient * ownerBody.damage,
-                damageColorIndex = DamageColorIndex.Default,
-                damageType = DamageType.Generic,
-                falloffModel = BulletAttack.FalloffModel.None,
-                maxDistance = 1000f,
-                force = 800f,
-                hitMask = LayerIndex.CommonMasks.bullet,
-                minSpread = 0f,
-                maxSpread = 0f,
-                isCrit = ownerBody.RollCrit(),
-                owner = gameObject,
-                smartCollision = true,
-                procChainMask = default,
-                procCoefficient = 1f,
-                radius = 0.75f,
-                sniper = false,
-                stopperMask = LayerIndex.CommonMasks.bullet,
-                weapon = null,
-                tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/tracers/TracerBanditShotgun"),
-                spreadPitchScale = 1f,
-                spreadYawScale = 1f,
-                queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
-                hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireShotgun.hitEffectPrefab,
-                hitCallback = HitCallback, // Callback para impedir self-hit
-            }.Fire();
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Simple_Bullet, this.gameObject);
+            if (ownerBody.hasEffectiveAuthority)
+            {
+
+                new BulletAttack
+                {
+                    bulletCount = 1,
+                    aimVector = shootDir,
+                    origin = firePoint.position,
+                    damage = damageCoefficient * ownerBody.damage,
+                    damageColorIndex = DamageColorIndex.Default,
+                    damageType = DamageType.Generic,
+                    falloffModel = BulletAttack.FalloffModel.None,
+                    maxDistance = 1000f,
+                    force = 800f,
+                    hitMask = LayerIndex.CommonMasks.bullet,
+                    minSpread = 0f,
+                    maxSpread = 0f,
+                    isCrit = ownerBody.RollCrit(),
+                    owner = gameObject,
+                    smartCollision = true,
+                    procChainMask = default,
+                    procCoefficient = 1f,
+                    radius = 0.75f,
+                    sniper = false,
+                    stopperMask = LayerIndex.CommonMasks.bullet,
+                    weapon = null,
+                    tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/tracers/TracerBanditShotgun"),
+                    spreadPitchScale = 1f,
+                    spreadYawScale = 1f,
+                    queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
+                    hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireShotgun.hitEffectPrefab,
+                    hitCallback = HitCallback, // Callback para impedir self-hit
+                }.Fire();
+
+                AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Simple_Bullet, this.gameObject);
+
+            }
+
+            
 
         }
 

@@ -76,7 +76,7 @@ namespace VileMod.Survivors.Vile.Components
 
         private void FixedUpdate()
         {
-            if (!Body.hasAuthority) return;
+            //if (!Body.hasAuthority) return;
 
             if (HasRideArmorBuff())
             {
@@ -155,7 +155,7 @@ namespace VileMod.Survivors.Vile.Components
 
             r_Health = r_MaxHealth;
 
-            if (Body.hasAuthority && NetworkServer.active)
+            if (NetworkServer.active)
             {
                 Body.AddBuff(VileBuffs.RideArmorEnabledBuff);
             }
@@ -245,7 +245,7 @@ namespace VileMod.Survivors.Vile.Components
 
         private void HawkFlyingBehavior()
         {
-            if (!Body.hasAuthority) return;
+            if (!Body.hasEffectiveAuthority) return;
 
             if (!Body.HasBuff(VileBuffs.HawkBuff)) return;
 
@@ -293,8 +293,8 @@ namespace VileMod.Survivors.Vile.Components
 
                     Body.characterMotor.velocity = finalVelocity;
 
-                    Debug.Log("Hawk Flying - Horizontal Dir: " + horizontalDirection);
-                    Debug.Log("Hawk Flying - Final Velocity: " + finalVelocity);
+                    //Debug.Log("Hawk Flying - Horizontal Dir: " + horizontalDirection);
+                    //Debug.Log("Hawk Flying - Final Velocity: " + finalVelocity);
                 }
 
                 h_FlyingTimer += Time.fixedDeltaTime;

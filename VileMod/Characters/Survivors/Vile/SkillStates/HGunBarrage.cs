@@ -118,7 +118,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
         {
             base.FixedUpdate();
 
-            if (!isAuthority || missilesFired >= totalMissiles)
+            if (missilesFired >= totalMissiles)
                 return;
 
             fireTimer -= Time.fixedDeltaTime;

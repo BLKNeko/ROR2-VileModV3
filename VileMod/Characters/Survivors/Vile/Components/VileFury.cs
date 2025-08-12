@@ -49,7 +49,6 @@ namespace VileMod.Survivors.Vile.Components
 
         private void FixedUpdate()
         {
-            if (!Body.hasAuthority) return;
 
             VFury();
 

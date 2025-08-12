@@ -26,7 +26,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             {
                 if (characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
                 {
-                    characterBody.RemoveOldestTimedBuff(VileBuffs.PrimaryHeatBuff);
+                    characterBody.RemoveBuff(VileBuffs.PrimaryHeatBuff);
                 }
 
                 

@@ -54,15 +54,6 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             tracerEffectPrefab = VileAssets.vileGreenTracerPrefab;
 
-            if (NetworkServer.active && isAuthority)
-            {
-                if (!characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
-                {
-                    characterBody.AddBuff(VileBuffs.PrimaryHeatBuff);
-                }
-            }
-
-            PlayCrossfade("LeftArm, Override", "VulcanLoop", playbackRateParam, shootDelay * 0.7f, 0.1f * shootDelay);
 
         }
 
@@ -76,7 +67,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             base.FixedUpdate();
 
             // Atualiza rotação da arma
-            if (IsKeyDownAuthority())
+            if (inputBank.skill1.down)
                 spinLevel += Time.fixedDeltaTime * 0.25f;
 
             spinLevel = Mathf.Clamp01(spinLevel);
@@ -85,7 +76,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             // Tempo entre disparos
             stopwatch += Time.fixedDeltaTime;
 
-            if (IsKeyDownAuthority() && stopwatch >= shootDelay)
+            if (inputBank.skill1.down && stopwatch >= shootDelay)
             {
                 FireBullet();
                 stopwatch = 0f;
@@ -100,43 +91,23 @@ namespace VileMod.Survivors.Vile.SkillStates
                 {
                     //CherryBlastEnd CBE = new CherryBlastEnd();
                     AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Overheat_SFX, this.gameObject);
-                    //outer.SetNextState(new ZipZapperEnd());
 
-                    if (NetworkServer.active && isAuthority)
+                    if (isAuthority)
                     {
-                        if (characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
-                        {
-                            characterBody.RemoveBuff(VileBuffs.PrimaryHeatBuff);
-                        }
-
+                        outer.SetNextState(new ZipZapperEnd());
                     }
-
-                    PlayCrossfade("LeftArm, Override", "BufferEmpty", "ShootGun.playbackRate", baseDuration * 0.7f, baseDuration);
-                    outer.SetNextStateToMain();
 
                 }
 
             }
 
             // Encerrar estado quando soltar botão
-            if (!IsKeyDownAuthority() && base.fixedAge >= 0.1f)
+            if (!inputBank.skill1.down && base.fixedAge >= 0.1f)
             {
-                //this.outer.SetNextStateToMain();
-                //CherryBlastEnd CBE = new CherryBlastEnd();
-
-                if (NetworkServer.active && isAuthority)
+                if (isAuthority)
                 {
-                    if (characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
-                    {
-                        characterBody.RemoveBuff(VileBuffs.PrimaryHeatBuff);
-                    }
-
-
+                    outer.SetNextState(new ZipZapperEnd());
                 }
-
-                PlayCrossfade("LeftArm, Override", "BufferEmpty", "ShootGun.playbackRate", baseDuration * 0.7f, baseDuration);
-                outer.SetNextStateToMain();
-                //outer.SetNextState(new ZipZapperEnd());
             }
         }
 

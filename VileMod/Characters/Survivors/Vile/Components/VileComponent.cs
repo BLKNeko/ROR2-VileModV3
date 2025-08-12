@@ -116,7 +116,7 @@ namespace VileMod.Survivors.Vile.Components
 
 
 
-            if(!Body.hasAuthority) return;
+            //if(!Body.hasAuthority) return;
 
             IsWeak();
             onRideArmor();
@@ -265,7 +265,7 @@ namespace VileMod.Survivors.Vile.Components
 
         public void SetExtraHeatValues(float heat)
         {
-            if (!Body.hasAuthority) return;
+            if (!Body.hasEffectiveAuthority) return;
 
             if (baseOverHeatValue >= 0.1f)
             {
@@ -309,7 +309,7 @@ namespace VileMod.Survivors.Vile.Components
 
         public void SetElementValues(float iceValue, float shockValue, float flameValue, bool iceReset, bool shockReset, bool flameReset)
         {
-            if (!Body.hasAuthority) return;
+            if (!Body.hasEffectiveAuthority) return;
 
             iceElementValue += iceValue;
             shockElementValue += shockValue;
@@ -335,7 +335,7 @@ namespace VileMod.Survivors.Vile.Components
 
             if (value > 0f && !hasBuff)
                 Body.AddBuff(buff);
-            else if (value <= 0f && hasBuff && Body.hasAuthority)
+            else if (value <= 0f && hasBuff && Body.hasEffectiveAuthority)
                 Body.RemoveBuff(buff);
         }
 

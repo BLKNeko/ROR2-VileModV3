@@ -22,15 +22,15 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             //PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
 
-            //if (NetworkServer.active)
-            //{
-            //    if (characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
-            //    {
-            //        characterBody.RemoveBuff(VileBuffs.PrimaryHeatBuff);
-            //    }
+            if (NetworkServer.active)
+            {
+                if (characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
+                {
+                    characterBody.RemoveBuff(VileBuffs.PrimaryHeatBuff);
+                }
 
-                
-            //}
+
+            }
 
             PlayCrossfade("LeftArm, Override", "BufferEmpty", "ShootGun.playbackRate", duration * 0.7f, 0.7f * duration);
 
