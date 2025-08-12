@@ -1,4 +1,5 @@
 ﻿using MegamanXMod.Survivors.X.SkillStates;
+using VileMod.Characters.Survivors.Vile.BuffSkillStates;
 using VileMod.Survivors.Vile.SkillStates;
 
 namespace VileMod.Survivors.Vile
@@ -123,6 +124,18 @@ namespace VileMod.Survivors.Vile
             Modules.Content.AddEntityState(typeof(ZipZapperEnd));
 
             Modules.Content.AddEntityState(typeof(ZipZapperStart));
+
+
+
+            Modules.Content.AddEntityState(typeof(VileAddFlamePrimaryBuff));
+            Modules.Content.AddEntityState(typeof(VileAddFrostPrimaryBuff));
+            Modules.Content.AddEntityState(typeof(VileAddShockPrimaryBuff));
+
+            Modules.Content.AddEntityState(typeof(VileRemFlamePrimaryBuff));
+            Modules.Content.AddEntityState(typeof(VileRemFrostPrimaryBuff));
+            Modules.Content.AddEntityState(typeof(VileRemShockPrimaryBuff));
+
+
 
 
         }

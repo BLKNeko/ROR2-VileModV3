@@ -8,6 +8,7 @@ using static Wamp;
 using ExtraSkillSlots;
 using System;
 using System.Security.Cryptography;
+using VileMod.Characters.Survivors.Vile.BuffSkillStates;
 
 namespace VileMod.Survivors.Vile.Components
 {
@@ -59,6 +60,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private Quaternion initialLocalRotation;
 
+        private EntityStateMachine VBuffESM;
+
         private void Start()
         {
             //any funny custom behavior you want here
@@ -97,6 +100,8 @@ namespace VileMod.Survivors.Vile.Components
             tracker.enabled = false;
 
             footstepHandler = Body.GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>().GetComponent<FootstepHandler>();
+
+            VBuffESM = EntityStateMachine.FindByCustomName(Body.gameObject, "VBuffESM");
 
             //Debug.Log(AnimVeh);
             //Debug.Log("Camera: " + cameraTargetParams);
@@ -258,10 +263,49 @@ namespace VileMod.Survivors.Vile.Components
 
         private void VElementBuffUpdate()
         {
-            UpdateBuff(VileBuffs.PrimaryIceBuff, iceElementValue);
-            UpdateBuff(VileBuffs.PrimaryFlameBuff, flameElementValue);
-            UpdateBuff(VileBuffs.PrimaryShockBuff, shockElementValue);
+            if (!Body.hasEffectiveAuthority) return;
+
+            if (flameElementValue > 0f && !Body.HasBuff(VileBuffs.PrimaryFlameBuff))
+            {
+                VBuffESM.SetNextState(new VileAddFlamePrimaryBuff());
+            }
+
+            if (iceElementValue > 0f && !Body.HasBuff(VileBuffs.PrimaryIceBuff))
+            {
+                VBuffESM.SetNextState(new VileAddFrostPrimaryBuff());
+            }
+
+            if (shockElementValue > 0f && !Body.HasBuff(VileBuffs.PrimaryShockBuff))
+            {
+                VBuffESM.SetNextState(new VileAddShockPrimaryBuff());
+            }
+
+            //Remove Buffs if values are 0
+
+            if (flameElementValue <= 0f && Body.HasBuff(VileBuffs.PrimaryFlameBuff))
+            {
+                VBuffESM.SetNextState(new VileRemFlamePrimaryBuff());
+            }
+
+            if (iceElementValue <= 0f && Body.HasBuff(VileBuffs.PrimaryIceBuff))
+            {
+                VBuffESM.SetNextState(new VileRemFrostPrimaryBuff());
+            }
+
+            if (shockElementValue <= 0f && Body.HasBuff(VileBuffs.PrimaryShockBuff))
+            {
+                VBuffESM.SetNextState(new VileRemShockPrimaryBuff());
+            }
+
+
         }
+
+        //private void VElementBuffUpdate()
+        //{
+        //    UpdateBuff(VileBuffs.PrimaryIceBuff, iceElementValue);
+        //    UpdateBuff(VileBuffs.PrimaryFlameBuff, flameElementValue);
+        //    UpdateBuff(VileBuffs.PrimaryShockBuff, shockElementValue);
+        //}
 
         public void SetExtraHeatValues(float heat)
         {
@@ -326,19 +370,19 @@ namespace VileMod.Survivors.Vile.Components
             //Debug.Log("Set Element Values: " + iceElementValue + ", " + shockElementValue + ", " + flameElementValue);
         }
 
-        private void UpdateBuff(BuffDef buff, float value)
-        {
+        //private void UpdateBuff(BuffDef buff, float value)
+        //{
 
-            if (!NetworkServer.active) return;
+        //    if (!NetworkServer.active) return;
 
-            bool hasBuff = Body.HasBuff(buff);
+        //    bool hasBuff = Body.HasBuff(buff);
 
-            if (value > 0f && !hasBuff)
-                Body.AddTimedBuff(buff, 10f);
-            else if (value <= 0f && hasBuff)
-                Body.RemoveOldestTimedBuff(buff);
+        //    if (value > 0f && !hasBuff)
+        //        Body.AddTimedBuff(buff, 10f);
+        //    else if (value <= 0f && hasBuff)
+        //        Body.RemoveOldestTimedBuff(buff);
 
-        }
+        //}
 
         public float GetBaseHeatValue()
         {

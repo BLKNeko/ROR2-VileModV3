@@ -320,6 +320,7 @@ namespace VileMod.Survivors.Vile
 
             Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon");
             Prefabs.AddEntityStateMachine(bodyPrefab, "Weapon2");
+            Prefabs.AddEntityStateMachine(bodyPrefab, "VBuffESM");
         }
 
         #region skills

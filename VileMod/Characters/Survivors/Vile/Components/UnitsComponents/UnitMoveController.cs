@@ -106,8 +106,6 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
         {
             if (playerTarget == null) return;
 
-            if (!ownerBody.hasEffectiveAuthority) return;
-
             if (!shouldFollowGroundOffset)
             {
                 distance = Vector3.Distance(transform.position, playerTarget.position);
