@@ -46,7 +46,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             SetHitReset(true, 2);
 
-            Debug.Log("GP2");
+            //Debug.Log("GP2");
 
             GPunch1 GP1 = new GPunch1();
             SetNextEntityState(GP1);

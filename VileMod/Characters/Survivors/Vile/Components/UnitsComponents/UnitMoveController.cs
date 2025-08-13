@@ -405,7 +405,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
         {
             if (firePoint == null)
             {
-                Debug.LogWarning("FirePoint is not assigned.");
+                //Debug.LogWarning("FirePoint is not assigned.");
                 return null;
             }
 

@@ -30,7 +30,7 @@ namespace VileMod.Characters.Survivors.Vile.BuffSkillStates
                 }
             }
 
-            Debug.Log($"VileRemFrostPrimaryBuff OnEnter: {fixedAge} / {duration}");
+            //Debug.Log($"VileRemFrostPrimaryBuff OnEnter: {fixedAge} / {duration}");
 
         }
 

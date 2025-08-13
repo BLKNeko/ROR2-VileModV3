@@ -60,16 +60,16 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
             moveSpeed += ownerBody.moveSpeed * 1.5f;
 
-            Debug.Log("ownerBody: " + ownerBody);
+            //Debug.Log("ownerBody: " + ownerBody);
 
             if (projectileController && projectileController.owner)
             {
                 bodyTransform = ownerBody.transform;
             }
 
-            Debug.Log($"PreonEController Awake: {gameObject.name}");
-            Debug.Log($"projectileController.gameObject: {projectileController.gameObject}");
-            Debug.Log($"projectileController.gameObject.name: {projectileController.gameObject.name}");
+            //Debug.Log($"PreonEController Awake: {gameObject.name}");
+            //Debug.Log($"projectileController.gameObject: {projectileController.gameObject}");
+            //Debug.Log($"projectileController.gameObject.name: {projectileController.gameObject.name}");
 
             Destroy(gameObject, lifetime);
         }
@@ -107,7 +107,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
             HurtBox target = FindTarget();
 
-            Debug.Log("distance: " + distance);
+            //Debug.Log("distance: " + distance);
             MoveProjectile();
             UpdateAnims();
 

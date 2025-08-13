@@ -44,7 +44,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             SetCustomAnimator(customAnimator);
             //playCustomExitAnim = true;
 
-            Debug.Log("GP1");
+            //Debug.Log("GP1");
 
             SetHitReset(true, 2);
 

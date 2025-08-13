@@ -288,6 +288,12 @@ namespace VileMod.Survivors.Vile
             vileSDRTracerPrefab = CreateColoredTracerPrefab("TracerBanditPistol", "VSDRTacer", new Color(0.4f, 0.8f, 1f, 1f), 100f, 0f);
             //vileSDRHitPrefab = CreateColoredTracerPrefab("FireMeatBallExplosion", "VSDRHit", new Color(0.4f, 0.8f, 1f, 1f), 170f, 5f);
 
+            Content.CreateAndAddEffectDef(vileGreenTracerPrefab);
+            Content.CreateAndAddEffectDef(vileCyanTracerPrefab);
+            Content.CreateAndAddEffectDef(vileBlueTracerPrefab);
+            Content.CreateAndAddEffectDef(vileSDRTracerPrefab);
+
+
         }
 
         private static void CreateRideExplosionEffect()
@@ -443,6 +449,17 @@ namespace VileMod.Survivors.Vile
             CreateFrontRunnerProjectile();
             CreateCerberusPhantonProjectile();
 
+            
+            GShotPhantonProjectile();
+
+            CreateCYPlasmaProjectile();
+            CreateShockSphereProjectile();
+
+            CreateGVMissileProjectile();
+
+            CreateFlameRoundProjectile();
+            CreateFlameRoundBombProjectile();
+
             CreateUnitPreonEProjectile();
             CreateUnitMettaurcureProjectile();
             CreateUnitBigBitProjectile();
@@ -453,15 +470,6 @@ namespace VileMod.Survivors.Vile
             CreateTogericsProjectile();
             CreateUnitGunVoltProjectile();
 
-            GShotPhantonProjectile();
-
-            CreateCYPlasmaProjectile();
-            CreateShockSphereProjectile();
-
-            CreateGVMissileProjectile();
-
-            CreateFlameRoundProjectile();
-            CreateFlameRoundBombProjectile();
 
 
             Content.AddProjectilePrefab(bombProjectilePrefab);
@@ -476,16 +484,6 @@ namespace VileMod.Survivors.Vile
             Content.AddProjectilePrefab(FrontRunnerFireBallProjectile);
             Content.AddProjectilePrefab(CerberusPhantonFMJProjectile);
 
-            Content.AddProjectilePrefab(unitPreonEPrefab);
-            Content.AddProjectilePrefab(unitMettaurcurePrefab);
-            Content.AddProjectilePrefab(unitBigBitPrefab);
-            Content.AddProjectilePrefab(unitNightmareVPrefab);
-            Content.AddProjectilePrefab(unitMettaurCommanderPrefab);
-            Content.AddProjectilePrefab(unitMameqPrefab);
-            Content.AddProjectilePrefab(unitSpikyPrefab);
-            Content.AddProjectilePrefab(unitTogericsPrefab);
-            Content.AddProjectilePrefab(unitGunvoltPrefab);
-
             Content.AddProjectilePrefab(GShotProjectile);
 
             Content.AddProjectilePrefab(CYPlasmaProjectile);
@@ -495,6 +493,16 @@ namespace VileMod.Survivors.Vile
 
             Content.AddProjectilePrefab(FlameRoundProjectile);
             Content.AddProjectilePrefab(FlameRoundBombProjectile);
+
+            Content.AddProjectilePrefab(unitPreonEPrefab);
+            Content.AddProjectilePrefab(unitMettaurcurePrefab);
+            Content.AddProjectilePrefab(unitBigBitPrefab);
+            Content.AddProjectilePrefab(unitNightmareVPrefab);
+            Content.AddProjectilePrefab(unitMettaurCommanderPrefab);
+            Content.AddProjectilePrefab(unitMameqPrefab);
+            Content.AddProjectilePrefab(unitSpikyPrefab);
+            Content.AddProjectilePrefab(unitTogericsPrefab);
+            Content.AddProjectilePrefab(unitGunvoltPrefab);
 
         }
 

@@ -8,6 +8,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using VileMod.Survivors.Vile.Components;
 using UnityEngine.UIElements.Experimental;
+using UnityEngine.AddressableAssets;
+using RoR2BepInExPack.GameAssetPaths;
 
 namespace MegamanXMod.Survivors.X.SkillStates
 {
@@ -22,7 +24,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
         public static float recoil = 3f;
         public static float range = 55f;
         public static GameObject tracerEffectPrefab = VileAssets.vileSDRTracerPrefab;
-        public static GameObject hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/HitsparkFMJ");
+        public static GameObject hitEffectPrefab;
 
         private float duration;
         private float fireTime;
@@ -64,6 +66,11 @@ namespace MegamanXMod.Survivors.X.SkillStates
             this.modelTransform = base.GetModelTransform();
             this.animator = base.GetModelAnimator();
             VC = GetComponent<VileComponent>();
+
+            //hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/HitsparkFMJ");
+            
+            //hitEffectPrefab = Addressables.LoadAssetAsync("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
+            hitEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
 
             elementBonus = 0.005f + characterBody.level / 1000f;
 
@@ -174,7 +181,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
                 FireWave2BulletAttack.sniper = false;
                 FireWave2BulletAttack.stopperMask = LayerIndex.CommonMasks.bullet;
                 FireWave2BulletAttack.weapon = null;
-                FireWave2BulletAttack.tracerEffectPrefab = tracerEffectPrefab;
+                FireWave2BulletAttack.tracerEffectPrefab = null;
                 FireWave2BulletAttack.spreadPitchScale = 1f;
                 FireWave2BulletAttack.spreadYawScale = 1f;
                 FireWave2BulletAttack.queryTriggerInteraction = QueryTriggerInteraction.UseGlobal;

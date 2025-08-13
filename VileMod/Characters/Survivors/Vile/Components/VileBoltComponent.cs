@@ -60,7 +60,7 @@ namespace VileMod.Survivors.Vile.Components
                         uint gained = currentMoney - lastMoney;
                         boltValue += (int)gained;
                         boltValue = Mathf.Clamp(boltValue, 0, 1000);
-                        Debug.Log($"[BOLT] Ganhou {gained} - Total: {boltValue}");
+                        //Debug.Log($"[BOLT] Ganhou {gained} - Total: {boltValue}");
                     }
 
                     lastMoney = currentMoney;

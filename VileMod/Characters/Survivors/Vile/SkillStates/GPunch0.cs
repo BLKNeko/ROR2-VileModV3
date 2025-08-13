@@ -50,7 +50,7 @@ namespace VileMod.Survivors.Vile.SkillStates
             //Debug.Log("ChildLocator" + childLocator);
             //Debug.Log("CustomAnimator" + customAnimator);
             //Debug.Log("Animator" + animator);
-            Debug.Log("GP0");
+            //Debug.Log("GP0");
 
             //SetHitReset(true, 3);
 

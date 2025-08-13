@@ -23,11 +23,17 @@ namespace VileMod.Modules.BaseStates
         private VileComponent VC;
         private VileBoltComponent VBC;
 
+        private ChildLocator childLocator;
+
 
         public override void OnEnter()
         {
             base.OnEnter();
             this.duration = this.baseDuration / this.attackSpeedStat;
+
+            modelTransform = GetModelTransform();
+
+            childLocator = modelTransform.GetComponent<ChildLocator>();
 
             VC = GetComponent<VileComponent>();
             VBC = GetComponent<VileBoltComponent>();
@@ -36,25 +42,41 @@ namespace VileMod.Modules.BaseStates
 
             if (characterBody.HasBuff(VileBuffs.GoliathBuff))
             {
-                characterBody.RemoveBuff(VileBuffs.GoliathBuff);
                 VC.ExitGoliath();
             }
 
             if (characterBody.HasBuff(VileBuffs.HawkBuff))
             {
-                characterBody.RemoveBuff(VileBuffs.HawkBuff);
                 VC.ExitHawk();
             }
 
             if (characterBody.HasBuff(VileBuffs.CyclopsBuff))
             {
-                characterBody.RemoveBuff(VileBuffs.CyclopsBuff);
                 VC.ExitCyclops();
             }
 
-            if (characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff))
-                characterBody.RemoveBuff(VileBuffs.RideArmorEnabledBuff);
+            if (NetworkServer.active)
+            {
 
+                if (characterBody.HasBuff(VileBuffs.GoliathBuff))
+                {
+                    characterBody.RemoveBuff(VileBuffs.GoliathBuff);
+                }
+
+                if (characterBody.HasBuff(VileBuffs.HawkBuff))
+                {
+                    characterBody.RemoveBuff(VileBuffs.HawkBuff);
+                }
+
+                if (characterBody.HasBuff(VileBuffs.CyclopsBuff))
+                {
+                    characterBody.RemoveBuff(VileBuffs.CyclopsBuff);
+                }
+
+                if (characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                    characterBody.RemoveBuff(VileBuffs.RideArmorEnabledBuff);
+
+            }
 
 
             if (VileConfig.enableVoiceBool.Value)
@@ -77,7 +99,7 @@ namespace VileMod.Modules.BaseStates
                 characterModel.invisibilityCount++;
             }
 
-
+            childLocator.FindChildGameObject("VBodyMesh").SetActive(false);
 
 
 

@@ -17,7 +17,7 @@ namespace VileMod.Survivors.Vile
     {
         protected override void SetItemDisplayRules(List<ItemDisplayRuleSet.KeyAssetRuleGroup> itemDisplayRules)
         {
-            Debug.LogWarning("VileMod: Setting Item Display Rules");
+            //Debug.LogWarning("VileMod: Setting Item Display Rules");
 
             itemDisplayRules.Add(ItemDisplays.CreateDisplayRuleGroupWithRules(ItemDisplays.KeyAssets["AlienHead"],
                 ItemDisplays.CreateDisplayRule(ItemDisplays.LoadDisplay("DisplayAlienHead"),

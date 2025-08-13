@@ -41,8 +41,8 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             {
                 body.healthComponent.Heal(healCoefficient * ownerBody.damage, default, true);
 
-                Debug.Log($"Body Name: {body.name}");
-                Debug.Log($"Body Heal: {body.healthComponent.health} + {healCoefficient * ownerBody.damage} = {body.healthComponent.health + healCoefficient * ownerBody.damage}");
+                //Debug.Log($"Body Name: {body.name}");
+               // Debug.Log($"Body Heal: {body.healthComponent.health} + {healCoefficient * ownerBody.damage} = {body.healthComponent.health + healCoefficient * ownerBody.damage}");
 
                 if (body.HasBuff(VileBuffs.RideArmorEnabledBuff))
                 {
