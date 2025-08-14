@@ -22,7 +22,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             //PlayAnimation("LeftArm, Override", "ShootGun", "ShootGun.playbackRate", 1.8f);
 
-            if (NetworkServer.active && isAuthority)
+            if (NetworkServer.active)
             {
                 if (!characterBody.HasBuff(VileBuffs.PrimaryHeatBuff))
                 {

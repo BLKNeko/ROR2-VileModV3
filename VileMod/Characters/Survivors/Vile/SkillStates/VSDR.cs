@@ -10,6 +10,7 @@ using VileMod.Survivors.Vile.Components;
 using UnityEngine.UIElements.Experimental;
 using UnityEngine.AddressableAssets;
 using RoR2BepInExPack.GameAssetPaths;
+using System;
 
 namespace MegamanXMod.Survivors.X.SkillStates
 {
@@ -72,7 +73,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
             //hitEffectPrefab = Addressables.LoadAssetAsync("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
             hitEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
 
-            elementBonus = 0.005f + characterBody.level / 1000f;
+            elementBonus = 0.01f + characterBody.level / 1000f;
 
             if (this.modelTransform)
             {
@@ -121,7 +122,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
         {
             base.FixedUpdate();
 
-            if (!isAuthority || missilesFired >= totalMissiles)
+            if (missilesFired >= totalMissiles)
                 return;
 
             fireTimer -= Time.fixedDeltaTime;
@@ -133,7 +134,7 @@ namespace MegamanXMod.Survivors.X.SkillStates
             }
 
             // Transição opcional quando terminar
-            if (missilesFired >= totalMissiles)
+            if (missilesFired >= totalMissiles && isAuthority)
             {
                 outer.SetNextStateToMain();
             }
@@ -141,12 +142,13 @@ namespace MegamanXMod.Survivors.X.SkillStates
 
         private void FireMissile(int index)
         {
+            EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
             if (isAuthority)
             {
 
                 characterBody.SetAimTimer(2f);
                 characterBody.AddSpreadBloom(0.8f);
-                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
+                
                 //PlayAnimation("Gesture, Override", "XBusterAttack", "attackSpeed", this.duration);
 
                 Ray aimRay = GetAimRay();
@@ -191,7 +193,13 @@ namespace MegamanXMod.Survivors.X.SkillStates
 
                 VC.SetElementValues(elementBonus, 0f, 0f, false, true, true);
                 VC.SetExtraHeatValues(-0.005f);
+                    
 
+            }
+
+            if (NetworkServer.active)
+            {
+                Ray aimRay = GetAimRay();
                 if (index % 2 == 0 || index == 0)
                 {
                     EffectManager.SpawnEffect(VileAssets.SDREffect, new EffectData
@@ -201,9 +209,8 @@ namespace MegamanXMod.Survivors.X.SkillStates
                         scale = 1f
                     }, true);
                 }
-                    
-
             }
+
         }
     
 

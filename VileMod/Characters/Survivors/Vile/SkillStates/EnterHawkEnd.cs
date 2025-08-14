@@ -57,20 +57,20 @@ namespace VileMod.Survivors.Vile.SkillStates
         {
 
 
-            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_In_SFX, this.gameObject);
+            //PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
+            //AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_In_SFX, this.gameObject);
 
-            if (NetworkServer.active)
-            {
-                characterBody.AddBuff(VileBuffs.HawkBuff);
-                characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
-            }
+            //if (NetworkServer.active)
+            //{
+            //    characterBody.AddBuff(VileBuffs.HawkBuff);
+            //    characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
+            //}
 
-            rideFinished = false;
+            //rideFinished = false;
 
-            PlayAnimation("Body", "IdleLock", "ShootGun.playbackRate", 1.8f);
+            //PlayAnimation("Body", "IdleLock", "ShootGun.playbackRate", 1.8f);
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Armed, this.gameObject);
+            //AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Armed, this.gameObject);
 
             base.OnExit();
         }
@@ -113,12 +113,13 @@ namespace VileMod.Survivors.Vile.SkillStates
                 rideArmorInstance = null;
             }
 
-            VC.EnterHawk(true);
+            //VC.EnterHawk(true);
 
             rideFinished = true;
 
             // Pule direto pro estado principal
-            outer.SetNextStateToMain();
+            //outer.SetNextStateToMain();
+            if (isAuthority) outer.SetNextState(new EnterHawkEnd2());
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

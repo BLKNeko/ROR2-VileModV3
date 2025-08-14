@@ -6,6 +6,7 @@ using VileMod.Survivors.Vile.Components;
 using System.Reflection;
 using VileMod.Survivors.Vile;
 using System;
+using TMPro;
 
 public class VileHeatUIController : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class VileHeatUIController : MonoBehaviour
     public Image barFillB;
     public Image barFillR;
     public Image barFillRSH;
+    public TextMeshProUGUI barTTInput;
     private VileComponent heatComp;
     private VileBoltComponent boltComp;
     private VileRideArmorComponent rideComp;
@@ -99,7 +101,7 @@ public class VileHeatUIController : MonoBehaviour
         rectTransform.pivot = new Vector2(0f, 1f);      // Pivot no canto superior esquerdo
 
         // Offset relativo ao canto superior esquerdo (ajuste fino)
-        rectTransform.anchoredPosition = new Vector2(1300f, -650f); // X mais para direita, Y mais para baixo
+        rectTransform.anchoredPosition = new Vector2(1300f, -720f); // X mais para direita, Y mais para baixo
 
         // Ajuste de tamanho, se necessário
         rectTransform.sizeDelta = new Vector2(160f, 20f); // largura x altura
@@ -113,6 +115,11 @@ public class VileHeatUIController : MonoBehaviour
         barFillB = heatBarGO.transform.Find("BBar/Bar_Fill_B").GetComponent<Image>();
         barFillR = heatBarGO.transform.Find("RBar/Bar_Fill_R").GetComponent<Image>();
         barFillRSH = heatBarGO.transform.Find("RBar/Bar_Fill_RSH").GetComponent<Image>();
+        barTTInput = heatBarGO.transform.Find("BBText/BBTInput").GetComponent<TextMeshProUGUI>();
+        barTTInput.fontSize = 20;
+        barTTInput.alignment = TextAlignmentOptions.Center;
+        barTTInput.color = Color.white;
+
 
         barR = heatBarGO.transform.Find("RBar").gameObject;
 
@@ -160,6 +167,9 @@ public class VileHeatUIController : MonoBehaviour
                 barFillES.fillAmount = heatComp.GetShockElementValue();
                 barFillEF.fillAmount = heatComp.GetFlameElementValue();
                 barFillB.fillAmount = boltComp.GetInverseLerpBoltValue();
+
+                
+                barTTInput.text = boltComp.GetBoltValue().ToString();
 
                 if (characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff))
                 {

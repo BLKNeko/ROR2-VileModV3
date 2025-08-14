@@ -2211,11 +2211,6 @@ namespace VileMod.Survivors.Vile
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
 
-            if (sender.HasBuff(VileBuffs.armorBuff))
-            {
-                args.armorAdd += 300;
-            }
-
             if (sender.HasBuff(VileBuffs.VileFuryBuff))
             {
                 args.attackSpeedMultAdd += 0.25f;

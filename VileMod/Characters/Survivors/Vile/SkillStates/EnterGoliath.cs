@@ -58,9 +58,9 @@ namespace VileMod.Survivors.Vile.SkillStates
             if (NetworkServer.active)
             {
                 //characterBody.AddBuff(VileBuffs.GoliathBuff);
-                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 5f);
-                characterBody.AddTimedBuff(RoR2Content.Buffs.Immune, 5f);
-                characterBody.AddTimedBuff(RoR2Content.Buffs.Intangible, 5f);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 7f);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.Immune, 7f);
+                characterBody.AddTimedBuff(RoR2Content.Buffs.Intangible, 7f);
             }
 
             VBC.ChangeBoltValue(-boltCost); //Remove 1000 bolts

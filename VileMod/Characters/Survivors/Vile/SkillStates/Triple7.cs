@@ -86,7 +86,6 @@ namespace VileMod.Survivors.Vile.SkillStates
                 //Debug.Log("spinLevel: " + spinLevel);
 
                 //PlayCrossfade("LeftArm, Override", "VulcanLoop", playbackRateParam, shootDelay * 0.7f, 0.1f * shootDelay);
-
                 if (characterBody.HasBuff(VileBuffs.OverHeatDebuff))
                 {
                     //CherryBlastEnd CBE = new CherryBlastEnd();

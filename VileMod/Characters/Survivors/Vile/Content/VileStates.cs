@@ -39,13 +39,19 @@ namespace VileMod.Survivors.Vile
 
             Modules.Content.AddEntityState(typeof(EnterCyclopsEnd));
 
+            Modules.Content.AddEntityState(typeof(EnterCyclopsEnd2));
+
             Modules.Content.AddEntityState(typeof(EnterGoliath));
 
             Modules.Content.AddEntityState(typeof(EnterGoliathEnd));
 
+            Modules.Content.AddEntityState(typeof(EnterGoliathEnd2));
+
             Modules.Content.AddEntityState(typeof(EnterHawk));
 
             Modules.Content.AddEntityState(typeof(EnterHawkEnd));
+
+            Modules.Content.AddEntityState(typeof(EnterHawkEnd2));
 
             Modules.Content.AddEntityState(typeof(ExitCyclops));
 
@@ -126,6 +132,9 @@ namespace VileMod.Survivors.Vile
             Modules.Content.AddEntityState(typeof(ZipZapperStart));
 
 
+
+
+            Modules.Content.AddEntityState(typeof(VileAddTempOverHeatDebuff));
 
             Modules.Content.AddEntityState(typeof(VileAddFlamePrimaryBuff));
             Modules.Content.AddEntityState(typeof(VileAddFrostPrimaryBuff));

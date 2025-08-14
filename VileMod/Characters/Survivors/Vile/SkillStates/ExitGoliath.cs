@@ -29,7 +29,6 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             if (NetworkServer.active)
             {
-                characterBody.AddTimedBuff(VileBuffs.armorBuff, 3f * duration);
                 characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
 
                 if (characterBody.HasBuff(VileBuffs.GoliathBuff))

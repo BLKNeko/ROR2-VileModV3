@@ -334,11 +334,11 @@ namespace VileMod.Survivors.Vile.Components
 
         private void SetOverHeat()
         {
-            if (!NetworkServer.active) return;
+            if (!Body.hasEffectiveAuthority) return;
 
             if (baseOverHeatValue >= 0.99f && !Body.HasBuff(VileBuffs.OverHeatDebuff)) 
             {
-                Body.AddTimedBuff(VileBuffs.OverHeatDebuff, 11f);
+                VBuffESM.SetNextState(new VileAddTempOverHeatDebuff());
             }
 
         }

@@ -56,18 +56,18 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void OnExit()
         {
 
-            AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_In_SFX, this.gameObject);
-            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
+            //AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_In_SFX, this.gameObject);
+            //PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Login", playbackRateParam, duration * 0.5f, 0.1f * duration);
 
-            if (NetworkServer.active)
-            {
-                characterBody.AddBuff(VileBuffs.CyclopsBuff);
-                characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
-            }
+            //if (NetworkServer.active)
+            //{
+            //    characterBody.AddBuff(VileBuffs.CyclopsBuff);
+            //    characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
+            //}
 
-            rideFinished = false;
+            //rideFinished = false;
 
-            PlayAnimation("Body", "IdleLock", "ShootGun.playbackRate", 1.8f);
+            //PlayAnimation("Body", "IdleLock", "ShootGun.playbackRate", 1.8f);
 
             base.OnExit();
         }
@@ -110,12 +110,15 @@ namespace VileMod.Survivors.Vile.SkillStates
                 rideArmorInstance = null;
             }
 
-            VC.EnterCyclops(true);
+            //VC.EnterCyclops(true);
 
             rideFinished = true;
 
             // Pule direto pro estado principal
-            outer.SetNextStateToMain();
+            //outer.SetNextStateToMain();
+
+            if (isAuthority) outer.SetNextState(new EnterCyclopsEnd2());
+
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

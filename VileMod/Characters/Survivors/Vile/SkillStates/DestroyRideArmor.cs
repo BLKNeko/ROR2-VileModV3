@@ -128,7 +128,7 @@ namespace VileMod.Survivors.Vile.SkillStates
         {
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_Lose, this.gameObject);
             PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "BufferEmpty", playbackRateParam, duration * 0.5f, 0.1f * duration);
-            extraSkill.extraFourth.temporaryCooldownPenalty = 120f;
+            extraSkill.extraFourth.temporaryCooldownPenalty = 30f;
 
             base.OnExit();
         }

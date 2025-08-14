@@ -6,7 +6,6 @@ namespace VileMod.Survivors.Vile
     public static class VileBuffs
     {
         // armor buff gained during roll
-        public static BuffDef armorBuff;
 
         public static BuffDef VileFuryBuff;
 
@@ -33,14 +32,9 @@ namespace VileMod.Survivors.Vile
 
         public static void Init(AssetBundle assetBundle)
         {
-            armorBuff = Modules.Content.CreateAndAddBuff("HenryArmorBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
-                Color.white,
-                false,
-                false);
 
             VileFuryBuff = Modules.Content.CreateAndAddBuff("VileFuryBuff",
-                LegacyResourcesAPI.Load<BuffDef>("BuffDefs/HiddenInvincibility").iconSprite,
+                VileAssets.VilePassiveIcon,
                 Color.white,
                 false,
                 false);
@@ -103,13 +97,13 @@ namespace VileMod.Survivors.Vile
                 VileAssets.UnitMetComSkillIcon,
                 Color.white,
                 false,
-                true);
+                false);
 
             MameqBuff = Modules.Content.CreateAndAddBuff("MAME-QBuff",
                 VileAssets.UnitMMQSkillIcon,
                 Color.white,
                 false,
-                true);
+                false);
 
 
             OverHeatDebuff = Modules.Content.CreateAndAddBuff("OverHeatDebuff",
