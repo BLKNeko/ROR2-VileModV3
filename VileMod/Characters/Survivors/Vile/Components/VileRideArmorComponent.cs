@@ -127,7 +127,7 @@ namespace VileMod.Survivors.Vile.Components
             if(r_RegenTimer >= r_RegemCooldown)
             {
 
-                r_RegemValue = 1f + (r_MaxHealth * 0.01f);
+                r_RegemValue = 1f + (r_MaxHealth * 0.005f);
 
                 r_Health += r_RegemValue;
 
@@ -143,7 +143,7 @@ namespace VileMod.Survivors.Vile.Components
         {
             if (r_Shield > 0f)
             {
-                r_Shield -= Time.fixedDeltaTime + r_MaxShield * 0.01f; // Deplete shield over time
+                r_Shield -= (Time.fixedDeltaTime * 0.01f) + (r_MaxShield * 0.001f); // Deplete shield over time
                 r_Shield = Mathf.Clamp(r_Shield, 0f, r_MaxShield);
 
                 //Debug.Log($"VileRideArmorComponent - Ride Armor Shield Depleted: New Shield: {r_Shield}");

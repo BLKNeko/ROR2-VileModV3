@@ -101,7 +101,7 @@ public class VileHeatUIController : MonoBehaviour
         rectTransform.pivot = new Vector2(0f, 1f);      // Pivot no canto superior esquerdo
 
         // Offset relativo ao canto superior esquerdo (ajuste fino)
-        rectTransform.anchoredPosition = new Vector2(1300f, -720f); // X mais para direita, Y mais para baixo
+        rectTransform.anchoredPosition = new Vector2(1300f, -680f); // X mais para direita, Y mais para baixo
 
         // Ajuste de tamanho, se necessário
         rectTransform.sizeDelta = new Vector2(160f, 20f); // largura x altura
