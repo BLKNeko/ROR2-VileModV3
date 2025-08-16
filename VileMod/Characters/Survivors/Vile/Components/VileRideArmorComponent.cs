@@ -31,10 +31,15 @@ namespace VileMod.Survivors.Vile.Components
 
         private float r_MaxShield;
         private float r_Shield;
+        private float flatDepleteRate = 10f; // valor fixo por segundo
+        private float percentDepleteRate = 0.05f; // 5% do valor atual por segundo
 
         private float r_RegemValue = 1f;
-        private float r_RegemCooldown = 0.5f; // 0.5 seconds cooldown for regen
+        private float r_RegemCooldown = 3f; // 0.5 seconds cooldown for regen
         private float r_RegenTimer;
+        private float baseRegen = 5f;          // regen fixo
+        private float regenPercent = 0.005f;    // % da vida máxima por segundo
+        private float bonusMultiplier = 1.2f;  // quanto mais vazio, mais regen
 
         private bool r_InitializeSuperRegem = false;
         private float r_InitializeSuperRegemTimer = 0f;
@@ -94,7 +99,7 @@ namespace VileMod.Survivors.Vile.Components
             if (Body.HasBuff(VileBuffs.HawkBuff))
                 HawkFlyingBehavior();
 
-            DeplateShieldOverTime();
+            DepleteShieldOverTime();
 
         }
 
@@ -122,31 +127,38 @@ namespace VileMod.Survivors.Vile.Components
 
         private void RegenRideArmorWhileNotInUse()
         {
-            r_RegenTimer += Time.fixedDeltaTime;
 
-            if(r_RegenTimer >= r_RegemCooldown)
+            if (r_Health < r_MaxHealth)
             {
 
-                r_RegemValue = 1f + (r_MaxHealth * 0.005f);
+                //r_RegenTimer += Time.fixedDeltaTime;
 
-                r_Health += r_RegemValue;
+                //if(r_RegenTimer >= r_RegemCooldown)
+                //{
+                    float hpPercent = r_Health / r_MaxHealth;           // 1 = cheio, 0 = vazio
+                    float curveFactor = Mathf.Lerp(bonusMultiplier, 1f, hpPercent);
+                    // perto de 0 HP → bonusMultiplier, perto de 100% HP → 1x
 
-                r_Health = Mathf.Clamp(r_Health, 1f, r_MaxHealth);
+                    float regenRate = (baseRegen + (r_MaxHealth * regenPercent)) * curveFactor;
 
-                r_RegenTimer = 0f;
+                    r_Health += (regenRate * Time.fixedDeltaTime) * 0.3f;
+                    r_Health = Mathf.Clamp(r_Health, 0f, r_MaxHealth);
 
-                //Debug.Log($"VileRideArmorComponent - Ride Armor Regenerated: {r_RegemValue}, New Health: {r_Health}");
+                   // r_RegenTimer = 0f;
+                    
+                //}
+
+                
             }
         }
 
-        private void DeplateShieldOverTime()
+        private void DepleteShieldOverTime()
         {
             if (r_Shield > 0f)
             {
-                r_Shield -= (Time.fixedDeltaTime * 0.01f) + (r_MaxShield * 0.001f); // Deplete shield over time
+                float depleteAmount = flatDepleteRate + (r_Shield * percentDepleteRate);
+                r_Shield -= depleteAmount * Time.fixedDeltaTime;
                 r_Shield = Mathf.Clamp(r_Shield, 0f, r_MaxShield);
-
-                //Debug.Log($"VileRideArmorComponent - Ride Armor Shield Depleted: New Shield: {r_Shield}");
             }
         }
 

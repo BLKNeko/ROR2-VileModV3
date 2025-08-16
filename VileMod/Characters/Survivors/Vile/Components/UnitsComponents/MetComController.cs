@@ -55,7 +55,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
 
                     if (body.GetComponent<VileRideArmorComponent>())
                     {
-                        body.GetComponent<VileRideArmorComponent>().AddShieldRA((healCoefficient * ownerBody.damage) * 1.25f + (body.GetComponent<VileRideArmorComponent>().GetRMaxShieldValue() * 0.05f));
+                        body.GetComponent<VileRideArmorComponent>().AddShieldRA((healCoefficient * ownerBody.damage * 2f) + (body.GetComponent<VileRideArmorComponent>().GetRMaxShieldValue() * 0.2f));
                     }
 
                 }

@@ -58,14 +58,41 @@ namespace VileMod.Survivors.Vile.Components
                     if (currentMoney > lastMoney)
                     {
                         uint gained = currentMoney - lastMoney;
+
+                        float reduction = GetBoltReduction(Body.level);
+                        gained = (uint)(gained * (1f - reduction));
+
                         boltValue += (int)gained;
                         boltValue = Mathf.Clamp(boltValue, 0, 1000);
-                        //Debug.Log($"[BOLT] Ganhou {gained} - Total: {boltValue}");
                     }
 
                     lastMoney = currentMoney;
                 }
             }
+        }
+
+        private float GetBoltReduction(float level)
+        {
+            float reduction;
+
+            if (level <= 10f)
+            {
+                // 0% -> 33% (nível 1 a 10)
+                reduction = Mathf.Lerp(0f, 0.33f, level / 10f);
+            }
+            else if (level <= 20f)
+            {
+                // 33% -> 50% (nível 10 a 20)
+                reduction = Mathf.Lerp(0.33f, 0.50f, (level - 10f) / 10f);
+            }
+            else
+            {
+                // 50% -> 70% (nível 20+)
+                // A cada 30 níveis, sobe proporcionalmente até chegar no limite
+                reduction = Mathf.Lerp(0.50f, 0.70f, (level - 20f) / 30f);
+            }
+
+            return Mathf.Min(reduction, 0.70f); // Garante máximo de 70%
         }
 
         //private void Hook()

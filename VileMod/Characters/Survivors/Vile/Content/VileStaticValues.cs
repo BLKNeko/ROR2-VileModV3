@@ -57,21 +57,21 @@ namespace VileMod.Survivors.Vile
 
         // RIDE ARMOR
 
-        public const float GPunch0DamageCoefficient = 3f;
+        public const float GPunch0DamageCoefficient = 2f;
 
-        public const float GPunch1DamageCoefficient = 3f;
+        public const float GPunch1DamageCoefficient = 2f;
 
-        public const float GPunch2DamageCoefficient = 3f;
+        public const float GPunch2DamageCoefficient = 2f;
 
-        public const float GDashPunchDamageCoefficient = 5f;
+        public const float GDashPunchDamageCoefficient = 4f;
 
-        public const float GShotDamageCoefficient = 2f;
+        public const float GShotDamageCoefficient = 1.6f;
 
-        public const float HGun1DamageCoefficient = 0.85f;
+        public const float HGun1DamageCoefficient = 0.6f;
 
-        public const float HGunBarrageDamageCoefficient = 1f;
+        public const float HGunBarrageDamageCoefficient = 0.8f;
 
-        public const float CyPunchDamageCoefficient = 1.7f;
+        public const float CyPunchDamageCoefficient = 1.4f;
 
         public const float CyShotDamageCoefficient = 5f;
 
@@ -83,21 +83,21 @@ namespace VileMod.Survivors.Vile
 
         // UNIT
 
-        public const float UnitBigBitDamageCoefficient = 0.75f;
+        public const float UnitBigBitDamageCoefficient = 0.6f;
 
-        public const float UnitMettaurCommanderDamageCoefficient = 1f;
+        public const float UnitMettaurCommanderDamageCoefficient = 1.5f;
 
-        public const float UnitMettaurcureDamageCoefficient = 1f;
+        public const float UnitMettaurcureDamageCoefficient = 2f;
 
-        public const float UnitNightmareVDamageCoefficient = 2f;
+        public const float UnitNightmareVDamageCoefficient = 1.8f;
 
-        public const float UnitPreonEDamageCoefficient = 1.5f;
+        public const float UnitPreonEDamageCoefficient = 1.2f;
 
-        public const float UnitTogericsDamageCoefficient = 0.5f;
+        public const float UnitTogericsDamageCoefficient = 0.4f;
 
-        public const float UnitGunVoltDamageCoefficient = 1f;
+        public const float UnitGunVoltDamageCoefficient = 0.8f;
 
-        public const float UnitSpikyDamageCoefficient = 0.8f;
+        public const float UnitSpikyDamageCoefficient = 0.7f;
 
         // VILE BOLT
 
