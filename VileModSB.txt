@@ -33,6 +33,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	3491906488	Play_Vile_Simple_Bullet			\Default Work Unit\Play_Vile_Simple_Bullet	
 	3525663006	Play_Vile_Ha			\Default Work Unit\Play_Vile_Ha	
 	3579896108	Play_Vile_Armed			\Default Work Unit\Play_Vile_Armed	
+	3808668177	Play_Vile_yippeeee			\Default Work Unit\Play_Vile_yippeeee	
 	3862754203	Play_Vile_Charge_Shoot			\Default Work Unit\Play_Vile_Charge_Shoot	
 	3941153195	Play_Vile_Laser_Shot			\Default Work Unit\Play_Vile_Laser_Shot	
 	3942056322	Play_MMQVSFX			\Default Work Unit\Play_MMQVSFX	
@@ -79,6 +80,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	648815430	Vile_I_Not_Done_Yet	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Not_Done_Yet_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Fury\Vile_I_Not_Done_Yet		9637
 	654498832	Fire_SFX	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Fire_SFX_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Fire_SFX		16378
 	670574358	MQ2	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\MQ2_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\MMQVSFX\MQ2		11552
+	686561142	Vile_yippeeee	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\yippeeee_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_yippeeee		30281
 	722609609	Vile_SFX_Shock	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_SFX_Shock_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_SFX_Shock		8306
 	755228233	Vile_TP_In	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_TP_In_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_TP_In		14600
 	799034785	Vile_I_Show_You_How_Strong_I_Am	A:\Users\augus\Documents\WwiseProjects\VileModV3SB\.cache\Windows\SFX\Vile_I_Show_You_How_Strong_I_Am_EDCD4836.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Mixxer\Vile_Fury\Vile_I_Show_You_How_Strong_I_Am		11748

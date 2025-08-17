@@ -54,8 +54,11 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             if (NetworkServer.active)
             {
-                characterBody.AddBuff(VileBuffs.CyclopsBuff);
-                characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
+                if(!characterBody.HasBuff(VileBuffs.CyclopsBuff))
+                    characterBody.AddBuff(VileBuffs.CyclopsBuff);
+
+                if (!characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                    characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
             }
 
             PlayAnimation("Body", "IdleLock", "ShootGun.playbackRate", 1.8f);

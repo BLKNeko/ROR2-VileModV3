@@ -6,6 +6,8 @@ namespace VileMod.Survivors.Vile
     public static class VileConfig
     {
 
+        public static ConfigEntry<bool> enableYipeeBool;
+
         public static ConfigEntry<bool> enableVoiceBool;
         public static ConfigEntry<int> enableFootstep;
 
@@ -38,6 +40,12 @@ namespace VileMod.Survivors.Vile
                 1f,
                 2f,
                 "The multiplier applied when Hawk is flying.");
+
+            enableYipeeBool = Config.BindAndOptions(
+                section,
+                "Yipeee SFX",
+                false,
+                "Change the SFX of a certain cute unit to YIPEEEE.");
         }
     }
 }

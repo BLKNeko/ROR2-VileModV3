@@ -52,7 +52,10 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
             if (vsfxTimer >= vsfxTimerCooldown)
             {
                 vsfxTimer = 0f; // Reinicia o temporizador
-                AkSoundEngine.PostEvent(VileStaticValues.Play_MMQVSFX, gameObject); // Toca o efeito sonoro de movimento
+                if (VileConfig.enableYipeeBool.Value)
+                    AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_yippeeee, gameObject); // Toca o efeito sonoro de movimento
+                else
+                    AkSoundEngine.PostEvent(VileStaticValues.Play_MMQVSFX, gameObject);
             }
             else
             {

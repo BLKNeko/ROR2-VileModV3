@@ -55,8 +55,11 @@ namespace VileMod.Survivors.Vile.SkillStates
 
             if (NetworkServer.active)
             {
-                characterBody.AddBuff(VileBuffs.HawkBuff);
-                characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
+                if (!characterBody.HasBuff(VileBuffs.HawkBuff))
+                    characterBody.AddBuff(VileBuffs.HawkBuff);
+
+                if (!characterBody.HasBuff(VileBuffs.RideArmorEnabledBuff))
+                    characterBody.AddBuff(VileBuffs.RideArmorEnabledBuff);
             }
 
             rideFinished = false;

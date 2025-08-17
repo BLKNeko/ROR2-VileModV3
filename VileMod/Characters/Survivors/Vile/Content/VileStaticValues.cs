@@ -164,6 +164,7 @@ namespace VileMod.Survivors.Vile
         public static readonly string Play_Vile_TP_In = "Play_Vile_TP_In";
         public static readonly string Play_Vile_TP_Out = "Play_Vile_TP_Out";
         public static readonly string Play_Vile_Take_This = "Play_Vile_Take_This";
+        public static readonly string Play_Vile_yippeeee = "Play_Vile_yippeeee";
 
 
     }
