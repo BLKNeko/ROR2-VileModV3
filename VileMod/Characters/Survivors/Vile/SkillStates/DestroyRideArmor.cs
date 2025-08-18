@@ -38,8 +38,6 @@ namespace VileMod.Survivors.Vile.SkillStates
             childLocator = GetModelTransform().GetComponent<ChildLocator>();
             playbackRateParam = "Slash.playbackRate";
 
-            PlayAnimation("Body", "Idle", "ShootGun.playbackRate", 0f);
-
             if (characterBody.HasBuff(VileBuffs.CyclopsBuff))
             {
                 customAnimator = childLocator.FindChildGameObject("CY").GetComponents<Animator>()[0];
@@ -53,7 +51,8 @@ namespace VileMod.Survivors.Vile.SkillStates
                 customAnimator = childLocator.FindChildGameObject("HAWK").GetComponents<Animator>()[0];
             }
 
-            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Die", playbackRateParam, duration * 0.5f, 0.1f * duration);
+            if(customAnimator)
+                PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "R_Die", playbackRateParam, duration * 0.5f, 0.5f * duration);
 
 
             if (NetworkServer.active)
@@ -127,7 +126,10 @@ namespace VileMod.Survivors.Vile.SkillStates
         public override void OnExit()
         {
             AkSoundEngine.PostEvent(VileStaticValues.Play_Vile_Ride_Armor_Lose, this.gameObject);
-            PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "BufferEmpty", playbackRateParam, duration * 0.5f, 0.1f * duration);
+
+            if (customAnimator)
+                PlayAnimationOnAnimator(customAnimator, "FullBody, Override", "BufferEmpty", playbackRateParam, duration * 0.5f, 0.5f * duration);
+
             extraSkill.extraFourth.temporaryCooldownPenalty = 30f;
 
             base.OnExit();
@@ -146,7 +148,7 @@ namespace VileMod.Survivors.Vile.SkillStates
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Frozen;
+            return InterruptPriority.Death;
         }
     }
 }

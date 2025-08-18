@@ -25,12 +25,18 @@ namespace VileMod.Survivors.Vile.Components
 
         private EntityStateMachine entityState;
 
-
+        //[SyncVar]
         private float r_MaxHealth;
+
+        //[SyncVar(hook = nameof(OnHealthChanged))]
         private float r_Health;
 
+        //[SyncVar]
         private float r_MaxShield;
+
+        //[SyncVar(hook = nameof(OnShieldChanged))]
         private float r_Shield;
+
         private float flatDepleteRate = 10f; // valor fixo por segundo
         private float percentDepleteRate = 0.05f; // 5% do valor atual por segundo
 
@@ -51,6 +57,9 @@ namespace VileMod.Survivors.Vile.Components
         private bool h_FlyingActivated = false;
         private float h_FallSlowStrength = 1f;   // força para desacelerar a queda
         private float h_MaxFallSpeed = -20f;
+
+        private float lastHealth;
+        private float currentHealth;
 
 
         private void Start()
@@ -101,6 +110,9 @@ namespace VileMod.Survivors.Vile.Components
 
             DepleteShieldOverTime();
 
+            RideArmorTakeDamage();
+
+
         }
 
         private bool HasRideArmorBuff()
@@ -110,6 +122,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private void UpdateMaxHealth()
         {
+            if (!Body.hasAuthority) return;
+
             r_MaxHealth = HealthComp.fullCombinedHealth;
 
             r_MaxShield = r_MaxHealth;
@@ -117,9 +131,11 @@ namespace VileMod.Survivors.Vile.Components
 
         private void CheckHealthUpdate()
         {
-            if(r_Health <= 0f && r_InitializeSuperRegemTimer >= 1.9f)
+            if (!Body.hasAuthority) return;
+
+            if (r_Health <= -0.1f && r_InitializeSuperRegemTimer >= 1.9f)
             {
-                if(Body.hasEffectiveAuthority)
+                if(Body.hasAuthority)
                     entityState.SetNextState(new SkillStates.DestroyRideArmor());
 
             }
@@ -127,6 +143,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private void RegenRideArmorWhileNotInUse()
         {
+
+            if (!Body.hasAuthority) return;
 
             if (r_Health < r_MaxHealth)
             {
@@ -154,6 +172,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private void DepleteShieldOverTime()
         {
+            if (!Body.hasAuthority) return;
+
             if (r_Shield > 0f)
             {
                 float depleteAmount = flatDepleteRate + (r_Shield * percentDepleteRate);
@@ -164,7 +184,7 @@ namespace VileMod.Survivors.Vile.Components
 
         public void InitializeRideArmor()
         {
-            //if (!Body.hasAuthority) return;
+            if (!Body.hasAuthority) return;
 
             UpdateMaxHealth();
 
@@ -187,6 +207,8 @@ namespace VileMod.Survivors.Vile.Components
 
         private void InitializeSuperRegem()
         {
+            if (!Body.hasAuthority) return;
+
             if (r_Health < r_MaxHealth || r_InitializeSuperRegemTimer <= 2f)
             {
                 r_Health += Time.fixedDeltaTime * (r_MaxHealth / (2f - Time.fixedDeltaTime));
@@ -201,28 +223,40 @@ namespace VileMod.Survivors.Vile.Components
             }
         }
 
+        //[Server]
         public void RepairRideArmor(float amount)
         {
+            if (!Body.hasAuthority) return;
+
             r_Health += amount;
 
             r_Health = Mathf.Clamp(r_Health, 1f, r_MaxHealth);
         }
 
+        //[Server]
         public void DamageRideArmor(float amount)
         {
+            if (!Body.hasAuthority) return;
+
             r_Health -= amount;
 
         }
 
+        //[Server]
         public void AddShieldRA(float amount)
         {
+            if (!Body.hasAuthority) return;
+
             r_Shield += amount;
 
             r_Shield = Mathf.Clamp(r_Shield, 1f, r_MaxShield);
         }
 
+        //[Server]
         public void DamageShieldRA(float amount)
         {
+            if (!Body.hasAuthority) return;
+
             r_Shield -= amount;
 
             r_Shield = Mathf.Clamp(r_Shield, 0f, r_MaxShield);
@@ -270,6 +304,72 @@ namespace VileMod.Survivors.Vile.Components
         {
 
             return r_Shield >= r_MaxShield;
+        }
+
+        private void RideArmorTakeDamage()
+        {
+            //if (!Body.hasAuthority) return;
+            //Debug.Log($"Last hit time: {HealthComp.lastHitTime}");
+
+            if (Body.HasBuff(VileBuffs.GoliathBuff) || Body.HasBuff(VileBuffs.HawkBuff) || Body.HasBuff(VileBuffs.CyclopsBuff))
+            {
+
+                currentHealth = HealthComp.health;
+
+                // se houve perda de vida
+                if (currentHealth < lastHealth)
+                {
+                    float damage = lastHealth - currentHealth;
+
+                    // opcional: checar se foi um hit recente
+                    if ((Run.FixedTimeStamp.now - HealthComp.lastHitTime) < 1f)
+                    {
+                        // manda o dano para a Ride Armor
+                        //ApplyRideArmorDamage(damage);
+                        if (GetRShieldValue() > 0f)
+                        {
+                            //r_Shield -= finalDamage;
+                            if (Body.hasAuthority)
+                                DamageShieldRA(damage);
+
+                            Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {damage}, New Shield: {r_Shield}");
+
+                        }
+                        else
+                        {
+                            //r_Health -= finalDamage;
+                            if (Body.hasAuthority)
+                                DamageRideArmor(damage);
+
+                            Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {damage}, New Health: {r_Health}");
+
+                        }
+
+                        // cura o player para anular o dano
+                        HealthComp.Heal(damage, default, true);
+
+                        //Efeito
+
+                        if (modelTransform)
+                        {
+                            TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
+                            temporaryOverlayInstance.duration = 1f;
+                            temporaryOverlayInstance.animateShaderAlpha = true;
+                            temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                            temporaryOverlayInstance.destroyComponentOnEnd = true;
+                            temporaryOverlayInstance.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matFullCrit");
+                            temporaryOverlayInstance.inspectorCharacterModel = model;
+                            temporaryOverlayInstance.AddToCharacterModel(model);
+                        }
+
+                    }
+                }
+
+                lastHealth = HealthComp.health;
+
+            }
+
+            
         }
 
         private void HawkFlyingBehavior()
@@ -356,99 +456,99 @@ namespace VileMod.Survivors.Vile.Components
             //On.RoR2.CameraRigController.Update += CameraRigController_Update;
             //On.RoR2.UI.HUD.Update += HUD_Update;
             //On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
-            On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
+            //On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
         }
 
-        private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
-        {
-            //orig(self, damageInfo, victim);
+        //private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
+        //{
+        //    //orig(self, damageInfo, victim);
 
-            if (self == null || damageInfo == null)
-            {
-                orig(self, damageInfo, victim);
-                return;
-            }
-
-
-            if (damageInfo.inflictor == null || damageInfo.attacker == null)
-            {
-                orig(self, damageInfo, victim);
-                return;
-            }
-
-            if (victim.GetComponent<CharacterBody>() == null)
-            {
-                orig(self, damageInfo, victim);
-                return;
-            }
-
-            if (victim.GetComponent<HealthComponent>() == null)
-            {
-                Debug.Log("HealthComp NULL");
-                orig(self, damageInfo, victim);
-                return;
-            }
-
-            if (damageInfo.attacker.name != Body.name && victim.GetComponent<HealthComponent>() == HealthComp)
-            {
-
-                if (victim.GetComponent<CharacterBody>().HasBuff(VileBuffs.GoliathBuff) || victim.GetComponent<CharacterBody>().HasBuff(VileBuffs.HawkBuff) || victim.GetComponent<CharacterBody>().HasBuff(VileBuffs.CyclopsBuff))
-                {
-                    float finalDamage = damageInfo.damage;
-
-                    if (victim.GetComponent<VileRideArmorComponent>() == null)
-                    {
-                        Debug.Log("VileRideArmorComponent NULL");
-                        orig(self, damageInfo, victim);
-                        return;
-                    }
-
-                    if (victim.GetComponent<CharacterBody>())
-                    {
-                        float armor = victim.GetComponent<CharacterBody>().armor;
-                        float armorMultiplier = 100f / (100f + armor);
-                        finalDamage *= armorMultiplier;
-                    }
-
-                    if (victim.GetComponent<VileRideArmorComponent>().GetRShieldValue() > 0f)
-                    {
-                        //r_Shield -= finalDamage;
-                        victim.GetComponent<VileRideArmorComponent>().DamageShieldRA(finalDamage);
-
-                        //Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {finalDamage}, New Shield: {r_Shield}");
-                    }
-                    else
-                    {
-                        //r_Health -= finalDamage;
-                        victim.GetComponent<VileRideArmorComponent>().DamageRideArmor(finalDamage);
+        //    if (self == null || damageInfo == null)
+        //    {
+        //        orig(self, damageInfo, victim);
+        //        return;
+        //    }
 
 
-                        //Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {finalDamage}, New Health: {r_Health}");
-                    }
+        //    if (damageInfo.inflictor == null || damageInfo.attacker == null)
+        //    {
+        //        orig(self, damageInfo, victim);
+        //        return;
+        //    }
+
+        //    if (victim.GetComponent<CharacterBody>() == null)
+        //    {
+        //        orig(self, damageInfo, victim);
+        //        return;
+        //    }
+
+        //    if (victim.GetComponent<HealthComponent>() == null)
+        //    {
+        //        Debug.Log("HealthComp NULL");
+        //        orig(self, damageInfo, victim);
+        //        return;
+        //    }
+
+        //    if (damageInfo.attacker.name != Body.name && victim.GetComponent<HealthComponent>() == HealthComp)
+        //    {
+
+        //        if (victim.GetComponent<CharacterBody>().HasBuff(VileBuffs.GoliathBuff) || victim.GetComponent<CharacterBody>().HasBuff(VileBuffs.HawkBuff) || victim.GetComponent<CharacterBody>().HasBuff(VileBuffs.CyclopsBuff))
+        //        {
+        //            float finalDamage = damageInfo.damage;
+
+        //            if (victim.GetComponent<VileRideArmorComponent>() == null)
+        //            {
+        //                Debug.Log("VileRideArmorComponent NULL");
+        //                orig(self, damageInfo, victim);
+        //                return;
+        //            }
+
+        //            if (victim.GetComponent<CharacterBody>())
+        //            {
+        //                float armor = victim.GetComponent<CharacterBody>().armor;
+        //                float armorMultiplier = 100f / (100f + armor);
+        //                finalDamage *= armorMultiplier;
+        //            }
+
+        //            if (victim.GetComponent<VileRideArmorComponent>().GetRShieldValue() > 0f)
+        //            {
+        //                //r_Shield -= finalDamage;
+        //                victim.GetComponent<VileRideArmorComponent>().DamageShieldRA(finalDamage);
+
+        //                //Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {finalDamage}, New Shield: {r_Shield}");
+        //            }
+        //            else
+        //            {
+        //                //r_Health -= finalDamage;
+        //                victim.GetComponent<VileRideArmorComponent>().DamageRideArmor(finalDamage);
+
+
+        //                //Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {finalDamage}, New Health: {r_Health}");
+        //            }
 
 
 
-                    if (victim.GetComponent<CharacterBody>().transform)
-                    {
-                        TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(victim.GetComponent<CharacterBody>().transform.gameObject);
-                        temporaryOverlayInstance.duration = 1f;
-                        temporaryOverlayInstance.animateShaderAlpha = true;
-                        temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
-                        temporaryOverlayInstance.destroyComponentOnEnd = true;
-                        temporaryOverlayInstance.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matFullCrit");
-                        temporaryOverlayInstance.inspectorCharacterModel = victim.GetComponent<CharacterBody>().GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
-                        temporaryOverlayInstance.AddToCharacterModel(victim.GetComponent<CharacterBody>().GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>());
-                    }
+        //            if (victim.GetComponent<CharacterBody>().transform)
+        //            {
+        //                TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(victim.GetComponent<CharacterBody>().transform.gameObject);
+        //                temporaryOverlayInstance.duration = 1f;
+        //                temporaryOverlayInstance.animateShaderAlpha = true;
+        //                temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+        //                temporaryOverlayInstance.destroyComponentOnEnd = true;
+        //                temporaryOverlayInstance.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matFullCrit");
+        //                temporaryOverlayInstance.inspectorCharacterModel = victim.GetComponent<CharacterBody>().GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
+        //                temporaryOverlayInstance.AddToCharacterModel(victim.GetComponent<CharacterBody>().GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>());
+        //            }
 
-                    damageInfo.damage = 0f;
-                    damageInfo.rejected = true;
-                }
+        //            damageInfo.damage = 0f;
+        //            damageInfo.rejected = true;
+        //        }
 
-            }
+        //    }
 
-            orig(self, damageInfo, victim);
+        //    orig(self, damageInfo, victim);
 
-        }
+        //}
 
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
@@ -488,16 +588,56 @@ namespace VileMod.Survivors.Vile.Components
 
                 if (self.GetComponent<CharacterBody>().HasBuff(VileBuffs.GoliathBuff) || self.GetComponent<CharacterBody>().HasBuff(VileBuffs.HawkBuff) || self.GetComponent<CharacterBody>().HasBuff(VileBuffs.CyclopsBuff))
                 {
-                    //float finalDamage = damageInfo.damage;
 
-                    //if (self.GetComponent<CharacterBody>())
-                    //{
-                    //    float armor = self.GetComponent<CharacterBody>().armor;
-                    //    float armorMultiplier = 100f / (100f + armor);
-                    //    finalDamage *= armorMultiplier;
-                    //}
+                    if (self.GetComponent<CharacterBody>().GetComponent<VileRideArmorComponent>() == null)
+                    {
+                        Debug.Log("VileRideArmorComponent NULL");
+                        orig(self, damageInfo);
+                        return;
+                    }
 
-                    //if(r_Shield > 0f)
+                    Debug.Log($"VileRideArmorComponent - Ride Armor Hit: {self.name}, Damage: {damageInfo.damage}");
+                    Debug.Log($"VileRideArmorComponent - Ride Armor Hit: {self.playerControllerId}, Damage: {damageInfo.damage}");
+                    Debug.Log($"VileRideArmorComponent - Ride Armor UserName: {self.GetComponent<CharacterBody>().GetUserName()}");
+
+                    float finalDamage = damageInfo.damage;
+
+                    if (self.GetComponent<CharacterBody>())
+                    {
+                        float armor = self.GetComponent<CharacterBody>().armor;
+                        float armorMultiplier = 100f / (100f + armor);
+                        finalDamage *= armorMultiplier;
+                    }
+
+                    if (self.GetComponent<CharacterBody>().GetComponent<VileRideArmorComponent>().GetRShieldValue() > 0f)
+                    {
+                        //r_Shield -= finalDamage;
+                        self.GetComponent<CharacterBody>().GetComponent<VileRideArmorComponent>().DamageShieldRA(finalDamage);
+
+                        Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {finalDamage}, New Shield: {self.GetComponent<CharacterBody>().GetComponent<VileRideArmorComponent>().GetRShieldValue()}");
+                    }
+                    else
+                    {
+                        //r_Health -= finalDamage;
+                        self.GetComponent<CharacterBody>().GetComponent<VileRideArmorComponent>().DamageRideArmor(finalDamage);
+
+                        
+                        Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {finalDamage}, New Health: {self.GetComponent<CharacterBody>().GetComponent<VileRideArmorComponent>().GetRHealthValue()}");
+                    }
+
+                    if (self.GetComponent<CharacterBody>().transform)
+                    {
+                        TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(self.GetComponent<CharacterBody>().transform.gameObject);
+                        temporaryOverlayInstance.duration = 1f;
+                        temporaryOverlayInstance.animateShaderAlpha = true;
+                        temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                        temporaryOverlayInstance.destroyComponentOnEnd = true;
+                        temporaryOverlayInstance.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matFullCrit");
+                        temporaryOverlayInstance.inspectorCharacterModel = self.GetComponent<CharacterBody>().GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>();
+                        temporaryOverlayInstance.AddToCharacterModel(self.GetComponent<CharacterBody>().GetComponent<ModelLocator>().modelTransform.gameObject.GetComponent<CharacterModel>());
+                    }
+
+                    //if (r_Shield > 0f)
                     //{
                     //    r_Shield -= finalDamage;
 
@@ -511,7 +651,7 @@ namespace VileMod.Survivors.Vile.Components
                     //    //Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {finalDamage}, New Health: {r_Health}");
                     //}
 
-                    
+
 
                     //if (modelTransform)
                     //{
@@ -539,7 +679,7 @@ namespace VileMod.Survivors.Vile.Components
             //On.RoR2.CameraRigController.Update -= CameraRigController_Update;
             //On.RoR2.UI.HUD.Update -= HUD_Update;
             //On.RoR2.HealthComponent.TakeDamage -= HealthComponent_TakeDamage;
-            On.RoR2.GlobalEventManager.OnHitEnemy -= GlobalEventManager_OnHitEnemy;
+            //On.RoR2.GlobalEventManager.OnHitEnemy -= GlobalEventManager_OnHitEnemy;
         }
 
         public void OnDestroy()
