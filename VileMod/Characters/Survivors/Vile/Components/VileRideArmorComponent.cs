@@ -332,7 +332,7 @@ namespace VileMod.Survivors.Vile.Components
                             if (Body.hasAuthority)
                                 DamageShieldRA(damage);
 
-                            Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {damage}, New Shield: {r_Shield}");
+                            //Debug.Log($"VileRideArmorComponent - Ride Armor Shield Decreased: {damage}, New Shield: {r_Shield}");
 
                         }
                         else
@@ -341,7 +341,7 @@ namespace VileMod.Survivors.Vile.Components
                             if (Body.hasAuthority)
                                 DamageRideArmor(damage);
 
-                            Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {damage}, New Health: {r_Health}");
+                            //Debug.Log($"VileRideArmorComponent - Ride Armor Health Decreased: {damage}, New Health: {r_Health}");
 
                         }
 

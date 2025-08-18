@@ -83,7 +83,7 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                 if (projectileController.ghost.gameObject)
                 {
                     projectileGhostGameObj = projectileController.ghost.gameObject;
-                    Debug.Log($"projectileController.ghost.gameObject: {projectileController.ghost.gameObject}");
+                    //Debug.Log($"projectileController.ghost.gameObject: {projectileController.ghost.gameObject}");
 
                 }
             }
@@ -93,13 +93,13 @@ namespace VileMod.Characters.Survivors.Vile.Components.UnitsComponents
                 if (projectileController.ghost.gameObject.GetComponent<Animator>() != null)
                 {
                     animator = projectileController.ghost.gameObject.GetComponent<Animator>();
-                    Debug.Log($"projectileController.ghost.gameObject.GetComponent<Animator>(): {projectileController.ghost.gameObject.GetComponent<Animator>()}");
+                    //Debug.Log($"projectileController.ghost.gameObject.GetComponent<Animator>(): {projectileController.ghost.gameObject.GetComponent<Animator>()}");
                 }
             }
 
             if (!animator && !projectileGhostGameObj)
             {
-                Debug.LogWarning("Animator not found on projectileGhostGameObj.");
+                //Debug.LogWarning("Animator not found on projectileGhostGameObj.");
                 return;
             }
 
