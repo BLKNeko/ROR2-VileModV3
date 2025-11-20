@@ -50,6 +50,7 @@ This mod contais some SFX for shots and voice for some skills!
 - I am also on ROR2 Modding Community.
 
 # Changelog
+- V 4.0.1 Probably Fix for Alloy Collective update.
 - V 4.0.0 Remake the whole project for the SOTS update, added RIDE-ARMOR and UNITS MECHANICS, EMOTEAPI compatibility, Risk Of Option compatibility and fixes, well, hope you enjoy!
 - V 3.0.0 Update to work with the update and add 2 new skills and some audios
 - V 2.0.0 Update to work with the update

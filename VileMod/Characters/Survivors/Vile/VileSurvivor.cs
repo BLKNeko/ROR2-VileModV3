@@ -311,6 +311,12 @@ namespace VileMod.Survivors.Vile
             //omit all this if you want to just keep theirs
             Prefabs.ClearEntityStateMachines(bodyPrefab);
 
+            CharacterBody body = bodyPrefab.GetComponent<CharacterBody>();
+            if (body)
+            {
+                body.vehicleIdleStateMachine = null;
+            }
+
             //the main "Body" state machine has some special properties
             Prefabs.AddMainEntityStateMachine(bodyPrefab, "Body", typeof(EntityStates.GenericCharacterMain), typeof(EntityStates.SpawnTeleporterState));
             bodyPrefab.GetComponent<CharacterDeathBehavior>().deathState = new EntityStates.SerializableEntityStateType(typeof(VileDeathState));

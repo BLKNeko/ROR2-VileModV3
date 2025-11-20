@@ -1,7 +1,7 @@
 {
     "name": "MegamanXVileMod",
     "author": "BLKNeko",
-    "version_number": "4.0.0",
+    "version_number": "4.0.1",
     "website_url": "https://github.com/BLKNeko/ROR2-VileModV3",
     "description": "Vile from MegamanX series as a survivor for Risk Of Rain 2",
     "dependencies": [
